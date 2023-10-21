@@ -1,4 +1,4 @@
-package com.group.atelier;
+package com.group.atelier.controller;
 
 import com.group.atelier.service.ClientService;
 import lombok.RequiredArgsConstructor;
