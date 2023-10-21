@@ -1,4 +1,11 @@
 drop schema public cascade;
+create schema public;
+
+create table "user"(
+    id serial primary key ,
+    username text,
+    password text
+);
 
 create table client(
     id serial primary key,
@@ -31,12 +38,6 @@ create table client_metrics(
     neck_base_to_front_waist_line_distance float,
     constraint client_client_metrics_fk
         foreign key (client_id) references client(id)
-);
-
-create table "user"(
-    id serial primary key ,
-    username text,
-    password text
 );
 
 create table user_role(
