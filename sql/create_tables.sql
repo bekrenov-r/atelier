@@ -47,12 +47,18 @@ create table user_role(
 
 insert into "user"(username, password)
 values
-    ('petro.kovalenko@exmaple.com', 'password'),
-    ('maria.shevchenko@exmaple.com', 'password'),
-    ('andrii.melnyk@exmaple.com', 'password');
+    ('petro.kovalenko@exmaple.com', '$2a$10$dGlirX4TKwGREM8iBzeWCONoU8tqy0QhYY1l/jzuq./pPKUzqw2wi'),
+    ('maria.shevchenko@exmaple.com', '$2a$10$dGlirX4TKwGREM8iBzeWCONoU8tqy0QhYY1l/jzuq./pPKUzqw2wi'),
+    ('andrii.melnyk@exmaple.com', '$2a$10$dGlirX4TKwGREM8iBzeWCONoU8tqy0QhYY1l/jzuq./pPKUzqw2wi');
 
 insert into user_role(user_id, role)
 values
-    (1, 'ROLE_CLIENT'),
-    (2, 'ROLE_CLIENT'),
-    (3, 'ROLE_CLIENT');
+    (1, 'CLIENT'),
+    (2, 'CLIENT'),
+    (3, 'CLIENT');
+
+insert into client(first_name, last_name, email, phone_number, user_id)
+values
+    ('Petro', 'Kovalenko', 'petro.kovalenko@exmaple.com', '874203146', 1),
+    ('Maria', 'Shevchenko', 'maria.shevchenko@exmaple.com', '745987631', 2),
+    ('Andrii', 'Melnyk', 'andrii.melnyk@exmaple.com', '634795201', 3);
