@@ -27,6 +27,9 @@ public class User implements UserDetails {
     @Column(name = "password")
     private String password;
 
+    @Column(name = "isActive")
+    private Boolean isActive;
+
     @ElementCollection(targetClass = Role.class)
     @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))
     @Column(name = "role")
@@ -41,6 +44,11 @@ public class User implements UserDetails {
     }
 
     @Override
+    public boolean isEnabled() {
+        return isActive;
+    }
+
+    @Override
     public boolean isAccountNonExpired() {
         return false;
     }
@@ -52,11 +60,6 @@ public class User implements UserDetails {
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return false;
-    }
-
-    @Override
-    public boolean isEnabled() {
         return false;
     }
 }

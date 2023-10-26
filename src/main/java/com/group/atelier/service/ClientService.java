@@ -9,6 +9,7 @@ import com.group.atelier.repository.ClientRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.util.Set;
 
 @Service
@@ -16,8 +17,9 @@ import java.util.Set;
 public class ClientService {
     private final ClientRepository clientRepository;
     private final UserService userService;
+    private final EmailService emailService;
 
-    public void registerClient(ClientRegistrationRequest request) {
+    public void registerClient(ClientRegistrationRequest request) throws IOException {
         User user = userService.createUser(request, Set.of(Role.CLIENT));
         Client client = Client.builder()
                 .firstName(request.firstName())
@@ -27,5 +29,6 @@ public class ClientService {
                 .user(user)
                 .build();
         clientRepository.save(client);
+        emailService.sendRegistrationConfirmationEmail(client);
     }
 }

@@ -1,0 +1,8 @@
+Dear %s!
+
+Thank You for choosing Atelier.
+
+To confirm your registration click this link: %s
+
+Best regards,
+Atelier team

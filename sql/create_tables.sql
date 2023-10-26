@@ -4,7 +4,8 @@ create schema public;
 create table "user"(
     id serial primary key ,
     username text,
-    password text
+    password text,
+    is_active bool
 );
 
 create table client(
@@ -45,11 +46,17 @@ create table user_role(
     role text
 );
 
-insert into "user"(username, password)
+create table registration_token(
+    id bigserial,
+    token text,
+    user_id int
+);
+
+insert into "user"(username, password, is_active)
 values
-    ('petro.kovalenko@exmaple.com', '$2a$10$dGlirX4TKwGREM8iBzeWCONoU8tqy0QhYY1l/jzuq./pPKUzqw2wi'),
-    ('maria.shevchenko@exmaple.com', '$2a$10$dGlirX4TKwGREM8iBzeWCONoU8tqy0QhYY1l/jzuq./pPKUzqw2wi'),
-    ('andrii.melnyk@exmaple.com', '$2a$10$dGlirX4TKwGREM8iBzeWCONoU8tqy0QhYY1l/jzuq./pPKUzqw2wi');
+    ('petro.kovalenko@exmaple.com', '$2a$10$dGlirX4TKwGREM8iBzeWCONoU8tqy0QhYY1l/jzuq./pPKUzqw2wi', true),
+    ('maria.shevchenko@exmaple.com', '$2a$10$dGlirX4TKwGREM8iBzeWCONoU8tqy0QhYY1l/jzuq./pPKUzqw2wi', true),
+    ('andrii.melnyk@exmaple.com', '$2a$10$dGlirX4TKwGREM8iBzeWCONoU8tqy0QhYY1l/jzuq./pPKUzqw2wi', true);
 
 insert into user_role(user_id, role)
 values

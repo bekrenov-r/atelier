@@ -7,3 +7,17 @@ spring:
     username: postgres
     password: postgres
     driver-class-name: org.postgresql.Driver
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: atelier.mail.server@gmail.com
+    password: rywh kjrd fruh pubs
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+custom:
+  frontend:
+    domain: 'localhost:4200'
