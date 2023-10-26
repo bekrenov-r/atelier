@@ -5,7 +5,7 @@ create table "user"(
     id serial primary key ,
     username text,
     password text,
-    is_active bool
+    active bool
 );
 
 create table client(
@@ -52,7 +52,7 @@ create table registration_token(
     user_id int
 );
 
-insert into "user"(username, password, is_active)
+insert into "user"(username, password, active)
 values
     ('petro.kovalenko@exmaple.com', '$2a$10$dGlirX4TKwGREM8iBzeWCONoU8tqy0QhYY1l/jzuq./pPKUzqw2wi', true),
     ('maria.shevchenko@exmaple.com', '$2a$10$dGlirX4TKwGREM8iBzeWCONoU8tqy0QhYY1l/jzuq./pPKUzqw2wi', true),

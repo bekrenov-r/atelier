@@ -25,7 +25,7 @@ public class UserService {
                 .username(request.email())
                 .password(passwordEncoder.encode(request.password()))
                 .roles(roles)
-                .isActive(false)
+                .active(false)
                 .build();
         User savedUser = userRepository.save(user);
         RegistrationToken token = RegistrationToken.builder()
@@ -37,4 +37,11 @@ public class UserService {
     }
 
 
+    public void activateUser(String token) {
+        var user = registrationTokenRepository.findByToken(token)
+                .orElseThrow(() -> new RuntimeException("Token not found")) // todo: use custom exception with reason
+                .getUser();
+        user.setActive(true);
+        userRepository.save(user);
+    }
 }
