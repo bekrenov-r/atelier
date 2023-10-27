@@ -1,6 +1,8 @@
 package com.group.atelier.service;
 
 import com.group.atelier.dto.request.UserRegistrationRequest;
+import com.group.atelier.exception.ApplicationException;
+import com.group.atelier.exception.ApplicationExceptionReason;
 import com.group.atelier.model.RegistrationToken;
 import com.group.atelier.model.Role;
 import com.group.atelier.model.User;
@@ -12,6 +14,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Set;
+
+import static com.group.atelier.exception.ApplicationExceptionReason.REGISTRATION_TOKEN_NOT_FOUND;
 
 @Service
 @RequiredArgsConstructor
@@ -39,7 +43,7 @@ public class UserService {
 
     public void activateUser(String token) {
         var user = registrationTokenRepository.findByToken(token)
-                .orElseThrow(() -> new RuntimeException("Token not found")) // todo: use custom exception with reason
+                .orElseThrow(() -> new ApplicationException(REGISTRATION_TOKEN_NOT_FOUND, token))
                 .getUser();
         user.setActive(true);
         userRepository.save(user);
