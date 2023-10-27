@@ -25,7 +25,6 @@ public class ClientService {
                 .firstName(request.firstName())
                 .lastName(request.lastName())
                 .email(request.email())
-                .phoneNumber(request.phoneNumber())
                 .user(user)
                 .build();
         clientRepository.save(client);

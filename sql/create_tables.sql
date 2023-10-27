@@ -13,7 +13,6 @@ create table client(
     first_name text,
     last_name text,
     email text,
-    phone_number text,
     user_id int,
     constraint client_user_fk
         foreign key (user_id) references "user"(id)
@@ -64,8 +63,8 @@ values
     (2, 'CLIENT'),
     (3, 'CLIENT');
 
-insert into client(first_name, last_name, email, phone_number, user_id)
+insert into client(first_name, last_name, email, user_id)
 values
-    ('Petro', 'Kovalenko', 'petro.kovalenko@exmaple.com', '874203146', 1),
-    ('Maria', 'Shevchenko', 'maria.shevchenko@exmaple.com', '745987631', 2),
-    ('Andrii', 'Melnyk', 'andrii.melnyk@exmaple.com', '634795201', 3);
+    ('Petro', 'Kovalenko', 'petro.kovalenko@exmaple.com', 1),
+    ('Maria', 'Shevchenko', 'maria.shevchenko@exmaple.com', 2),
+    ('Andrii', 'Melnyk', 'andrii.melnyk@exmaple.com', 3);

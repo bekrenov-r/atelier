@@ -4,6 +4,5 @@ public record ClientRegistrationRequest(
         String firstName,
         String lastName,
         String email,
-        String phoneNumber,
         String password
 ) implements UserRegistrationRequest {}
