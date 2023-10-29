@@ -41,7 +41,7 @@ create table client_metrics(
 );
 
 create table user_role(
-    user_id text,
+    user_id int,
     role text
 );
 

@@ -24,7 +24,7 @@ public class HomePageImageService {
         File midiCoatDir = new File(HOMEPAGE_IMG_DIR_PATH + "/" + MIDI_COAT_IMG_DIR_NAME);
         List<byte[]> midiCoatImages = this.getAllImagesFromDirectory(midiCoatDir);
 
-        File maxiCoatDir = new File(HOMEPAGE_IMG_DIR_PATH + "/" + MIDI_COAT_IMG_DIR_NAME);
+        File maxiCoatDir = new File(HOMEPAGE_IMG_DIR_PATH + "/" + MAXI_COAT_IMG_DIR_NAME);
         List<byte[]> maxiCoatImages = this.getAllImagesFromDirectory(maxiCoatDir);
 
         return HomePageImagesResponse.builder()
