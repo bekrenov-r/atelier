@@ -1,4 +1,4 @@
-package com.group.atelier.model;
+package com.group.atelier.model.entity;
 
 import jakarta.persistence.*;
 import lombok.*;

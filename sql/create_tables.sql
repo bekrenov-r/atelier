@@ -51,6 +51,13 @@ create table registration_token(
     user_id int
 );
 
+create table homepage_image(
+    id serial primary key,
+    path text,
+    coat_type text,
+    video_url text
+);
+
 insert into "user"(username, password, active)
 values
     ('petro.kovalenko@exmaple.com', '$2a$10$dGlirX4TKwGREM8iBzeWCONoU8tqy0QhYY1l/jzuq./pPKUzqw2wi', true),
@@ -68,3 +75,19 @@ values
     ('Petro', 'Kovalenko', 'petro.kovalenko@exmaple.com', 1),
     ('Maria', 'Shevchenko', 'maria.shevchenko@exmaple.com', 2),
     ('Andrii', 'Melnyk', 'andrii.melnyk@exmaple.com', 3);
+
+insert into homepage_image(path, coat_type, video_url)
+values
+    ('src/main/resources/images/homepage/jacket_coat/jacket_coat_1.png', 'JACKET_COAT', null),
+    ('src/main/resources/images/homepage/jacket_coat/jacket_coat_2.png', 'JACKET_COAT', null),
+    ('src/main/resources/images/homepage/jacket_coat/jacket_coat_3.png', 'JACKET_COAT', null),
+    ('src/main/resources/images/homepage/jacket_coat/jacket_coat_4.png', 'JACKET_COAT', null),
+    ('src/main/resources/images/homepage/maxi_coat/maxi_coat_1.png', 'MAXI_COAT', null),
+    ('src/main/resources/images/homepage/maxi_coat/maxi_coat_2.png', 'MAXI_COAT', null),
+    ('src/main/resources/images/homepage/maxi_coat/maxi_coat_3.png', 'MAXI_COAT', null),
+    ('src/main/resources/images/homepage/maxi_coat/maxi_coat_4.png', 'MAXI_COAT', null),
+    ('src/main/resources/images/homepage/midi_coat/midi_coat_1.png', 'MIDI_COAT', null),
+    ('src/main/resources/images/homepage/midi_coat/midi_coat_2.png', 'MIDI_COAT', null),
+    ('src/main/resources/images/homepage/midi_coat/midi_coat_3.png', 'MIDI_COAT', null),
+    ('src/main/resources/images/homepage/midi_coat/midi_coat_4.png', 'MIDI_COAT', null);
+

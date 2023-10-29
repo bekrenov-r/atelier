@@ -1,10 +1,9 @@
 package com.group.atelier.service;
 
 import com.group.atelier.dto.request.ClientRegistrationRequest;
-import com.group.atelier.dto.request.UserRegistrationRequest;
-import com.group.atelier.model.Client;
-import com.group.atelier.model.Role;
-import com.group.atelier.model.User;
+import com.group.atelier.model.entity.Client;
+import com.group.atelier.security.Role;
+import com.group.atelier.model.entity.User;
 import com.group.atelier.repository.ClientRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

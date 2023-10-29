@@ -1,7 +1,7 @@
 package com.group.atelier.repository;
 
-import com.group.atelier.model.RegistrationToken;
-import com.group.atelier.model.User;
+import com.group.atelier.model.entity.RegistrationToken;
+import com.group.atelier.model.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

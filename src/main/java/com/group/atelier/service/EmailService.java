@@ -1,7 +1,6 @@
 package com.group.atelier.service;
 
-import com.group.atelier.model.Client;
-import com.group.atelier.repository.ClientRepository;
+import com.group.atelier.model.entity.Client;
 import com.group.atelier.repository.RegistrationTokenRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -9,8 +8,6 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
-import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
