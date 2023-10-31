@@ -58,6 +58,41 @@ create table homepage_image(
     video_url text
 );
 
+create table pattern_data (
+    user_id int,
+    basis_grid_width float,
+    basis_grid_length float,
+    armhole_depth float,
+    back_width float,
+    file_width float,
+    armhole_width float,
+    back_neck_width float,
+    back_neck_height float,
+    shoulder_cut_slope float,
+    shoulder_cut_end float,
+    side_slope_top float,
+    back_armhole_slope float,
+    product_balance float,
+    file_neck_width float,
+    file_neck_depth float,
+    chest_dart float,
+    shoulder_slope float,
+    armhole float,
+    total_dart_deviation_by_waist_line float,
+    side_dart float,
+    file_dart float,
+    back_dart float,
+    increase_to_width_by_chest_line float,
+    increase_to_width_by_waist_line float,
+    increase_to_armhole_width float,
+    increase_to_armhole_depth float,
+    increase_to_neck_back float,
+    increase_to_back_width float,
+    increase_to_file_width float,
+    constraint fk_pattern_data_user
+        foreign key (user_id) references "user"(id)
+);
+
 insert into "user"(username, password, active)
 values
     ('petro.kovalenko@exmaple.com', '$2a$10$dGlirX4TKwGREM8iBzeWCONoU8tqy0QhYY1l/jzuq./pPKUzqw2wi', true),
