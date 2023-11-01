@@ -51,10 +51,13 @@ create table registration_token(
     user_id int
 );
 
-create table homepage_image(
+create table coat_model(
     id serial primary key,
-    path text,
+    name text,
+    price float,
+    creation_time_days int,
     coat_type text,
+    img_path text,
     video_url text
 );
 
@@ -111,18 +114,18 @@ values
     ('Maria', 'Shevchenko', 'maria.shevchenko@exmaple.com', 2),
     ('Andrii', 'Melnyk', 'andrii.melnyk@exmaple.com', 3);
 
-insert into homepage_image(path, coat_type, video_url)
+insert into coat_model(name, price, creation_time_days, img_path, coat_type, video_url)
 values
-    ('src/main/resources/images/homepage/jacket_coat/jacket_coat_1.png', 'JACKET_COAT', null),
-    ('src/main/resources/images/homepage/jacket_coat/jacket_coat_2.png', 'JACKET_COAT', null),
-    ('src/main/resources/images/homepage/jacket_coat/jacket_coat_3.png', 'JACKET_COAT', null),
-    ('src/main/resources/images/homepage/jacket_coat/jacket_coat_4.png', 'JACKET_COAT', null),
-    ('src/main/resources/images/homepage/maxi_coat/maxi_coat_1.png', 'MAXI_COAT', null),
-    ('src/main/resources/images/homepage/maxi_coat/maxi_coat_2.png', 'MAXI_COAT', null),
-    ('src/main/resources/images/homepage/maxi_coat/maxi_coat_3.png', 'MAXI_COAT', null),
-    ('src/main/resources/images/homepage/maxi_coat/maxi_coat_4.png', 'MAXI_COAT', null),
-    ('src/main/resources/images/homepage/midi_coat/midi_coat_1.png', 'MIDI_COAT', null),
-    ('src/main/resources/images/homepage/midi_coat/midi_coat_2.png', 'MIDI_COAT', null),
-    ('src/main/resources/images/homepage/midi_coat/midi_coat_3.png', 'MIDI_COAT', null),
-    ('src/main/resources/images/homepage/midi_coat/midi_coat_4.png', 'MIDI_COAT', null);
+    ('Model 1', 999.99, 14, 'src/main/resources/images/coat_models/jacket_coat/jacket_coat_1.png', 'JACKET_COAT', null),
+    ('Model 2', 999.99, 14, 'src/main/resources/images/coat_models/jacket_coat/jacket_coat_2.png', 'JACKET_COAT', null),
+    ('Model 3', 999.99, 14, 'src/main/resources/images/coat_models/jacket_coat/jacket_coat_3.png', 'JACKET_COAT', null),
+    ('Model 4', 999.99, 14, 'src/main/resources/images/coat_models/jacket_coat/jacket_coat_4.png', 'JACKET_COAT', null),
+    ('Model 5', 999.99, 14, 'src/main/resources/images/coat_models/maxi_coat/maxi_coat_1.png', 'MAXI_COAT', null),
+    ('Model 6', 999.99, 14, 'src/main/resources/images/coat_models/maxi_coat/maxi_coat_2.png', 'MAXI_COAT', null),
+    ('Model 7', 999.99, 14, 'src/main/resources/images/coat_models/maxi_coat/maxi_coat_3.png', 'MAXI_COAT', null),
+    ('Model 8', 999.99, 14, 'src/main/resources/images/coat_models/maxi_coat/maxi_coat_4.png', 'MAXI_COAT', null),
+    ('Model 9', 999.99, 14, 'src/main/resources/images/coat_models/midi_coat/midi_coat_1.png', 'MIDI_COAT', null),
+    ('Model 10', 999.99, 14, 'src/main/resources/images/coat_models/midi_coat/midi_coat_2.png', 'MIDI_COAT', null),
+    ('Model 11', 999.99, 14, 'src/main/resources/images/coat_models/midi_coat/midi_coat_3.png', 'MIDI_COAT', null),
+    ('Model 12', 999.99, 14, 'src/main/resources/images/coat_models/midi_coat/midi_coat_4.png', 'MIDI_COAT', null);
 

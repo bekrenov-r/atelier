@@ -5,18 +5,27 @@ import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
-@Table(name = "homepage_image")
+@Table(name = "coat_model")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class HomepageImage {
+public class CoatModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "path")
-    private String path;
+    @Column(name = "name")
+    private String name;
+
+    @Column(name = "price")
+    private Double price;
+
+    @Column(name = "creation_time_days")
+    private Integer creationTimeDays;
+
+    @Column(name = "img_path")
+    private String imagePath;
 
     @Column(name = "coat_type")
     @Enumerated(value = EnumType.STRING)
