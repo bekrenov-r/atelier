@@ -1,9 +1,11 @@
 package com.group.atelier.security;
 
+import com.group.atelier.repository.UserRepository;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
@@ -16,7 +18,8 @@ import java.util.Map;
 import java.util.function.Function;
 
 @Component
-public class JwtUtil {
+@RequiredArgsConstructor
+public class JwtProvider {
     @Value("${jwt.secret}")
     private String secret;
 
@@ -37,16 +40,19 @@ public class JwtUtil {
     }
 
     private Claims getAllClaimsFromToken(String token) {
-        return Jwts.parser()
-                .decryptWith((SecretKey) this.getSignKey())
+        return Jwts.parserBuilder()
+                .setSigningKey(this.getKey())
                 .build()
-                .parseSignedClaims(token)
-                .getPayload();
+                .parseClaimsJws(token)
+                .getBody();
     }
 
-    public Boolean validateToken(String token, UserDetails userDetails) {
-        String username = this.getUsername(token);
-        return (username.equals(userDetails.getUsername()) && !this.isTokenExpired(token));
+    public Boolean validateToken(String token) {
+        Jwts.parserBuilder()
+                .setSigningKey(this.getKey())
+                .build()
+                .parseClaimsJws(token);
+        return !this.isTokenExpired(token);
     }
 
     private Boolean isTokenExpired(String token) {
@@ -58,14 +64,14 @@ public class JwtUtil {
         Map<String, Object> claims = new HashMap<>();
         claims.put("roles", userDetails.getAuthorities().toString());
         return Jwts.builder()
-                .claims(claims)
-                .subject(userDetails.getUsername())
-                .issuedAt(new Date(System.currentTimeMillis()))
-                .expiration(new Date(System.currentTimeMillis() + expirationTime))
-                .signWith(this.getSignKey()).compact();
+                .setClaims(claims)
+                .setSubject(userDetails.getUsername())
+                .setIssuedAt(new Date(System.currentTimeMillis()))
+                .setExpiration(new Date(System.currentTimeMillis() + expirationTime))
+                .signWith(this.getKey(), SignatureAlgorithm.HS256).compact();
     }
 
-    private Key getSignKey(){
+    private Key getKey(){
         return Keys.hmacShaKeyFor(secret.getBytes());
     }
 }

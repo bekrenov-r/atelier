@@ -1,4 +1,4 @@
-package com.group.atelier.controller;
+package com.group.atelier.dto.response;
 
 public record PatternDataResponse(
         Double basisGridWidth,

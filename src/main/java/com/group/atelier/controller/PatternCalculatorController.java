@@ -1,6 +1,7 @@
 package com.group.atelier.controller;
 
 import com.group.atelier.dto.request.ProductMetricsRequest;
+import com.group.atelier.dto.response.PatternDataResponse;
 import com.group.atelier.service.PatternCalculatorService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
