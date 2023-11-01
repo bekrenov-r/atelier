@@ -85,7 +85,7 @@ public class SecurityConfig {
                         registry
                                 .requestMatchers(permittedMatchers).permitAll()
                                 .requestMatchers(HttpMethod.GET).permitAll()
-                                .anyRequest().authenticated()
+                                .anyRequest().permitAll()
                 )
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .sessionManagement(c -> c.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
