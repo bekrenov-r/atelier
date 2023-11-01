@@ -20,6 +20,6 @@ public class PatternCalculatorService {
 
     public PatternDataResponse calculatePatternDataAndSave(ProductMetricsRequest request) {
         PatternData patternData = patternCalculator.doCalculate(request);
-        return null;
+        return patternDataMapper.entityToResponse(patternData);
     }
 }

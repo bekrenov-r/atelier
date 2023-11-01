@@ -25,7 +25,8 @@ custom:
     permitted-matchers: >
       /users/activate/**,
       /authenticate,
-      /clients/register
+      /clients/register,
+      /patterns/calculate
 jwt:
   secret: KE73EYGWFWT378RTGFEW873R87F7TF8WYE7FT76FW6E76TF76ETFW76
   expiration-time-millis: 604800000

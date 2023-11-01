@@ -13,12 +13,12 @@ import org.springframework.web.bind.annotation.*;
 public class PatternCalculatorController {
     private final PatternCalculatorService patternCalculatorService;
 
-    @GetMapping("/calculate")
+    @PostMapping("/calculate")
     public ResponseEntity<PatternDataResponse> calculatePatternData(@RequestBody ProductMetricsRequest request){
         return ResponseEntity.ok(patternCalculatorService.calculatePatternData(request));
     }
 
-    @PostMapping("/calculate")
+    @PostMapping("/calculate/save")
     public ResponseEntity<PatternDataResponse> calculatePatternDataAndSave(@RequestBody ProductMetricsRequest request){
         return ResponseEntity.ok(patternCalculatorService.calculatePatternDataAndSave(request));
     }
