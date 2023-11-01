@@ -1,8 +1,8 @@
-Dear %s!
+Шановний(на) %s!
 
-Thank You for choosing Atelier.
+Дякуємо Вам що вибрали Atelier.
 
-To confirm your registration click this link: %s
+Щоб закінчити реєстрацію і активувати акаунт, перейдіть за цим посиланням: %s
 
-Best regards,
-Atelier team
+Щиро ваші,
+Команда Atelier
