@@ -16,10 +16,7 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping("/activate/{token}")
-    public ResponseEntity<Void> activateUser(@PathVariable String token){
-        userService.activateUser(token);
-        return ResponseEntity
-                .status(HttpStatus.OK)
-                .build();
+    public ResponseEntity<String> activateUser(@PathVariable String token){
+        return ResponseEntity.ok(userService.activateUser(token));
     }
 }

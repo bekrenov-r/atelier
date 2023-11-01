@@ -3,6 +3,7 @@ package com.group.atelier.service;
 import com.group.atelier.dto.request.UserRegistrationRequest;
 import com.group.atelier.exception.ApplicationException;
 import com.group.atelier.model.entity.RegistrationToken;
+import com.group.atelier.security.JwtProvider;
 import com.group.atelier.security.Role;
 import com.group.atelier.model.entity.User;
 import com.group.atelier.repository.RegistrationTokenRepository;
@@ -22,6 +23,7 @@ public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final RegistrationTokenRepository registrationTokenRepository;
+    private final JwtProvider jwtProvider;
 
     public User createUser(UserRegistrationRequest request, Set<Role> roles) {
         User user = User.builder()
@@ -40,11 +42,12 @@ public class UserService {
     }
 
 
-    public void activateUser(String token) {
+    public String activateUser(String token) {
         var user = registrationTokenRepository.findByToken(token)
                 .orElseThrow(() -> new ApplicationException(REGISTRATION_TOKEN_NOT_FOUND, token))
                 .getUser();
         user.setActive(true);
         userRepository.save(user);
+        return jwtProvider.generateToken(user);
     }
 }
