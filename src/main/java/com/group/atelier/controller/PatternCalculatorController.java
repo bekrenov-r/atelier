@@ -17,9 +17,4 @@ public class PatternCalculatorController {
     public ResponseEntity<PatternDataResponse> calculatePatternData(@RequestBody ProductMetricsRequest request){
         return ResponseEntity.ok(patternCalculatorService.calculatePatternData(request));
     }
-
-    @PostMapping("/calculate/save")
-    public ResponseEntity<PatternDataResponse> calculatePatternDataAndSave(@RequestBody ProductMetricsRequest request){
-        return ResponseEntity.ok(patternCalculatorService.calculatePatternDataAndSave(request));
-    }
 }

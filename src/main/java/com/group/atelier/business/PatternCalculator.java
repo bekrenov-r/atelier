@@ -1,4 +1,4 @@
-package com.group.atelier.service;
+package com.group.atelier.business;
 
 import com.group.atelier.dto.request.ProductMetricsRequest;
 import com.group.atelier.model.entity.PatternData;

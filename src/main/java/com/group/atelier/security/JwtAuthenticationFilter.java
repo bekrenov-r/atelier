@@ -2,6 +2,7 @@ package com.group.atelier.security;
 
 import com.group.atelier.exception.ApplicationException;
 import com.group.atelier.exception.ApplicationExceptionReason;
+import com.group.atelier.exception.InvalidAuthHeaderException;
 import com.group.atelier.repository.UserRepository;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -42,13 +43,14 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String authHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
         if(authHeader == null || !authHeader.startsWith(BEARER_PREFIX))
-            throw new BadCredentialsException("Authorization header is invalid or is not present");
+            throw new InvalidAuthHeaderException();
         String jwt = authHeader.substring(BEARER_PREFIX.length());
         if(jwtProvider.validateToken(jwt)){
             String username = jwtProvider.getUsername(jwt);
             UserDetails user = userRepository.findByUsername(username)
                     .orElseThrow(() -> new ApplicationException(USER_NOT_FOUND, username));
             var auth = new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword());
+//            auth.setAuthenticated(true);
             SecurityContextHolder.getContext().setAuthentication(auth);
         }
         filterChain.doFilter(request, response);

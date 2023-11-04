@@ -104,6 +104,6 @@ public class PatternData {
     private Double increaseToFileWidth;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    private User client;
+    @JoinColumn(name = "client_id")
+    private Client client;
 }

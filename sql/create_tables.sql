@@ -62,7 +62,8 @@ create table coat_model(
 );
 
 create table pattern_data (
-    user_id int,
+    id serial primary key,
+    client_id int,
     basis_grid_width float,
     basis_grid_length float,
     armhole_depth float,
@@ -93,7 +94,21 @@ create table pattern_data (
     increase_to_back_width float,
     increase_to_file_width float,
     constraint fk_pattern_data_user
-        foreign key (user_id) references "user"(id)
+        foreign key (client_id) references client(id)
+);
+
+create table "order"(
+    id serial primary key,
+    client_id int,
+    coat_model_id int,
+    pattern_data_id int,
+    created_at timestamp,
+    constraint fk_order_client
+        foreign key (client_id) references client(id),
+    constraint fk_order_coat_model
+        foreign key (coat_model_id) references coat_model(id),
+    constraint fk_order_pattern_data
+        foreign key (pattern_data_id) references pattern_data(id)
 );
 
 insert into "user"(username, password, active)
