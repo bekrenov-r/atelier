@@ -1,7 +1,7 @@
 package com.group.atelier.config;
 
 import com.group.atelier.exception.ApplicationException;
-import com.group.atelier.exception.ApplicationExceptionReason;
+import com.group.atelier.exception.AuthenticationExceptionHandlerFilter;
 import com.group.atelier.repository.UserRepository;
 import com.group.atelier.security.JwtAuthenticationFilter;
 import lombok.RequiredArgsConstructor;
@@ -19,15 +19,12 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
-import javax.sql.DataSource;
-import java.util.Arrays;
 import java.util.List;
 
 import static com.group.atelier.exception.ApplicationExceptionReason.USER_NOT_FOUND;
@@ -37,6 +34,7 @@ import static com.group.atelier.exception.ApplicationExceptionReason.USER_NOT_FO
 public class SecurityConfig {
     private final UserRepository userRepository;
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
+    private final AuthenticationExceptionHandlerFilter authenticationExceptionHandlerFilter;
 
     @Value("${custom.security.permitted-matchers}")
     private String[] permittedMatchers;
@@ -88,6 +86,7 @@ public class SecurityConfig {
                                 .anyRequest().permitAll()
                 )
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(authenticationExceptionHandlerFilter, JwtAuthenticationFilter.class)
                 .sessionManagement(c -> c.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationManager(authenticationManager())
                 .build();

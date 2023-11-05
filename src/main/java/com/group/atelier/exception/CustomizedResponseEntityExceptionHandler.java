@@ -45,7 +45,7 @@ public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExce
     }
 
     @ExceptionHandler(AuthenticationException.class)
-    public ResponseEntity<ErrorResponse> handleAuthenticationException(AuthenticationException ex, WebRequest webRequest){
+    public ResponseEntity<ErrorResponse> handleAuthenticationException(AuthenticationException ex){
         this.logException(ex);
         ErrorResponse response = ErrorResponse
                 .builder()
