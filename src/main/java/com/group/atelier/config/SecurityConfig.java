@@ -79,12 +79,6 @@ public class SecurityConfig {
         return http
                 .cors(c -> c.configurationSource(corsConfigurationSource()))
                 .csrf(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests(registry ->
-                        registry
-                                .requestMatchers(permittedMatchers).permitAll()
-                                .requestMatchers(HttpMethod.GET).permitAll()
-                                .anyRequest().permitAll()
-                )
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore(authenticationExceptionHandlerFilter, JwtAuthenticationFilter.class)
                 .sessionManagement(c -> c.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

@@ -58,9 +58,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request){
-        if(request.getMethod().equals(HttpMethod.GET.name())){
-            return true;
-        }
         return Arrays.stream(permittedMatchers)
                 .map(AntPathRequestMatcher::new)
                 .anyMatch(matcher -> matcher.matches(request));
