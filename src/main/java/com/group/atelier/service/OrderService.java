@@ -1,7 +1,9 @@
 package com.group.atelier.service;
 
 import com.group.atelier.business.PatternCalculator;
+import com.group.atelier.dto.mapper.OrderMapper;
 import com.group.atelier.dto.request.OrderRequest;
+import com.group.atelier.dto.response.OrderResponse;
 import com.group.atelier.exception.ApplicationException;
 import com.group.atelier.model.entity.*;
 import com.group.atelier.repository.ClientRepository;
@@ -23,8 +25,9 @@ public class OrderService {
     private final LoggedUserUtil loggedUserUtil;
     private final ClientRepository clientRepository;
     private final CoatModelRepository coatModelRepository;
+    private final OrderMapper orderMapper;
 
-    public void createOrder(OrderRequest request) {
+    public OrderResponse createOrder(OrderRequest request) {
         Client client = clientRepository.findByUser(loggedUserUtil.getUser());
         PatternData patternData = patternCalculatorService.calculatePatternDataAndSave(request.productMetrics());
         CoatModel coatModel = coatModelRepository.findById(request.coatModelId())
@@ -35,6 +38,6 @@ public class OrderService {
                 .client(client)
                 .createdAt(LocalDateTime.now())
                 .build();
-        orderRepository.save(order);
+        return orderMapper.entityToResponse(orderRepository.save(order));
     }
 }

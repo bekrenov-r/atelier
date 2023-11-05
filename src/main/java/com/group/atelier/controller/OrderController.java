@@ -1,6 +1,7 @@
 package com.group.atelier.controller;
 
 import com.group.atelier.dto.request.OrderRequest;
+import com.group.atelier.dto.response.OrderResponse;
 import com.group.atelier.service.OrderService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -18,10 +19,7 @@ public class OrderController {
     private final OrderService orderService;
 
     @PostMapping
-    public ResponseEntity<Void> createOrder(@RequestBody @Valid OrderRequest request){
-        orderService.createOrder(request);
-        return ResponseEntity
-                .status(HttpStatus.OK)
-                .build();
+    public ResponseEntity<OrderResponse> createOrder(@RequestBody @Valid OrderRequest request){
+        return ResponseEntity.ok(orderService.createOrder(request));
     }
 }

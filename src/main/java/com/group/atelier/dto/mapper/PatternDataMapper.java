@@ -6,5 +6,5 @@ import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")
 public abstract class PatternDataMapper {
-    public abstract PatternDataResponse entityToResponse(PatternData entity);
+    public abstract PatternDataResponse entityToResponse(PatternData patternData);
 }
