@@ -45,7 +45,7 @@ public class ClientMetricsService {
         ClientMetrics clientMetrics = clientMetricsRepository.findById(client.getId())
                 .orElseThrow(() -> new ApplicationException(CLIENT_METRICS_NOT_FOUND));
         ClientMetrics updatedMetrics = this.doUpdate(clientMetrics, request);
-        return clientMetricsMapper.entityToResponse(updatedMetrics);
+        return clientMetricsMapper.entityToResponse(clientMetricsRepository.save(updatedMetrics));
     }
 
     private ClientMetrics doUpdate(ClientMetrics clientMetrics, ClientMetricsRequest request){

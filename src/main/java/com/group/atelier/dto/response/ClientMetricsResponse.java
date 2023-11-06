@@ -1,7 +1,6 @@
 package com.group.atelier.dto.response;
 
 public record ClientMetricsResponse(
-        Long clientId,
         Double neckSemiCircumference,
         Double chestSemiCircumference1,
         Double chestSemiCircumference2,
