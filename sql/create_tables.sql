@@ -125,9 +125,9 @@ values
 
 insert into client(first_name, last_name, email, user_id)
 values
-    ('Petro', 'Kovalenko', 'petro.kovalenko@exmaple.com', 1),
-    ('Maria', 'Shevchenko', 'maria.shevchenko@exmaple.com', 2),
-    ('Andrii', 'Melnyk', 'andrii.melnyk@exmaple.com', 3);
+    ('Petro', 'Kovalenko', 'petro.kovalenko@example.com', 1),
+    ('Maria', 'Shevchenko', 'maria.shevchenko@example.com', 2),
+    ('Andrii', 'Melnyk', 'andrii.melnyk@example.com', 3);
 
 insert into coat_model(name, price, creation_time_days, img_path, coat_type, video_url)
 values

@@ -1,5 +1,6 @@
 package com.group.atelier.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -15,11 +16,16 @@ import lombok.Setter;
 public class ClientMetrics {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int clientId;
+    private Long clientId;
+
+    @MapsId
+    @OneToOne
+    @JoinColumn(name = "client_id")
+    @JsonIgnore
+    private Client client;
 
     @Column(name = "neck_semi_circumference")
     private Double neckSemiCircumference;
-
     @Column(name = "chest_semi_circumference_1")
     private Double chestSemiCircumference1;
 
