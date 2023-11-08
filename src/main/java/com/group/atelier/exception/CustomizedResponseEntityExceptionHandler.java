@@ -1,6 +1,6 @@
 package com.group.atelier.exception;
 
-import jakarta.persistence.EntityNotFoundException;
+import io.jsonwebtoken.JwtException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -57,7 +57,7 @@ public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExce
     }
 
     @ExceptionHandler(IllegalArgumentException.class)
-    public ResponseEntity<ErrorResponse> handleIllegalArgument(IllegalArgumentException ex, WebRequest webRequest){
+    public ResponseEntity<ErrorResponse> handleIllegalArgumentException(IllegalArgumentException ex, WebRequest webRequest){
         ErrorResponse response = ErrorResponse
                 .builder()
                 .message(ex.getMessage())
@@ -65,6 +65,17 @@ public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExce
                 .timestamp(LocalDateTime.now())
                 .build();
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(JwtException.class)
+    public ResponseEntity<ErrorResponse> handleJwtException(JwtException ex){
+        ErrorResponse response = ErrorResponse
+                .builder()
+                .message(ex.getMessage())
+                .status(HttpStatus.FORBIDDEN)
+                .timestamp(LocalDateTime.now())
+                .build();
+        return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
     }
 
     @Override

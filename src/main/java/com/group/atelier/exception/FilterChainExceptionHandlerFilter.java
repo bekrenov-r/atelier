@@ -2,24 +2,21 @@ package com.group.atelier.exception;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.datatype.jsr310.JSR310Module;
+import io.jsonwebtoken.JwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.ServletRequest;
-import jakarta.servlet.ServletResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.stereotype.Component;
-import org.springframework.web.filter.GenericFilterBean;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 
 @Component
 @RequiredArgsConstructor
-public class AuthenticationExceptionHandlerFilter extends OncePerRequestFilter {
+public class FilterChainExceptionHandlerFilter extends OncePerRequestFilter {
     private final CustomizedResponseEntityExceptionHandler exceptionHandler;
 
     @Override
@@ -27,10 +24,22 @@ public class AuthenticationExceptionHandlerFilter extends OncePerRequestFilter {
         try {
             filterChain.doFilter(request, response);
         } catch (AuthenticationException ex){
-            ErrorResponse errorResponse = exceptionHandler.handleAuthenticationException(ex).getBody();
-            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
-            response.getWriter().write(this.convertErrorResponseToString(errorResponse));
+            this.handleAuthenticationException(ex, response);
+        } catch (JwtException ex){
+            this.handleJwtException(ex, response);
         }
+    }
+
+    private void handleAuthenticationException(AuthenticationException ex, HttpServletResponse response) throws IOException {
+        ErrorResponse errorResponse = exceptionHandler.handleAuthenticationException(ex).getBody();
+        response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+        response.getWriter().write(this.convertErrorResponseToString(errorResponse));
+    }
+
+    private void handleJwtException(JwtException ex, HttpServletResponse response) throws IOException {
+        ErrorResponse errorResponse = exceptionHandler.handleJwtException(ex).getBody();
+        response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+        response.getWriter().write(this.convertErrorResponseToString(errorResponse));
     }
 
     private String convertErrorResponseToString(ErrorResponse errorResponse) throws JsonProcessingException {

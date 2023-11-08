@@ -1,14 +1,13 @@
 package com.group.atelier.config;
 
 import com.group.atelier.exception.ApplicationException;
-import com.group.atelier.exception.AuthenticationExceptionHandlerFilter;
+import com.group.atelier.exception.FilterChainExceptionHandlerFilter;
 import com.group.atelier.repository.UserRepository;
 import com.group.atelier.security.JwtAuthenticationFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.ProviderManager;
@@ -34,7 +33,7 @@ import static com.group.atelier.exception.ApplicationExceptionReason.USER_NOT_FO
 public class SecurityConfig {
     private final UserRepository userRepository;
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
-    private final AuthenticationExceptionHandlerFilter authenticationExceptionHandlerFilter;
+    private final FilterChainExceptionHandlerFilter filterChainExceptionHandlerFilter;
 
     @Value("${custom.security.permitted-matchers}")
     private String[] permittedMatchers;
@@ -80,7 +79,7 @@ public class SecurityConfig {
                 .cors(c -> c.configurationSource(corsConfigurationSource()))
                 .csrf(AbstractHttpConfigurer::disable)
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
-                .addFilterBefore(authenticationExceptionHandlerFilter, JwtAuthenticationFilter.class)
+                .addFilterBefore(filterChainExceptionHandlerFilter, JwtAuthenticationFilter.class)
                 .sessionManagement(c -> c.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationManager(authenticationManager())
                 .build();
