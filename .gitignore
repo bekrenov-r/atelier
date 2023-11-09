@@ -10,6 +10,9 @@
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
 
+# PostgreSQL data volume
+/postgres/data/
+
 target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/

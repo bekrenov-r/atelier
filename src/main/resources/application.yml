@@ -2,8 +2,10 @@ server:
   servlet:
     context-path: /api/v1
 spring:
+  config:
+    activate:
+      on-profile: dev, prod
   datasource:
-    url: jdbc:postgresql://localhost:5432/atelier
     username: postgres
     password: postgres
     driver-class-name: org.postgresql.Driver
@@ -18,21 +20,37 @@ spring:
           auth: true
           starttls:
             enable: true
-custom:
-  frontend:
-    domain: 'localhost:4200'
-  security:
-    permitted-matchers: >
-      /users/activate/**,
-      /authenticate,
-      /clients/register,
-      /patterns/calculate,
-      /coat-models
-jwt:
-  secret: KE73EYGWFWT378RTGFEW873R87F7TF8WYE7FT76FW6E76TF76ETFW76
-  expiration-time-millis: 604800000
+  custom:
+    frontend:
+      domain: 'localhost:4200'
+    security:
+      permitted-matchers: >
+        /users/activate/**,
+        /authenticate,
+        /clients/register,
+        /patterns/calculate,
+        /coat-models
+  jwt:
+    secret: KE73EYGWFWT378RTGFEW873R87F7TF8WYE7FT76FW6E76TF76ETFW76
+    expiration-time-millis: 604800000
 logging:
   level:
     org:
       springframework:
         security: TRACE
+---
+spring:
+  config:
+    activate:
+      on-profile: dev
+  datasource:
+    url: jdbc:postgresql://localhost:5432/atelier
+---
+spring:
+  config:
+    activate:
+      on-profile: prod
+  datasource:
+    url: jdbc:postgresql://atelier-db:5432/atelier
+
+

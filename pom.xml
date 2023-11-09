@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.group</groupId>
 	<artifactId>atelier</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.1</version>
 	<name>atelier</name>
 	<description>Backend for Atelier project</description>
 	<properties>

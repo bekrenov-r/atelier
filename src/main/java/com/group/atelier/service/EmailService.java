@@ -9,8 +9,6 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 
 @Service
 @RequiredArgsConstructor
@@ -18,10 +16,10 @@ public class EmailService {
     private final JavaMailSender mailSender;
     private final RegistrationTokenRepository registrationTokenRepository;
 
-    @Value("${custom.frontend.domain}")
+    @Value("${spring.custom.frontend.domain}")
     private String frontendDomain;
 
-    private static final String CONTENT_TEMPLATE_FILE_PATH = "src/main/resources/registration-confirmation-email-content.txt";
+    private static final String CONTENT_TEMPLATE_FILE_PATH = "/registration-confirmation-email-content.txt";
 
     public void sendRegistrationConfirmationEmail(Client client) throws IOException {
         String contentTemplate = this.getContentTemplate();
@@ -37,8 +35,6 @@ public class EmailService {
     }
 
     private String getContentTemplate() throws IOException {
-        return new String(
-                Files.readAllBytes(Paths.get(CONTENT_TEMPLATE_FILE_PATH))
-        );
+        return new String(getClass().getResourceAsStream(CONTENT_TEMPLATE_FILE_PATH).readAllBytes());
     }
 }

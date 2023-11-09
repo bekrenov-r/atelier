@@ -1,7 +1,6 @@
 package com.group.atelier.security;
 
 import com.group.atelier.exception.ApplicationException;
-import com.group.atelier.exception.ApplicationExceptionReason;
 import com.group.atelier.exception.InvalidAuthHeaderException;
 import com.group.atelier.repository.UserRepository;
 import jakarta.servlet.FilterChain;
@@ -11,11 +10,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
@@ -24,7 +19,6 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.Collection;
 
 import static com.group.atelier.exception.ApplicationExceptionReason.USER_NOT_FOUND;
 
@@ -33,7 +27,7 @@ import static com.group.atelier.exception.ApplicationExceptionReason.USER_NOT_FO
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private static final String BEARER_PREFIX = "Bearer ";
 
-    @Value("${custom.security.permitted-matchers}")
+    @Value("${spring.custom.security.permitted-matchers}")
     private String[] permittedMatchers;
 
     private final JwtProvider jwtProvider;

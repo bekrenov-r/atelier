@@ -5,7 +5,6 @@ import com.group.atelier.exception.FilterChainExceptionHandlerFilter;
 import com.group.atelier.repository.UserRepository;
 import com.group.atelier.security.JwtAuthenticationFilter;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -34,9 +33,6 @@ public class SecurityConfig {
     private final UserRepository userRepository;
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
     private final FilterChainExceptionHandlerFilter filterChainExceptionHandlerFilter;
-
-    @Value("${custom.security.permitted-matchers}")
-    private String[] permittedMatchers;
 
     @Bean
     public PasswordEncoder passwordEncoder(){

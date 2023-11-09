@@ -1,0 +1,35 @@
+version: "3.9"
+
+networks:
+  atelier:
+    driver: bridge
+    ipam:
+      driver: default
+    name: atelier
+
+services:
+  atelier-db:
+    container_name: database
+    image: postgres:15.3
+    environment:
+      POSTGRES_DB: atelier
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    logging:
+      options:
+        max-size: 10m
+        max-file: "3"
+    volumes:
+      - ./postgres/data:/var/lib/postgresql/data
+      - ./postgres/scripts/create_tables.sql:/docker-entrypoint-initdb.d/create_tables.sql
+    ports:
+      - "5432:5432"
+    networks:
+      - atelier
+    healthcheck:
+      test: [ "CMD", "pg_isready", "-q", "-d", "atelier", "-U", "postgres" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart:
+      unless-stopped

@@ -6,9 +6,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
 
-import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
 
 @Mapper(componentModel = "spring")
 public abstract class CoatModelMapper {
@@ -18,6 +16,6 @@ public abstract class CoatModelMapper {
 
     @Named("mapImage")
     protected byte[] mapImage(String path) throws IOException {
-        return Files.readAllBytes(new File(path).toPath());
+        return getClass().getResourceAsStream(path).readAllBytes();
     }
 }
