@@ -107,7 +107,7 @@ create table pattern_data (
     increase_to_armhole_depth float,
     increase_to_neck_back float,
     increase_to_back_width float,
-    increase_to_file_width float,
+    increase_to_file_width float
 );
 
 create table "order"(
