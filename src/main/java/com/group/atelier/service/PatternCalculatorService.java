@@ -1,13 +1,11 @@
 package com.group.atelier.service;
 
 import com.group.atelier.business.PatternCalculator;
+import com.group.atelier.dto.ProductMetricsDTO;
 import com.group.atelier.dto.mapper.PatternDataMapper;
-import com.group.atelier.dto.request.ProductMetricsRequest;
 import com.group.atelier.dto.response.PatternDataResponse;
 import com.group.atelier.model.entity.PatternData;
-import com.group.atelier.repository.ClientRepository;
 import com.group.atelier.repository.PatternDataRepository;
-import com.group.atelier.util.CurrentUserUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -17,15 +15,13 @@ public class PatternCalculatorService {
     private final PatternCalculator patternCalculator;
     private final PatternDataMapper patternDataMapper;
     private final PatternDataRepository patternDataRepository;
-    private final CurrentUserUtil currentUserUtil;
-    private final ClientRepository clientRepository;
 
-    public PatternDataResponse calculatePatternData(ProductMetricsRequest request) {
+    public PatternDataResponse calculatePatternData(ProductMetricsDTO request) {
         PatternData patternData = patternCalculator.doCalculate(request);
         return patternDataMapper.entityToResponse(patternData);
     }
 
-    public PatternData calculatePatternDataAndSave(ProductMetricsRequest request) {
+    public PatternData calculatePatternDataAndSave(ProductMetricsDTO request) {
         PatternData patternData = patternCalculator.doCalculate(request);
         return patternDataRepository.save(patternData);
     }

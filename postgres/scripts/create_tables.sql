@@ -47,6 +47,29 @@ create table client_details(
     address_id int
 );
 
+create table product_metrics(
+    id serial primary key ,
+    neck_semi_circumference float,
+    chest_semi_circumference_1 float,
+    chest_semi_circumference_2 float,
+    chest_semi_circumference_3 float,
+    waist_semi_circumference float,
+    shoulder_width float,
+    chest_height float,
+    chest_height_1 float,
+    back_armhole_height float,
+    back_length_till_waist float,
+    shoulder_height_sidelong float,
+    chest_width float,
+    chest_center float,
+    back_width float,
+    waist_length_front float,
+    neck_base_to_front_waist_line_distance float,
+    increase_to_width_by_chest_line float,
+    increase_to_armhole_depth float,
+    increase_to_neck_back float
+);
+
 create table address(
     id serial primary key,
     city text,
@@ -115,13 +138,16 @@ create table "order"(
     client_id int,
     coat_model_id int,
     pattern_data_id int,
+    product_metrics_id int,
     created_at timestamp,
     constraint fk_order_client
         foreign key (client_id) references client(id),
     constraint fk_order_coat_model
         foreign key (coat_model_id) references coat_model(id),
     constraint fk_order_pattern_data
-        foreign key (pattern_data_id) references pattern_data(id)
+        foreign key (pattern_data_id) references pattern_data(id),
+    constraint fk_order_product_metrics
+        foreign key (product_metrics_id) references product_metrics(id)
 );
 
 insert into "user"(username, password, active)

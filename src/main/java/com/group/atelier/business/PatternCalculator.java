@@ -1,6 +1,6 @@
 package com.group.atelier.business;
 
-import com.group.atelier.dto.request.ProductMetricsRequest;
+import com.group.atelier.dto.ProductMetricsDTO;
 import com.group.atelier.model.entity.PatternData;
 import org.springframework.stereotype.Component;
 
@@ -11,7 +11,7 @@ import java.math.RoundingMode;
 public class PatternCalculator {
     private static final RoundingMode ROUNDING_MODE = RoundingMode.HALF_UP;
 
-    public PatternData doCalculate(ProductMetricsRequest request){
+    public PatternData doCalculate(ProductMetricsDTO request){
         // Пт
         BigDecimal increaseToWidthByWaistLine = BigDecimal
                 .valueOf(request.increaseToWidthByChestLine())

@@ -31,4 +31,8 @@ public class Order {
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "pattern_data_id")
     private PatternData patternData;
+
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "product_metrics_id")
+    private ProductMetrics productMetrics;
 }
