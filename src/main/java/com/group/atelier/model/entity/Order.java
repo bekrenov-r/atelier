@@ -28,7 +28,7 @@ public class Order {
     @JoinColumn(name = "coat_model_id")
     private CoatModel coatModel;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "pattern_data_id")
     private PatternData patternData;
 }

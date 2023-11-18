@@ -5,7 +5,6 @@ import com.group.atelier.dto.response.OrderResponse;
 import com.group.atelier.service.OrderService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,5 +29,10 @@ public class OrderController {
     @GetMapping("/{id}")
     public ResponseEntity<OrderResponse> getOrderById(@PathVariable Long id){
         return ResponseEntity.ok(orderService.getOrderById(id));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<OrderResponse> updateOrder(@PathVariable Long id, @RequestBody @Valid OrderRequest request){
+        return ResponseEntity.ok(orderService.updateOrder(id, request));
     }
 }

@@ -1,38 +1,10 @@
 package com.group.atelier.dto.request;
 
+import jakarta.validation.constraints.NotNull;
+
 public record ProductMetricsRequest(
-        // Сш
-        Double neckSemiCircumference,
-        // Сг1
-        Double chestSemiCircumference1,
-        // Сг2
-        Double chestSemiCircumference2,
-        // Сг3
-        Double chestSemiCircumference3,
-        // Ст
-        Double waistSemiCircumference,
-        // Шп
-        Double shoulderWidth,
-        // Вг
-        Double chestHeight,
-        // Вг1
-        Double chestHeight1,
-        // Впрз
-        Double backArmholeHeight,
-        // Дтс
-        Double backLengthTillWaist,
-        // Впк
-        Double shoulderHeightSidelong,
-        // Шг
-        Double chestWidth,
-        // Цг
-        Double chestCenter,
-        // Шс
-        Double backWidth,
-        // Дтп
-        Double waistLengthFront,
-        // Дтп1
-        Double neckBaseToFrontWaistLineDistance,
+        @NotNull
+        ClientMetricsRequest clientMetrics,
         // Пг
         Double increaseToWidthByChestLine,
         // Пг.пр

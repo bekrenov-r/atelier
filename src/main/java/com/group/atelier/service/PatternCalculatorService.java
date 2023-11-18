@@ -1,10 +1,9 @@
 package com.group.atelier.service;
 
 import com.group.atelier.business.PatternCalculator;
-import com.group.atelier.dto.response.PatternDataResponse;
 import com.group.atelier.dto.mapper.PatternDataMapper;
 import com.group.atelier.dto.request.ProductMetricsRequest;
-import com.group.atelier.model.entity.Client;
+import com.group.atelier.dto.response.PatternDataResponse;
 import com.group.atelier.model.entity.PatternData;
 import com.group.atelier.repository.ClientRepository;
 import com.group.atelier.repository.PatternDataRepository;
@@ -28,8 +27,6 @@ public class PatternCalculatorService {
 
     public PatternData calculatePatternDataAndSave(ProductMetricsRequest request) {
         PatternData patternData = patternCalculator.doCalculate(request);
-        Client client = clientRepository.findByUser(currentUserUtil.getCurrentUser());
-        patternData.setClient(client);
         return patternDataRepository.save(patternData);
     }
 }

@@ -79,7 +79,6 @@ create table coat_model(
 
 create table pattern_data (
     id serial primary key,
-    client_id int,
     basis_grid_width float,
     basis_grid_length float,
     armhole_depth float,
@@ -109,8 +108,6 @@ create table pattern_data (
     increase_to_neck_back float,
     increase_to_back_width float,
     increase_to_file_width float,
-    constraint fk_pattern_data_user
-        foreign key (client_id) references client(id)
 );
 
 create table "order"(

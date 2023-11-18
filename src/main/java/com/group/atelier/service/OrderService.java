@@ -1,10 +1,14 @@
 package com.group.atelier.service;
 
+import com.group.atelier.business.PatternCalculator;
 import com.group.atelier.dto.mapper.OrderMapper;
 import com.group.atelier.dto.request.OrderRequest;
 import com.group.atelier.dto.response.OrderResponse;
 import com.group.atelier.exception.ApplicationException;
-import com.group.atelier.model.entity.*;
+import com.group.atelier.model.entity.Client;
+import com.group.atelier.model.entity.CoatModel;
+import com.group.atelier.model.entity.Order;
+import com.group.atelier.model.entity.PatternData;
 import com.group.atelier.repository.ClientRepository;
 import com.group.atelier.repository.CoatModelRepository;
 import com.group.atelier.repository.OrderRepository;
@@ -22,6 +26,7 @@ import static com.group.atelier.exception.ApplicationExceptionReason.*;
 public class OrderService {
     private final OrderRepository orderRepository;
     private final PatternCalculatorService patternCalculatorService;
+    private final PatternCalculator patternCalculator;
     private final CurrentUserUtil currentUserUtil;
     private final ClientRepository clientRepository;
     private final CoatModelRepository coatModelRepository;
@@ -52,9 +57,22 @@ public class OrderService {
     public OrderResponse getOrderById(Long id) {
         Order order = orderRepository.findById(id)
                 .orElseThrow(() -> new ApplicationException(ORDER_NOT_FOUND, id));
+        return orderMapper.entityToResponse(order);
+    }
+
+    public OrderResponse updateOrder(Long id, OrderRequest request) {
+        Order order = orderRepository.findById(id)
+                .orElseThrow(() -> new ApplicationException(ORDER_NOT_FOUND, id));
+        this.validateOrderOwnership(order);
+        PatternData updatedPatternData = patternCalculator.doCalculate(request.productMetrics());
+        updatedPatternData.setId(order.getPatternData().getId());
+        order.setPatternData(updatedPatternData);
+        return orderMapper.entityToResponse(orderRepository.save(order));
+    }
+
+    private void validateOrderOwnership(Order order){
         Client currentClient = clientRepository.findByUser(currentUserUtil.getCurrentUser());
         if(!order.getClient().equals(currentClient))
             throw new ApplicationException(NOT_ENTITY_OWNER);
-        return orderMapper.entityToResponse(order);
     }
 }

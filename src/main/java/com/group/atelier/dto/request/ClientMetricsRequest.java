@@ -4,36 +4,52 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 
 public record ClientMetricsRequest(
+        // Сш
         @NotNull @Positive
         Double neckSemiCircumference,
+        // Сг1
         @NotNull @Positive
         Double chestSemiCircumference1,
+        // Сг2
         @NotNull @Positive
         Double chestSemiCircumference2,
+        // Сг3
         @NotNull @Positive
         Double chestSemiCircumference3,
+        // Ст
         @NotNull @Positive
         Double waistSemiCircumference,
+        // Шп
         @NotNull @Positive
         Double shoulderWidth,
+        // Вг
         @NotNull @Positive
         Double chestHeight,
+        // Вг1
         @NotNull @Positive
         Double chestHeight1,
+        // Впрз
         @NotNull @Positive
         Double backArmholeHeight,
+        // Дтс
         @NotNull @Positive
         Double backLengthTillWaist,
+        // Впк
         @NotNull @Positive
         Double shoulderHeightSidelong,
+        // Шг
         @NotNull @Positive
         Double chestWidth,
+        // Цг
         @NotNull @Positive
         Double chestCenter,
+        // Шс
         @NotNull @Positive
         Double backWidth,
+        // Дтп
         @NotNull @Positive
         Double waistLengthFront,
+        // Дтп1
         @NotNull @Positive
         Double neckBaseToFrontWaistLineDistance
 ) { }

@@ -34,30 +34,30 @@ public class PatternCalculator {
 
         // AA1
         BigDecimal basisGridWidth = BigDecimal
-                .valueOf(request.chestSemiCircumference2())
+                .valueOf(request.clientMetrics().chestSemiCircumference2())
                 .add(BigDecimal.valueOf(request.increaseToWidthByChestLine()))
                 .setScale(1, ROUNDING_MODE);
         // AT
         BigDecimal basisGridLength = BigDecimal
-                .valueOf(request.backLengthTillWaist())
+                .valueOf(request.clientMetrics().backLengthTillWaist())
                 .setScale(1, ROUNDING_MODE);
         // AГ
         BigDecimal armholeDepth = BigDecimal
-                .valueOf(request.backArmholeHeight())
+                .valueOf(request.clientMetrics().backArmholeHeight())
                 .add(BigDecimal.valueOf(request.increaseToArmholeDepth()))
                 .setScale(1, ROUNDING_MODE);
         // Aa
         BigDecimal backWidth = BigDecimal
-                .valueOf(request.backWidth())
+                .valueOf(request.clientMetrics().backWidth())
                 .add(increaseToBackWidth)
                 .setScale(1, ROUNDING_MODE);
         // A1a1
         BigDecimal fileWidth = BigDecimal
-                .valueOf(request.chestWidth())
+                .valueOf(request.clientMetrics().chestWidth())
                 .add(
                         BigDecimal
-                                .valueOf(request.chestSemiCircumference2())
-                                .subtract(BigDecimal.valueOf(request.chestSemiCircumference1()))
+                                .valueOf(request.clientMetrics().chestSemiCircumference2())
+                                .subtract(BigDecimal.valueOf(request.clientMetrics().chestSemiCircumference1()))
                 ).add(increaseToFileWidth)
                 .setScale(1, ROUNDING_MODE);
         // aa1
@@ -67,7 +67,7 @@ public class PatternCalculator {
                 .setScale(1, ROUNDING_MODE);
         // AA2
         BigDecimal backNeckWidth = BigDecimal
-                .valueOf(request.neckSemiCircumference())
+                .valueOf(request.clientMetrics().neckSemiCircumference())
                 .divide(BigDecimal.valueOf(3), ROUNDING_MODE)
                 .add(BigDecimal.valueOf(request.increaseToNeckBack()))
                 .setScale(1, ROUNDING_MODE);
@@ -79,15 +79,15 @@ public class PatternCalculator {
         // аП
         BigDecimal shoulderCutSlope = BigDecimal.valueOf(2);
         // А3П1
-        BigDecimal shoulderCutEnd = BigDecimal.valueOf(request.shoulderWidth());
+        BigDecimal shoulderCutEnd = BigDecimal.valueOf(request.clientMetrics().shoulderWidth());
         // Г2Г4
         BigDecimal sideSlopeTop = BigDecimal.ZERO; // todo: clarify
         // Г2П2; Г21
         BigDecimal backArmholeSlope = BigDecimal.ZERO; // todo: clarify
         // A1A4
         BigDecimal productBalance = BigDecimal
-                .valueOf(request.neckBaseToFrontWaistLineDistance())
-                .subtract(BigDecimal.valueOf(request.backLengthTillWaist()))
+                .valueOf(request.clientMetrics().neckBaseToFrontWaistLineDistance())
+                .subtract(BigDecimal.valueOf(request.clientMetrics().backLengthTillWaist()))
                 .setScale(1, ROUNDING_MODE);
         // A4A5
         BigDecimal fileNeckWidth = backNeckWidth; // todo: clarify
@@ -102,11 +102,11 @@ public class PatternCalculator {
         BigDecimal armhole = BigDecimal.ZERO; // todo: clarify
         // Рв.т.
         BigDecimal totalDartDeviationByWaistLine = BigDecimal
-                .valueOf(request.chestSemiCircumference2())
+                .valueOf(request.clientMetrics().chestSemiCircumference2())
                 .add(BigDecimal.valueOf(request.increaseToWidthByChestLine()))
                 .subtract(
                         BigDecimal
-                                .valueOf(request.waistSemiCircumference())
+                                .valueOf(request.clientMetrics().waistSemiCircumference())
                                 .add(increaseToWidthByWaistLine)
                 ).setScale(1, ROUNDING_MODE);
         // Рб.в
