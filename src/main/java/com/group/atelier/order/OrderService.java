@@ -13,6 +13,7 @@ import com.group.atelier.model.dto.request.OrderRequest;
 import com.group.atelier.model.dto.response.OrderResponse;
 import com.group.atelier.model.entity.*;
 import com.group.atelier.model.enums.OrderStatus;
+import com.group.atelier.security.Role;
 import com.group.atelier.util.CurrentUserUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -56,12 +57,23 @@ public class OrderService {
     }
 
     public List<OrderResponse> getAllOrders() {
-        Client client = clientRepository.findByUser(currentUserUtil.getCurrentUser());
-        List<Order> orders = orderRepository.findByClient(client);
+        List<Order> orders = this.getAllOrdersDependingOnRole();
         return orders.stream()
                 .map(orderMapper::entityToResponse)
                 .toList();
     }
+
+    private List<Order> getAllOrdersDependingOnRole(){
+        User currentUser = currentUserUtil.getCurrentUser();
+        if(currentUser.getRoles().contains(Role.EMPLOYEE)){
+            Employee employee = employeeRepository.findByUser(currentUser);
+            return orderRepository.findAllByEmployee(employee);
+        } else {
+            Client client = clientRepository.findByUser(currentUser);
+            return orderRepository.findAllByClient(client);
+        }
+    }
+
 
     public OrderResponse getOrderById(Long id) {
         Order order = orderRepository.findById(id)
