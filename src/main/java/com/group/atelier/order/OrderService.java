@@ -12,6 +12,7 @@ import com.group.atelier.model.dto.mapper.ProductMetricsMapper;
 import com.group.atelier.model.dto.request.OrderRequest;
 import com.group.atelier.model.dto.response.OrderResponse;
 import com.group.atelier.model.entity.*;
+import com.group.atelier.model.enums.OrderStatus;
 import com.group.atelier.util.CurrentUserUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -19,7 +20,8 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import static com.group.atelier.exception.ApplicationExceptionReason.*;
+import static com.group.atelier.exception.ApplicationExceptionReason.COAT_MODEL_NOT_FOUND;
+import static com.group.atelier.exception.ApplicationExceptionReason.ORDER_NOT_FOUND;
 
 @Service
 @RequiredArgsConstructor
@@ -34,6 +36,7 @@ public class OrderService {
     private final ProductMetricsService productMetricsService;
     private final ProductMetricsMapper productMetricsMapper;
     private final EmployeeRepository employeeRepository;
+    private final OrderValidator orderValidator;
 
     public OrderResponse createOrder(OrderRequest request) {
         ProductMetrics productMetrics = productMetricsService.save(request.productMetrics());
@@ -47,6 +50,7 @@ public class OrderService {
                 .patternData(patternData)
                 .client(client)
                 .createdAt(LocalDateTime.now())
+                .status(OrderStatus.PENDING)
                 .build();
         return orderMapper.entityToResponse(orderRepository.save(order));
     }
@@ -75,7 +79,7 @@ public class OrderService {
     public OrderResponse updateOrder(Long id, OrderRequest request) {
         Order order = orderRepository.findById(id)
                 .orElseThrow(() -> new ApplicationException(ORDER_NOT_FOUND, id));
-        this.validateOrderOwnership(order);
+        orderValidator.validateOrderOwnershipByClient(order);
 
         ProductMetrics updatedProductMetrics = productMetricsMapper.dtoToEntity(request.productMetrics());
         updatedProductMetrics.setId(order.getProductMetrics().getId());
@@ -92,19 +96,17 @@ public class OrderService {
         Employee currentEmployee = employeeRepository.findByUser(currentUserUtil.getCurrentUser());
         Order order = orderRepository.findById(orderId)
                 .orElseThrow(() -> new ApplicationException(ORDER_NOT_FOUND, orderId));
-        this.validateBeforeAssignment(order);
+        orderValidator.validateBeforeAssignment(order);
         order.setEmployee(currentEmployee);
+        order.setStatus(OrderStatus.IN_PROGRESS);
         orderRepository.save(order);
     }
 
-    private void validateOrderOwnership(Order order){
-        Client currentClient = clientRepository.findByUser(currentUserUtil.getCurrentUser());
-        if(!order.getClient().equals(currentClient))
-            throw new ApplicationException(NOT_ENTITY_OWNER);
-    }
-
-    private void validateBeforeAssignment(Order order){
-        if(order.getEmployee() != null)
-            throw new ApplicationException(ORDER_ALREADY_ASSIGNED, order.getId());
+    public OrderResponse changeOrderStatus(Long id, OrderStatus status) {
+        Order order = orderRepository.findById(id)
+                .orElseThrow(() -> new ApplicationException(ORDER_NOT_FOUND, id));
+        orderValidator.validateOrderOwnershipByEmployee(order);
+        order.setStatus(status);
+        return orderMapper.entityToResponse(orderRepository.save(order));
     }
 }
