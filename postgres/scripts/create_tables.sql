@@ -18,6 +18,18 @@ create table client(
         foreign key (user_id) references "user"(id)
 );
 
+create table employee(
+    id serial primary key,
+    first_name text,
+    last_name text,
+    email text,
+    phone_number text,
+    registered_at timestamp,
+    user_id int,
+    constraint employee_user_fk
+        foreign key (user_id) references "user"(id)
+);
+
 create table client_metrics(
     client_id int,
     neck_semi_circumference float,
@@ -136,12 +148,16 @@ create table pattern_data (
 create table "order"(
     id serial primary key,
     client_id int,
+    employee_id int,
     coat_model_id int,
     pattern_data_id int,
     product_metrics_id int,
     created_at timestamp,
+    status text,
     constraint fk_order_client
         foreign key (client_id) references client(id),
+    constraint fk_order_employee
+        foreign key (employee_id) references employee(id),
     constraint fk_order_coat_model
         foreign key (coat_model_id) references coat_model(id),
     constraint fk_order_pattern_data
@@ -154,19 +170,28 @@ insert into "user"(username, password, active)
 values
     ('petro.kovalenko@example.com', '$2a$10$dGlirX4TKwGREM8iBzeWCONoU8tqy0QhYY1l/jzuq./pPKUzqw2wi', true),
     ('maria.shevchenko@example.com', '$2a$10$dGlirX4TKwGREM8iBzeWCONoU8tqy0QhYY1l/jzuq./pPKUzqw2wi', true),
-    ('andrii.melnyk@example.com', '$2a$10$dGlirX4TKwGREM8iBzeWCONoU8tqy0QhYY1l/jzuq./pPKUzqw2wi', true);
+    ('andrii.melnyk@example.com', '$2a$10$dGlirX4TKwGREM8iBzeWCONoU8tqy0QhYY1l/jzuq./pPKUzqw2wi', true),
+    ('oleksandr.ivanchenko@example.com', '$2a$10$dGlirX4TKwGREM8iBzeWCONoU8tqy0QhYY1l/jzuq./pPKUzqw2wi', true),
+    ('yuliya.zhuravlova@example.com', '$2a$10$dGlirX4TKwGREM8iBzeWCONoU8tqy0QhYY1l/jzuq./pPKUzqw2wi', true);
 
 insert into user_role(user_id, role)
 values
     (1, 'CLIENT'),
     (2, 'CLIENT'),
-    (3, 'CLIENT');
+    (3, 'CLIENT'),
+    (4, 'EMPLOYEE'),
+    (5, 'EMPLOYEE');
 
 insert into client(first_name, last_name, email, user_id)
 values
     ('Petro', 'Kovalenko', 'petro.kovalenko@example.com', 1),
     ('Maria', 'Shevchenko', 'maria.shevchenko@example.com', 2),
     ('Andrii', 'Melnyk', 'andrii.melnyk@example.com', 3);
+
+insert into employee(first_name, last_name, email, phone_number, registered_at, user_id)
+values
+    ('Oleksandr', 'Ivanchenko', 'oleksandr.ivanchenko@example.com', '1234567890', null, 4),
+    ('Yuliya', 'Zhuravlova', 'yuliya.zhuravlova@example.com', '1234567890', null, 5);
 
 insert into coat_model(name, price, creation_time_days, img_path, coat_type, video_url)
 values

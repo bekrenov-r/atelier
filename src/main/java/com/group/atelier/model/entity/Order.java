@@ -1,5 +1,6 @@
 package com.group.atelier.model.entity;
 
+import com.group.atelier.model.enums.OrderStatus;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -20,9 +21,17 @@ public class Order {
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 
+    @Column(name = "status")
+    @Enumerated(EnumType.STRING)
+    private OrderStatus status;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "client_id")
     private Client client;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "employee_id")
+    private Employee employee;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "coat_model_id")

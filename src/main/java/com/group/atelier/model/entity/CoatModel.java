@@ -1,8 +1,11 @@
 package com.group.atelier.model.entity;
 
-import com.group.atelier.model.CoatType;
+import com.group.atelier.model.enums.CoatType;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Table(name = "coat_model")

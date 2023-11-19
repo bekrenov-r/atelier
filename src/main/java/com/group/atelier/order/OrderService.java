@@ -1,16 +1,17 @@
 package com.group.atelier.order;
 
+import com.group.atelier.business.coatmodel.CoatModelRepository;
 import com.group.atelier.business.patterndata.PatternCalculator;
+import com.group.atelier.business.patterndata.PatternCalculatorService;
+import com.group.atelier.business.productmetrics.ProductMetricsService;
+import com.group.atelier.client.ClientRepository;
+import com.group.atelier.employee.EmployeeRepository;
+import com.group.atelier.exception.ApplicationException;
 import com.group.atelier.model.dto.mapper.OrderMapper;
 import com.group.atelier.model.dto.mapper.ProductMetricsMapper;
 import com.group.atelier.model.dto.request.OrderRequest;
 import com.group.atelier.model.dto.response.OrderResponse;
-import com.group.atelier.exception.ApplicationException;
 import com.group.atelier.model.entity.*;
-import com.group.atelier.business.patterndata.PatternCalculatorService;
-import com.group.atelier.business.productmetrics.ProductMetricsService;
-import com.group.atelier.client.ClientRepository;
-import com.group.atelier.business.coatmodel.CoatModelRepository;
 import com.group.atelier.util.CurrentUserUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -32,6 +33,7 @@ public class OrderService {
     private final OrderMapper orderMapper;
     private final ProductMetricsService productMetricsService;
     private final ProductMetricsMapper productMetricsMapper;
+    private final EmployeeRepository employeeRepository;
 
     public OrderResponse createOrder(OrderRequest request) {
         ProductMetrics productMetrics = productMetricsService.save(request.productMetrics());
@@ -63,6 +65,13 @@ public class OrderService {
         return orderMapper.entityToResponse(order);
     }
 
+    public List<OrderResponse> getAllUnassignedOrders() {
+        List<Order> orders = orderRepository.findAllUnassignedOrders();
+        return orders.stream()
+                .map(orderMapper::entityToResponse)
+                .toList();
+    }
+
     public OrderResponse updateOrder(Long id, OrderRequest request) {
         Order order = orderRepository.findById(id)
                 .orElseThrow(() -> new ApplicationException(ORDER_NOT_FOUND, id));
@@ -79,9 +88,23 @@ public class OrderService {
         return orderMapper.entityToResponse(orderRepository.save(order));
     }
 
+    public void assignEmployeeToOrder(Long orderId) {
+        Employee currentEmployee = employeeRepository.findByUser(currentUserUtil.getCurrentUser());
+        Order order = orderRepository.findById(orderId)
+                .orElseThrow(() -> new ApplicationException(ORDER_NOT_FOUND, orderId));
+        this.validateBeforeAssignment(order);
+        order.setEmployee(currentEmployee);
+        orderRepository.save(order);
+    }
+
     private void validateOrderOwnership(Order order){
         Client currentClient = clientRepository.findByUser(currentUserUtil.getCurrentUser());
         if(!order.getClient().equals(currentClient))
             throw new ApplicationException(NOT_ENTITY_OWNER);
+    }
+
+    private void validateBeforeAssignment(Order order){
+        if(order.getEmployee() != null)
+            throw new ApplicationException(ORDER_ALREADY_ASSIGNED, order.getId());
     }
 }
