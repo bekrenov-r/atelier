@@ -2,7 +2,7 @@ package com.group.atelier.security;
 
 import com.group.atelier.exception.ApplicationException;
 import com.group.atelier.exception.InvalidAuthHeaderException;
-import com.group.atelier.repository.UserRepository;
+import com.group.atelier.security.user.UserRepository;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

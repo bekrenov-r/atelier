@@ -2,7 +2,7 @@ package com.group.atelier.util;
 
 import com.group.atelier.exception.ApplicationException;
 import com.group.atelier.model.entity.User;
-import com.group.atelier.repository.UserRepository;
+import com.group.atelier.security.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;

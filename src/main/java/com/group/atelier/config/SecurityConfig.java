@@ -2,7 +2,7 @@ package com.group.atelier.config;
 
 import com.group.atelier.exception.ApplicationException;
 import com.group.atelier.exception.FilterChainExceptionHandlerFilter;
-import com.group.atelier.repository.UserRepository;
+import com.group.atelier.security.user.UserRepository;
 import com.group.atelier.security.JwtAuthenticationFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
