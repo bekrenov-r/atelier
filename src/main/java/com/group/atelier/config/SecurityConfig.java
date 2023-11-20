@@ -2,8 +2,8 @@ package com.group.atelier.config;
 
 import com.group.atelier.exception.ApplicationException;
 import com.group.atelier.exception.FilterChainExceptionHandlerFilter;
-import com.group.atelier.security.user.UserRepository;
 import com.group.atelier.security.JwtAuthenticationFilter;
+import com.group.atelier.security.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -31,8 +31,8 @@ import static com.group.atelier.exception.ApplicationExceptionReason.USER_NOT_FO
 @RequiredArgsConstructor
 public class SecurityConfig {
     private final UserRepository userRepository;
-    private final JwtAuthenticationFilter jwtAuthenticationFilter;
     private final FilterChainExceptionHandlerFilter filterChainExceptionHandlerFilter;
+    private final JwtAuthenticationFilter jwtAuthenticationFilter;
 
     @Bean
     public PasswordEncoder passwordEncoder(){

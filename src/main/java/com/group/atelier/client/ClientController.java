@@ -23,6 +23,4 @@ public class ClientController {
         clientService.registerClient(request);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
-//
-//    @PostMapping("/register/")
 }

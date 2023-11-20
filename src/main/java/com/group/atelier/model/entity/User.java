@@ -64,4 +64,8 @@ public class User implements UserDetails {
     public boolean isCredentialsNonExpired() {
         return true;
     }
+
+    public boolean hasRole(Role role){
+        return roles.contains(role);
+    }
 }

@@ -12,6 +12,5 @@ public record ClientRegistrationRequest(
         @NotBlank @Email
         @UniqueEmail(message = "User with given email address already exists")
         String email,
-        @NotBlank
         String password
 ) implements UserRegistrationRequest {}

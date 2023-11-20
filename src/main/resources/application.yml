@@ -27,7 +27,6 @@ spring:
       permitted-matchers: >
         /users/activate/**,
         /authenticate,
-        /clients/register,
         /patterns/calculate,
         /coat-models
   jwt:

@@ -14,11 +14,21 @@ import static com.group.atelier.exception.ApplicationExceptionReason.USER_NOT_FO
 public class CurrentUserUtil {
     private final UserRepository userRepository;
 
+    private static final Object ANONYMOUS_PRINCIPAL = "anonymousUser";
+
     public User getCurrentUser(){
         String username = (String) SecurityContextHolder.getContext()
                 .getAuthentication()
                 .getPrincipal();
         return userRepository.findByUsername(username)
                 .orElseThrow(() -> new ApplicationException(USER_NOT_FOUND, username));
+    }
+
+    public boolean hasLoggedUser(){
+         Object principal = SecurityContextHolder.getContext()
+                .getAuthentication()
+                .getPrincipal();
+        System.out.println(principal);
+        return !principal.equals(ANONYMOUS_PRINCIPAL);
     }
 }
