@@ -3,5 +3,6 @@ package com.group.atelier.model.enums;
 public enum OrderStatus {
     PENDING,
     IN_PROGRESS,
-    CLOSED
+    DONE,
+    CANCELLED
 }

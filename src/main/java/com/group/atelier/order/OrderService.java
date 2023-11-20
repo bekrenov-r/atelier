@@ -13,7 +13,6 @@ import com.group.atelier.model.dto.request.OrderRequest;
 import com.group.atelier.model.dto.response.OrderResponse;
 import com.group.atelier.model.entity.*;
 import com.group.atelier.model.enums.OrderStatus;
-import com.group.atelier.security.Role;
 import com.group.atelier.util.CurrentUserUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -23,6 +22,7 @@ import java.util.List;
 
 import static com.group.atelier.exception.ApplicationExceptionReason.COAT_MODEL_NOT_FOUND;
 import static com.group.atelier.exception.ApplicationExceptionReason.ORDER_NOT_FOUND;
+import static com.group.atelier.security.Role.EMPLOYEE;
 
 @Service
 @RequiredArgsConstructor
@@ -65,7 +65,7 @@ public class OrderService {
 
     private List<Order> getAllOrdersDependingOnRole(){
         User currentUser = currentUserUtil.getCurrentUser();
-        if(currentUser.getRoles().contains(Role.EMPLOYEE)){
+        if(currentUser.getRoles().contains(EMPLOYEE)){
             Employee employee = employeeRepository.findByUser(currentUser);
             return orderRepository.findAllByEmployee(employee);
         } else {
@@ -118,6 +118,7 @@ public class OrderService {
         Order order = orderRepository.findById(id)
                 .orElseThrow(() -> new ApplicationException(ORDER_NOT_FOUND, id));
         orderValidator.validateOrderOwnershipByEmployee(order);
+        orderValidator.validateStatusDependingOnRole(status);
         order.setStatus(status);
         return orderMapper.entityToResponse(orderRepository.save(order));
     }
