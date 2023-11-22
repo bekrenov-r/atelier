@@ -92,6 +92,7 @@ public class OrderService {
         Order order = orderRepository.findById(id)
                 .orElseThrow(() -> new ApplicationException(ORDER_NOT_FOUND, id));
         orderValidator.validateOrderOwnershipByClient(order);
+        orderValidator.assertOrderIsNotCancelled(order);
 
         ProductMetrics updatedProductMetrics = productMetricsMapper.dtoToEntity(request.productMetrics());
         updatedProductMetrics.setId(order.getProductMetrics().getId());
@@ -114,12 +115,24 @@ public class OrderService {
         orderRepository.save(order);
     }
 
-    public OrderResponse changeOrderStatus(Long id, OrderStatus status) {
+    public OrderResponse markOrderAsCompleted(Long id) {
         Order order = orderRepository.findById(id)
                 .orElseThrow(() -> new ApplicationException(ORDER_NOT_FOUND, id));
+
+        orderValidator.assertOrderIsInProgress(order);
+        orderValidator.assertOrderIsNotCancelled(order);
         orderValidator.validateOrderOwnershipByEmployee(order);
-        orderValidator.validateStatusDependingOnRole(status);
-        order.setStatus(status);
+        order.setStatus(OrderStatus.COMPLETED);
+        return orderMapper.entityToResponse(orderRepository.save(order));
+    }
+
+    public OrderResponse cancelOrder(Long id){
+        Order order = orderRepository.findById(id)
+                .orElseThrow(() -> new ApplicationException(ORDER_NOT_FOUND, id));
+
+        orderValidator.validateOrderOwnershipByClient(order);
+        orderValidator.assertOrderIsNotCompleted(order);
+        order.setStatus(OrderStatus.CANCELLED);
         return orderMapper.entityToResponse(orderRepository.save(order));
     }
 }

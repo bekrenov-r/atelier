@@ -2,7 +2,6 @@ package com.group.atelier.order;
 
 import com.group.atelier.model.dto.request.OrderRequest;
 import com.group.atelier.model.dto.response.OrderResponse;
-import com.group.atelier.model.enums.OrderStatus;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -53,11 +52,14 @@ public class OrderController {
     }
 
     // todo: for role EMPLOYEE
-    @PatchMapping("/{id}/status")
-    public ResponseEntity<OrderResponse> changeOrderStatus(
-            @PathVariable Long id,
-            @RequestParam("value") OrderStatus status
-    ){
-        return ResponseEntity.ok(orderService.changeOrderStatus(id, status));
+    @PatchMapping("/{id}/completed")
+    public ResponseEntity<OrderResponse> markOrderAsCompleted(@PathVariable Long id){
+        return ResponseEntity.ok(orderService.markOrderAsCompleted(id));
+    }
+
+    // todo: for role CLIENT
+    @PatchMapping("/{id}/cancel")
+    public ResponseEntity<OrderResponse> cancelOrder(@PathVariable Long id){
+        return ResponseEntity.ok(orderService.cancelOrder(id));
     }
 }

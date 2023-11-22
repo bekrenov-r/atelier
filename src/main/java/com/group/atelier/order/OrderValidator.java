@@ -6,18 +6,12 @@ import com.group.atelier.exception.ApplicationException;
 import com.group.atelier.model.entity.Client;
 import com.group.atelier.model.entity.Employee;
 import com.group.atelier.model.entity.Order;
-import com.group.atelier.model.entity.User;
 import com.group.atelier.model.enums.OrderStatus;
-import com.group.atelier.security.Role;
 import com.group.atelier.util.CurrentUserUtil;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.access.AuthorizationServiceException;
 import org.springframework.stereotype.Component;
 
-import static com.group.atelier.exception.ApplicationExceptionReason.NOT_ENTITY_OWNER;
-import static com.group.atelier.exception.ApplicationExceptionReason.ORDER_ALREADY_ASSIGNED;
-import static com.group.atelier.security.Role.CLIENT;
-import static com.group.atelier.security.Role.EMPLOYEE;
+import static com.group.atelier.exception.ApplicationExceptionReason.*;
 
 @Component
 @RequiredArgsConstructor
@@ -43,17 +37,18 @@ public class OrderValidator {
             throw new ApplicationException(ORDER_ALREADY_ASSIGNED, order.getId());
     }
 
-    public void validateStatusDependingOnRole(OrderStatus status){
-        if(status.equals(OrderStatus.DONE)){
-            requireRole(EMPLOYEE);
-        } else if(status.equals(OrderStatus.CANCELLED)){
-            requireRole(CLIENT);
-        }
+    public void assertOrderIsNotCancelled(Order order){
+        if(order.getStatus().equals(OrderStatus.CANCELLED))
+            throw new ApplicationException(ORDER_ALREADY_CANCELLED, order.getId());
     }
 
-    private void requireRole(Role role){
-        User currentUser = currentUserUtil.getCurrentUser();
-        if(!currentUser.hasRole(role))
-            throw new AuthorizationServiceException("You don't have authority required for this action");
+    public void assertOrderIsNotCompleted(Order order){
+        if(order.getStatus().equals(OrderStatus.COMPLETED))
+            throw new ApplicationException(ORDER_ALREADY_COMPLETED, order.getId());
+    }
+
+    public void assertOrderIsInProgress(Order order){
+        if(!order.getStatus().equals(OrderStatus.IN_PROGRESS))
+            throw new ApplicationException(ORDER_NOT_ASSIGNED, order.getId());
     }
 }
