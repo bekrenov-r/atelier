@@ -30,6 +30,7 @@ public class EmployeeService {
     public List<EmployeeResponse> getAllEmployees(){
         return employeeRepository.findAll().stream()
                 .filter(e -> !e.getUser().hasRole(Role.ADMIN))
+                .filter(e -> e.getUser().getActive())
                 .map(employeeMapper::entityToResponse)
                 .toList();
     }
