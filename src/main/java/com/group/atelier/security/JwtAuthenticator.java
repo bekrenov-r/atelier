@@ -8,7 +8,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
@@ -31,9 +30,11 @@ public class JwtAuthenticator {
             String username = jwtProvider.getUsername(jwt);
             UserDetails user = userRepository.findByUsername(username)
                     .orElseThrow(() -> new ApplicationException(USER_NOT_FOUND, username));
-            Authentication auth =
-                    new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword());
-//            auth.setAuthenticated(true); // todo: check if auth.isAuthenticated() returns true now
+            var auth = UsernamePasswordAuthenticationToken.authenticated(
+                    user.getUsername(),
+                    user.getPassword(),
+                    user.getAuthorities()
+            );
             SecurityContextHolder.getContext().setAuthentication(auth);
         } else throw new JwtException("Invalid JWT token");
     }

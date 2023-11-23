@@ -7,6 +7,7 @@ import com.group.atelier.model.dto.request.EmployeeRegistrationRequest;
 import com.group.atelier.model.dto.response.EmployeeResponse;
 import com.group.atelier.model.entity.Employee;
 import com.group.atelier.model.entity.User;
+import com.group.atelier.model.enums.OrderStatus;
 import com.group.atelier.security.Role;
 import com.group.atelier.security.user.UserService;
 import lombok.RequiredArgsConstructor;
@@ -16,8 +17,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
 
-import static com.group.atelier.exception.ApplicationExceptionReason.EMAIL_ALREADY_EXISTS;
-import static com.group.atelier.exception.ApplicationExceptionReason.EMPLOYEE_NOT_FOUND;
+import static com.group.atelier.exception.ApplicationExceptionReason.*;
 
 @Service
 @RequiredArgsConstructor
@@ -43,14 +43,24 @@ public class EmployeeService {
         return employeeMapper.entityToResponse(employeeRepository.save(employee));
     }
 
-    public void deleteEmployee(Long id) {
+    public void dismissEmployee(Long id) {
         Employee employee = employeeRepository.findById(id)
                 .orElseThrow(() -> new ApplicationException(EMPLOYEE_NOT_FOUND, id));
-        employeeRepository.delete(employee);
+        assertEmployeeHasNoOrdersInProgress(employee);
+        employee.getUser().setActive(false);
+        employeeRepository.save(employee);
     }
 
-    public void assertEmailIsUnique(String email){
+    private void assertEmailIsUnique(String email){
         if(employeeRepository.existsByEmail(email) || clientRepository.existsByEmail(email))
             throw new ApplicationException(EMAIL_ALREADY_EXISTS, email);
+    }
+
+    private void assertEmployeeHasNoOrdersInProgress(Employee employee){
+        boolean hasOrdersInProgress = employee.getOrders()
+                .stream()
+                .anyMatch(o -> o.getStatus().equals(OrderStatus.IN_PROGRESS));
+        if(hasOrdersInProgress)
+            throw new ApplicationException(EMPLOYEE_HAS_UNFINISHED_ORDERS, employee.getId());
     }
 }

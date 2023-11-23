@@ -119,8 +119,8 @@ public class OrderService {
         Order order = orderRepository.findById(id)
                 .orElseThrow(() -> new ApplicationException(ORDER_NOT_FOUND, id));
 
-        orderValidator.assertOrderIsInProgress(order);
         orderValidator.assertOrderIsNotCancelled(order);
+        orderValidator.assertOrderIsInProgress(order);
         orderValidator.validateOrderOwnershipByEmployee(order);
         order.setStatus(OrderStatus.COMPLETED);
         return orderMapper.entityToResponse(orderRepository.save(order));

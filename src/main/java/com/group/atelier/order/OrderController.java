@@ -6,6 +6,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -33,6 +34,7 @@ public class OrderController {
 
     // todo: for role EMPLOYEE
     @GetMapping("/unassigned")
+    @Secured("EMPLOYEE")
     public ResponseEntity<List<OrderResponse>> getAllUnassignedOrders(){
         return ResponseEntity.ok(orderService.getAllUnassignedOrders());
     }
@@ -42,8 +44,8 @@ public class OrderController {
         return ResponseEntity.ok(orderService.updateOrder(id, request));
     }
 
-    // todo: for role EMPLOYEE
     @PatchMapping("/assign/{orderId}")
+    @Secured("EMPLOYEE")
     public ResponseEntity<Void> assignEmployeeToOrder(@PathVariable Long orderId){
         orderService.assignEmployeeToOrder(orderId);
         return ResponseEntity
@@ -51,14 +53,14 @@ public class OrderController {
                 .build();
     }
 
-    // todo: for role EMPLOYEE
     @PatchMapping("/{id}/completed")
+    @Secured("EMPLOYEE")
     public ResponseEntity<OrderResponse> markOrderAsCompleted(@PathVariable Long id){
         return ResponseEntity.ok(orderService.markOrderAsCompleted(id));
     }
 
-    // todo: for role CLIENT
     @PatchMapping("/{id}/cancel")
+    @Secured("CLIENT")
     public ResponseEntity<OrderResponse> cancelOrder(@PathVariable Long id){
         return ResponseEntity.ok(orderService.cancelOrder(id));
     }

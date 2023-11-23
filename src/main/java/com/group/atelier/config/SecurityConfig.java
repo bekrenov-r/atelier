@@ -11,6 +11,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -29,6 +30,7 @@ import static com.group.atelier.exception.ApplicationExceptionReason.USER_NOT_FO
 
 @Configuration
 @RequiredArgsConstructor
+@EnableMethodSecurity(securedEnabled = true)
 public class SecurityConfig {
     private final UserRepository userRepository;
     private final FilterChainExceptionHandlerFilter filterChainExceptionHandlerFilter;

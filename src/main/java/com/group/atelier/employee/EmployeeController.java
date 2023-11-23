@@ -5,13 +5,14 @@ import com.group.atelier.model.dto.response.EmployeeResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-// todo: for role ADMIN
 @RestController
 @RequestMapping("/employees")
+@Secured("ADMIN")
 @RequiredArgsConstructor
 public class EmployeeController {
     private final EmployeeService employeeService;
@@ -29,8 +30,8 @@ public class EmployeeController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteEmployee(@PathVariable Long id){
-        employeeService.deleteEmployee(id);
+    public ResponseEntity<Void> dismissEmployee(@PathVariable Long id){
+        employeeService.dismissEmployee(id);
         return ResponseEntity.ok().build();
     }
 }

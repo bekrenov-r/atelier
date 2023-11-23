@@ -172,7 +172,8 @@ values
     ('maria.shevchenko@example.com', '$2a$10$dGlirX4TKwGREM8iBzeWCONoU8tqy0QhYY1l/jzuq./pPKUzqw2wi', true),
     ('andrii.melnyk@example.com', '$2a$10$dGlirX4TKwGREM8iBzeWCONoU8tqy0QhYY1l/jzuq./pPKUzqw2wi', true),
     ('oleksandr.ivanchenko@example.com', '$2a$10$dGlirX4TKwGREM8iBzeWCONoU8tqy0QhYY1l/jzuq./pPKUzqw2wi', true),
-    ('yuliya.zhuravlova@example.com', '$2a$10$dGlirX4TKwGREM8iBzeWCONoU8tqy0QhYY1l/jzuq./pPKUzqw2wi', true);
+    ('yuliya.zhuravlova@example.com', '$2a$10$dGlirX4TKwGREM8iBzeWCONoU8tqy0QhYY1l/jzuq./pPKUzqw2wi', true),
+    ('viktor.pawlenko@example.com', '$2a$10$dGlirX4TKwGREM8iBzeWCONoU8tqy0QhYY1l/jzuq./pPKUzqw2wi', true);
 
 insert into user_role(user_id, role)
 values
@@ -180,7 +181,9 @@ values
     (2, 'CLIENT'),
     (3, 'CLIENT'),
     (4, 'EMPLOYEE'),
-    (5, 'EMPLOYEE');
+    (5, 'EMPLOYEE'),
+    (6, 'EMPLOYEE'),
+    (6, 'ADMIN');
 
 insert into client(first_name, last_name, email, user_id)
 values
@@ -191,7 +194,8 @@ values
 insert into employee(first_name, last_name, email, phone_number, registered_at, user_id)
 values
     ('Oleksandr', 'Ivanchenko', 'oleksandr.ivanchenko@example.com', '1234567890', '2023-11-23 19:16:14.572710', 4),
-    ('Yuliya', 'Zhuravlova', 'yuliya.zhuravlova@example.com', '1234567890', '2023-11-23 19:16:14.572710', 5);
+    ('Yuliya', 'Zhuravlova', 'yuliya.zhuravlova@example.com', '1234567890', '2023-11-23 19:16:14.572710', 5),
+    ('Viktor', 'Pawlenko', 'viktor.pawlenko@example.com', '1234567890', '2023-11-23 19:16:14.572710', 6);
 
 insert into coat_model(name, price, creation_time_days, img_path, coat_type, video_url)
 values

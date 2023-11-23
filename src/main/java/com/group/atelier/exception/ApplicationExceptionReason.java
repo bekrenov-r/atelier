@@ -22,7 +22,8 @@ public enum ApplicationExceptionReason {
     ORDER_ALREADY_CANCELLED("Order with id [%s] is cancelled and cannot be updated", HttpStatus.CONFLICT),
     ORDER_ALREADY_COMPLETED("Order with id [%s] is already completed", HttpStatus.CONFLICT),
     EMPLOYEE_NOT_FOUND("Employee with id [%s] does not exist", HttpStatus.NOT_FOUND),
-    EMAIL_ALREADY_EXISTS("Email address [%s] is already registered", HttpStatus.CONFLICT);
+    EMAIL_ALREADY_EXISTS("Email address [%s] is already registered", HttpStatus.CONFLICT),
+    EMPLOYEE_HAS_UNFINISHED_ORDERS("Employee with id [%s] has unfinished orders and therefore cannot be deleted", HttpStatus.CONFLICT);
 
     private final String message;
     private final HttpStatus status;

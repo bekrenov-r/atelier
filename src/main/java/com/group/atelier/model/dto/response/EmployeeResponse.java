@@ -8,6 +8,7 @@ public record EmployeeResponse(
         String lastName,
         String email,
         String phoneNumber,
-        LocalDateTime registeredAt
+        LocalDateTime registeredAt,
+        Boolean isActive
 ) {
 }
