@@ -1,12 +1,12 @@
 package com.group.atelier.security.user;
 
-import com.group.atelier.model.dto.request.UserRegistrationRequest;
 import com.group.atelier.exception.ApplicationException;
+import com.group.atelier.model.dto.request.UserRegistrationRequest;
 import com.group.atelier.model.entity.RegistrationToken;
-import com.group.atelier.security.JwtProvider;
-import com.group.atelier.security.Role;
 import com.group.atelier.model.entity.User;
+import com.group.atelier.security.JwtProvider;
 import com.group.atelier.security.RegistrationTokenRepository;
+import com.group.atelier.security.Role;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -31,13 +31,19 @@ public class UserService {
                 .roles(roles)
                 .active(false)
                 .build();
+        if(user.hasRole(Role.EMPLOYEE))
+            user.setActive(true);
         User savedUser = userRepository.save(user);
+        createRegistrationToken(savedUser);
+        return savedUser;
+    }
+
+    private void createRegistrationToken(User user){
         RegistrationToken token = RegistrationToken.builder()
                 .token(RandomStringUtils.random(20, true, true))
-                .user(savedUser)
+                .user(user)
                 .build();
         registrationTokenRepository.save(token);
-        return savedUser;
     }
 
 

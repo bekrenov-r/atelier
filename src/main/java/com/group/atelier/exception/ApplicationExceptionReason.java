@@ -20,7 +20,9 @@ public enum ApplicationExceptionReason {
     ORDER_NOT_IN_PROGRESS("Order with id [%s] is not in progress(either not assigned or cancelled)", HttpStatus.CONFLICT),
     ORDER_ALREADY_ASSIGNED("Order with id [%s] is already assigned to some employee", HttpStatus.CONFLICT),
     ORDER_ALREADY_CANCELLED("Order with id [%s] is cancelled and cannot be updated", HttpStatus.CONFLICT),
-    ORDER_ALREADY_COMPLETED("Order with id [%s] is already completed", HttpStatus.CONFLICT);
+    ORDER_ALREADY_COMPLETED("Order with id [%s] is already completed", HttpStatus.CONFLICT),
+    EMPLOYEE_NOT_FOUND("Employee with id [%s] does not exist", HttpStatus.NOT_FOUND),
+    EMAIL_ALREADY_EXISTS("Email address [%s] is already registered", HttpStatus.CONFLICT);
 
     private final String message;
     private final HttpStatus status;

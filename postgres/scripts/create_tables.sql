@@ -190,8 +190,8 @@ values
 
 insert into employee(first_name, last_name, email, phone_number, registered_at, user_id)
 values
-    ('Oleksandr', 'Ivanchenko', 'oleksandr.ivanchenko@example.com', '1234567890', null, 4),
-    ('Yuliya', 'Zhuravlova', 'yuliya.zhuravlova@example.com', '1234567890', null, 5);
+    ('Oleksandr', 'Ivanchenko', 'oleksandr.ivanchenko@example.com', '1234567890', '2023-11-23 19:16:14.572710', 4),
+    ('Yuliya', 'Zhuravlova', 'yuliya.zhuravlova@example.com', '1234567890', '2023-11-23 19:16:14.572710', 5);
 
 insert into coat_model(name, price, creation_time_days, img_path, coat_type, video_url)
 values
