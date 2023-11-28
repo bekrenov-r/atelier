@@ -36,8 +36,11 @@ public class EmployeeService {
     }
 
     public EmployeeResponse registerEmployee(EmployeeRegistrationRequest request) {
-        assertEmailIsUnique(request.email());
         Employee employee = employeeMapper.requestToEntity(request);
+        if(wasDismissed(employee)){
+            return restoreEmployee(employee.getEmail());
+        }
+        assertEmailIsUnique(request.email());
         User user = userService.createUser(request, Set.of(Role.EMPLOYEE));
         employee.setUser(user);
         employee.setRegisteredAt(LocalDateTime.now());
@@ -52,9 +55,23 @@ public class EmployeeService {
         employeeRepository.save(employee);
     }
 
+    private EmployeeResponse restoreEmployee(String email){
+        var employee = employeeRepository.findByEmail(email);
+        employee.getUser().setActive(true);
+        return employeeMapper.entityToResponse(employeeRepository.save(employee));
+    }
+
     private void assertEmailIsUnique(String email){
         if(employeeRepository.existsByEmail(email) || clientRepository.existsByEmail(email))
             throw new ApplicationException(EMAIL_ALREADY_EXISTS, email);
+    }
+
+    private boolean wasDismissed(Employee employee){
+        if(employeeRepository.existsByEmail(employee.getEmail())){
+            var existingEmployee = employeeRepository.findByEmail(employee.getEmail());
+            return !existingEmployee.getUser().getActive();
+        }
+        return false;
     }
 
     private void assertEmployeeHasNoOrdersInProgress(Employee employee){
