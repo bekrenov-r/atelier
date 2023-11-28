@@ -9,6 +9,7 @@ spring:
     username: postgres
     password: postgres
     driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/atelier
   mail:
     host: smtp.gmail.com
     port: 587
@@ -21,8 +22,6 @@ spring:
           starttls:
             enable: true
   custom:
-    frontend:
-      domain: 'localhost:4200'
     security:
       permitted-matchers: >
         /users/activate/**,
@@ -42,14 +41,17 @@ spring:
   config:
     activate:
       on-profile: dev
-  datasource:
-    url: jdbc:postgresql://localhost:5432/atelier
+  custom:
+    frontend:
+      domain: 'localhost:4200'
 ---
 spring:
   config:
     activate:
       on-profile: prod
-  datasource:
-    url: jdbc:postgresql://atelier-db:5432/atelier
+  custom:
+    frontend:
+      domain: 'a-telier.web.app'
+
 
 
