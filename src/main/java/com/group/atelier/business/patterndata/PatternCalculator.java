@@ -80,26 +80,40 @@ public class PatternCalculator {
         BigDecimal shoulderCutSlope = BigDecimal.valueOf(2);
         // А3П1
         BigDecimal shoulderCutEnd = BigDecimal.valueOf(request.clientMetrics().shoulderWidth());
-        // Г2Г4
-        BigDecimal sideSlopeTop = BigDecimal.ZERO; // todo: clarify
-        // Г2П2; Г21
-        BigDecimal backArmholeSlope = BigDecimal.ZERO; // todo: clarify
         // A1A4
         BigDecimal productBalance = BigDecimal
                 .valueOf(request.clientMetrics().neckBaseToFrontWaistLineDistance())
                 .subtract(BigDecimal.valueOf(request.clientMetrics().backLengthTillWaist()))
                 .setScale(1, ROUNDING_MODE);
         // A4A5
-        BigDecimal fileNeckWidth = backNeckWidth; // todo: clarify
+        BigDecimal fileNeckWidth = backNeckWidth;
         // A4A6
-        BigDecimal fileNeckDepth = fileNeckWidth // todo: clarify
+        BigDecimal fileNeckDepth = fileNeckWidth
                 .add(BigDecimal.valueOf(1))
                 .divide(BigDecimal.valueOf(1.5), ROUNDING_MODE)
                 .setScale(1, ROUNDING_MODE);
 
-        BigDecimal chestDart = BigDecimal.ZERO; // todo: clarify
-        BigDecimal shoulderSlope = BigDecimal.ZERO; // todo: clarify
-        BigDecimal armhole = BigDecimal.ZERO; // todo: clarify
+        // Г1Г5
+        BigDecimal chestDart = BigDecimal
+                .valueOf(request.clientMetrics().chestCenter())
+                .add(BigDecimal.valueOf(0.5))
+                .setScale(1, ROUNDING_MODE);
+        // А5Г6 = Вг1
+        BigDecimal shoulderSlope = BigDecimal
+                .valueOf(request.clientMetrics().chestHeight())
+                .subtract(
+                        BigDecimal
+                                .valueOf(request.clientMetrics().waistLengthFront())
+                                .subtract(BigDecimal
+                                        .valueOf(request.clientMetrics().neckBaseToFrontWaistLineDistance()))
+                ).setScale(1, ROUNDING_MODE);
+        // A7A8
+        BigDecimal armhole = BigDecimal
+                .valueOf(request.clientMetrics().chestSemiCircumference2())
+                .subtract(BigDecimal.valueOf(request.clientMetrics().chestSemiCircumference1()))
+                .multiply(BigDecimal.valueOf(2))
+                .add(BigDecimal.valueOf(1.5))
+                .setScale(1, ROUNDING_MODE);
         // Рв.т.
         BigDecimal totalDartDeviationByWaistLine = BigDecimal
                 .valueOf(request.clientMetrics().chestSemiCircumference2())
@@ -135,8 +149,6 @@ public class PatternCalculator {
                 .backNeckHeight(backNeckHeight.doubleValue())
                 .shoulderCutSlope(shoulderCutSlope.doubleValue())
                 .shoulderCutEnd(shoulderCutEnd.doubleValue())
-                .sideSlopeTop(sideSlopeTop.doubleValue())
-                .backArmholeSlope(backArmholeSlope.doubleValue())
                 .productBalance(productBalance.doubleValue())
                 .fileNeckWidth(fileNeckWidth.doubleValue())
                 .fileNeckDepth(fileNeckDepth.doubleValue())

@@ -11,8 +11,6 @@ public record PatternDataResponse(
         Double backNeckHeight,
         Double shoulderCutSlope,
         Double shoulderCutEnd,
-        Double sideSlopeTop,
-        Double backArmholeSlope,
         Double productBalance,
         Double fileNeckWidth,
         Double fileNeckDepth,
