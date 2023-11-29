@@ -64,7 +64,7 @@ spring:
       on-profile: prod
   custom:
     frontend:
-      domain: 'a-telier.web.app'
+      domain: 'atelier-vm.northeurope.cloudapp.azure.com:4200'
 
 
 
