@@ -1,4 +1,4 @@
-package com.group.atelier.model.dto;
+package com.group.atelier.model.dto.response;
 
 public record ClientResponse(
         Long id,

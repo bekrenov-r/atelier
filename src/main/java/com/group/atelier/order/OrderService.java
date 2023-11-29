@@ -20,8 +20,8 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import static com.group.atelier.exception.ApplicationExceptionReason.COAT_MODEL_NOT_FOUND;
-import static com.group.atelier.exception.ApplicationExceptionReason.ORDER_NOT_FOUND;
+import static com.group.atelier.exception.ApplicationExceptionReason.*;
+import static com.group.atelier.security.Role.CLIENT;
 import static com.group.atelier.security.Role.EMPLOYEE;
 
 @Service
@@ -41,7 +41,6 @@ public class OrderService {
 
     public OrderResponse createOrder(OrderRequest request) {
         ProductMetrics productMetrics = productMetricsService.save(request.productMetrics());
-        Client client = clientRepository.findByUser(currentUserUtil.getCurrentUser());
         PatternData patternData = patternCalculatorService.calculatePatternDataAndSave(request.productMetrics());
         CoatModel coatModel = coatModelRepository.findById(request.coatModelId())
                 .orElseThrow(() -> new ApplicationException(COAT_MODEL_NOT_FOUND, request.coatModelId()));
@@ -49,11 +48,33 @@ public class OrderService {
                 .coatModel(coatModel)
                 .productMetrics(productMetrics)
                 .patternData(patternData)
-                .client(client)
-                .createdAt(LocalDateTime.now())
-                .status(OrderStatus.PENDING)
                 .build();
+
+        return currentUserUtil.getCurrentUser().hasRole(CLIENT)
+                ? createOrderAsClient(order)
+                : createOrderAsEmployee(order, request.clientId());
+    }
+
+    private OrderResponse createOrderAsClient(Order order){
+        Client client = clientRepository.findByUser(currentUserUtil.getCurrentUser());
+        order.setClient(client);
+        order.setCreatedAt(LocalDateTime.now());
+        order.setStatus(OrderStatus.PENDING);
         return orderMapper.entityToResponse(orderRepository.save(order));
+    }
+
+    private OrderResponse createOrderAsEmployee(Order order, Long clientId){
+        if(clientId == null)
+            throw new ApplicationException(CLIENT_ID_REQUIRED);
+
+        Client client = clientRepository.findById(clientId)
+                .orElseThrow(() -> new ApplicationException(CLIENT_NOT_FOUND, clientId));
+        order.setClient(client);
+        order.setCreatedAt(LocalDateTime.now());
+
+        Order savedOrder = orderRepository.save(order);
+        assignEmployeeToOrder(savedOrder.getId());
+        return orderMapper.entityToResponse(savedOrder);
     }
 
     public List<OrderResponse> getAllOrders() {

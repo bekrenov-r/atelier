@@ -1,6 +1,6 @@
 package com.group.atelier.model.dto.mapper;
 
-import com.group.atelier.model.dto.ClientResponse;
+import com.group.atelier.model.dto.response.ClientResponse;
 import com.group.atelier.model.entity.Client;
 import org.mapstruct.Mapper;
 
