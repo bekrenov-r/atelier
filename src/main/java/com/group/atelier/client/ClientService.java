@@ -1,5 +1,7 @@
 package com.group.atelier.client;
 
+import com.group.atelier.model.dto.ClientResponse;
+import com.group.atelier.model.dto.mapper.ClientMapper;
 import com.group.atelier.model.dto.request.ClientRegistrationRequest;
 import com.group.atelier.model.entity.Client;
 import com.group.atelier.model.entity.User;
@@ -21,8 +23,9 @@ public class ClientService {
     private final UserService userService;
     private final EmailService emailService;
     private final CurrentUserUtil currentUserUtil;
+    private final ClientMapper clientMapper;
 
-    public void registerClient(ClientRegistrationRequest request) throws IOException {
+    public ClientResponse registerClient(ClientRegistrationRequest request) throws IOException {
         Client client = Client.builder()
                 .firstName(request.firstName())
                 .lastName(request.lastName())
@@ -35,11 +38,10 @@ public class ClientService {
             emailService.sendRegistrationConfirmationEmail(client);
         }
 
-        clientRepository.save(client);
+        return clientMapper.entityToResponse(clientRepository.save(client));
     }
 
     private boolean shouldCreateUserForClient(){
-        System.out.println(currentUserUtil.hasLoggedUser());
         if(currentUserUtil.hasLoggedUser()){
             if(currentUserUtil.getCurrentUser().hasRole(Role.EMPLOYEE))
                 return false;

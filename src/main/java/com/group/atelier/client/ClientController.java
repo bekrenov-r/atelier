@@ -1,5 +1,6 @@
 package com.group.atelier.client;
 
+import com.group.atelier.model.dto.ClientResponse;
 import com.group.atelier.model.dto.request.ClientRegistrationRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -19,8 +20,9 @@ public class ClientController {
     private final ClientService clientService;
 
     @PostMapping("/register")
-    public ResponseEntity<Void> registerClient(@RequestBody @Valid ClientRegistrationRequest request) throws IOException {
-        clientService.registerClient(request);
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+    public ResponseEntity<ClientResponse> registerClient(@RequestBody @Valid ClientRegistrationRequest request) throws IOException {
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(clientService.registerClient(request));
     }
 }

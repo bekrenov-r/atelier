@@ -28,7 +28,6 @@ public class CurrentUserUtil {
          Object principal = SecurityContextHolder.getContext()
                 .getAuthentication()
                 .getPrincipal();
-        System.out.println(principal);
         return !principal.equals(ANONYMOUS_PRINCIPAL);
     }
 }
