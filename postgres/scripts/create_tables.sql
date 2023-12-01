@@ -48,15 +48,28 @@ create table client_metrics(
     back_width float,
     waist_length_front float,
     neck_base_to_front_waist_line_distance float,
-    constraint client_client_metrics_fk
+    constraint client_metrics_client_fk
         foreign key (client_id) references client(id)
+);
+
+create table address(
+    id serial primary key,
+    city text,
+    street text,
+    building_number text,
+    apartment_number text,
+    zip_code text
 );
 
 create table client_details(
     client_id int,
     birth_date date,
     phone_number text,
-    address_id int
+    address_id int,
+    constraint client_details_client_fk
+        foreign key (client_id) references client(id),
+    constraint client_details_address_fk
+        foreign key (address_id) references address(id)
 );
 
 create table product_metrics(
@@ -80,15 +93,6 @@ create table product_metrics(
     increase_to_width_by_chest_line float,
     increase_to_armhole_depth float,
     increase_to_neck_back float
-);
-
-create table address(
-    id serial primary key,
-    city text,
-    street text,
-    building_number text,
-    apartment_number text,
-    zip_code text
 );
 
 create table user_role(
@@ -154,6 +158,7 @@ create table "order"(
     product_metrics_id int,
     created_at timestamp,
     status text,
+    img_path text,
     constraint fk_order_client
         foreign key (client_id) references client(id),
     constraint fk_order_employee
