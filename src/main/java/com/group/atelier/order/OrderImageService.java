@@ -27,6 +27,12 @@ public class OrderImageService {
         return ORDERS_IMAGES_DIR_PATH + '/' + name;
     }
 
+    public byte[] extractImage(String imgPath) throws IOException {
+        return imgPath != null
+                ? Files.readAllBytes(Paths.get(imgPath))
+                : null;
+    }
+
     private void removeOldImageIfPresent(String imgPath) throws IOException {
         if(imgPath != null)
             Files.delete(Paths.get(imgPath));
