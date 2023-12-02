@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -32,7 +33,6 @@ public class OrderController {
         return ResponseEntity.ok(orderService.getOrderById(id));
     }
 
-    // todo: for role EMPLOYEE
     @GetMapping("/unassigned")
     @Secured("EMPLOYEE")
     public ResponseEntity<List<OrderResponse>> getAllUnassignedOrders(){
@@ -42,6 +42,15 @@ public class OrderController {
     @PutMapping("/{id}")
     public ResponseEntity<OrderResponse> updateOrder(@PathVariable Long id, @RequestBody @Valid OrderRequest request){
         return ResponseEntity.ok(orderService.updateOrder(id, request));
+    }
+
+    @PatchMapping("/{id}/image")
+    @Secured("EMPLOYEE")
+    public ResponseEntity<Void> attachImageToOrder(@PathVariable Long id, @RequestParam("file") MultipartFile file){
+        orderService.attachImageToOrder(id, file);
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .build();
     }
 
     @PatchMapping("/assign/{orderId}")
