@@ -1,6 +1,12 @@
 server:
   servlet:
     context-path: /api/v1
+  max-http-header-size: 4194304
+  tomcat:
+    max-http-form-post-size: 4194304
+java:
+  io:
+    tmpdir: src/main/resources/temp
 spring:
   config:
     activate:
