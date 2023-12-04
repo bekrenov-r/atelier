@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/coat-models")
@@ -22,7 +23,7 @@ public class CoatModelController {
     }
 
     @GetMapping("/{id}/images")
-    public ResponseEntity<List<byte[]>> getAllOrderImagesForCoatModel(@PathVariable Long id){
+    public ResponseEntity<Map<Long, byte[]>> getAllOrderImagesForCoatModel(@PathVariable Long id){
         return ResponseEntity.ok(coatModelService.getAllOrderImagesForCoatModel(id));
     }
 }

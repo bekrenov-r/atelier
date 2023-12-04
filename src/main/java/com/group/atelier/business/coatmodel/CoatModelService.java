@@ -12,6 +12,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import static com.group.atelier.exception.ApplicationExceptionReason.COAT_MODEL_NOT_FOUND;
 
@@ -29,7 +31,7 @@ public class CoatModelService {
                 .toList();
     }
 
-    public List<byte[]> getAllOrderImagesForCoatModel(Long id) {
+    public Map<Long, byte[]> getAllOrderImagesForCoatModel(Long id) {
         CoatModel coatModel = coatModelRepository.findById(id)
                 .orElseThrow(() -> new ApplicationException(COAT_MODEL_NOT_FOUND, id));
         List<Order> orders = orderRepository.findAllByCoatModel(coatModel);
@@ -38,7 +40,6 @@ public class CoatModelService {
 
         return orders.stream()
                 .filter(order -> order.getImgPath() != null)
-                .map(mapImageFunction.unchecked())
-                .toList();
+                .collect(Collectors.toMap(Order::getId, mapImageFunction.unchecked()));
     }
 }

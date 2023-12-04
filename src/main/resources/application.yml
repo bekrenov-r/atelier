@@ -4,9 +4,6 @@ server:
   max-http-header-size: 4194304
   tomcat:
     max-http-form-post-size: 4194304
-java:
-  io:
-    tmpdir: src/main/resources/temp
 spring:
   config:
     activate:
@@ -34,7 +31,8 @@ spring:
         /authenticate,
         /patterns/calculate,
         /coat-models,
-        /coat-models/**/images
+        /coat-models/**/images,
+        /orders/**/metrics
   jwt:
     secret: KE73EYGWFWT378RTGFEW873R87F7TF8WYE7FT76FW6E76TF76ETFW76
     expiration-time-millis: 604800000

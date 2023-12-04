@@ -1,5 +1,6 @@
 package com.group.atelier.order;
 
+import com.group.atelier.model.dto.ProductMetricsDTO;
 import com.group.atelier.model.dto.request.OrderRequest;
 import com.group.atelier.model.dto.response.OrderResponse;
 import jakarta.validation.Valid;
@@ -31,6 +32,11 @@ public class OrderController {
     @GetMapping("/{id}")
     public ResponseEntity<OrderResponse> getOrderById(@PathVariable Long id){
         return ResponseEntity.ok(orderService.getOrderById(id));
+    }
+
+    @GetMapping("/{id}/metrics")
+    public ResponseEntity<ProductMetricsDTO> getProductMetricsOfOrderById(@PathVariable Long id){
+        return ResponseEntity.ok(orderService.getProductMetricsOfOrderById(id));
     }
 
     @GetMapping("/unassigned")

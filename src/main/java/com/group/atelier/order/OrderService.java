@@ -7,6 +7,7 @@ import com.group.atelier.business.productmetrics.ProductMetricsService;
 import com.group.atelier.client.ClientRepository;
 import com.group.atelier.employee.EmployeeRepository;
 import com.group.atelier.exception.ApplicationException;
+import com.group.atelier.model.dto.ProductMetricsDTO;
 import com.group.atelier.model.dto.mapper.OrderMapper;
 import com.group.atelier.model.dto.mapper.ProductMetricsMapper;
 import com.group.atelier.model.dto.request.OrderRequest;
@@ -173,5 +174,11 @@ public class OrderService {
         orderValidator.assertOrderIsNotCompleted(order);
         order.setStatus(OrderStatus.CANCELLED);
         return orderMapper.entityToResponse(orderRepository.save(order));
+    }
+
+    public ProductMetricsDTO getProductMetricsOfOrderById(Long id) {
+        Order order = orderRepository.findById(id)
+                .orElseThrow(() -> new ApplicationException(ORDER_NOT_FOUND, id));
+        return productMetricsMapper.entityToDto(order.getProductMetrics());
     }
 }
