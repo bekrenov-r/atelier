@@ -49,6 +49,11 @@ public class OrderValidator {
 
     public void assertOrderIsInProgress(Order order){
         if(!order.getStatus().equals(OrderStatus.IN_PROGRESS))
-            throw new ApplicationException(ORDER_NOT_ASSIGNED, order.getId());
+            throw new ApplicationException(ORDER_NOT_IN_PROGRESS, order.getId());
+    }
+
+    public void assertOrderIsCompleted(Order order){
+        if(!order.getStatus().equals(OrderStatus.COMPLETED))
+            throw new ApplicationException(ORDER_NOT_COMPLETED, order.getId());
     }
 }

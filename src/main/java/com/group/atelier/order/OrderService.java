@@ -143,7 +143,7 @@ public class OrderService {
         Order order = orderRepository.findById(id)
                 .orElseThrow(() -> new ApplicationException(ORDER_NOT_FOUND, id));
         orderValidator.validateOrderOwnershipByEmployee(order);
-        orderValidator.assertOrderIsInProgress(order);
+        orderValidator.assertOrderIsCompleted(order);
 
         try {
             String imgPath = orderImageService.saveImageForOrder(order, file);

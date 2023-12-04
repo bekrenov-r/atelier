@@ -20,6 +20,7 @@ public enum ApplicationExceptionReason {
     CLIENT_ID_REQUIRED("Client id is missing from request body though required", HttpStatus.BAD_REQUEST),
     ORDER_NOT_ASSIGNED("Order with id [%s] is not assigned to any employee yet", HttpStatus.CONFLICT),
     ORDER_NOT_IN_PROGRESS("Order with id [%s] is not in progress(either not assigned or cancelled)", HttpStatus.CONFLICT),
+    ORDER_NOT_COMPLETED("Order with id [%s] is not completed", HttpStatus.CONFLICT),
     ORDER_ALREADY_ASSIGNED("Order with id [%s] is already assigned to some employee", HttpStatus.CONFLICT),
     ORDER_ALREADY_CANCELLED("Order with id [%s] is cancelled and cannot be updated", HttpStatus.CONFLICT),
     ORDER_ALREADY_COMPLETED("Order with id [%s] is already completed", HttpStatus.CONFLICT),
