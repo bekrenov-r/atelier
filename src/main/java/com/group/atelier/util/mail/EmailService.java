@@ -31,7 +31,7 @@ public class EmailService {
         String registrationToken = registrationTokenRepository
                 .findByUser(client.getUser())
                 .getToken();
-        String url = "http://" + frontendDomain + "/activate/" + registrationToken;
+        String url = "https://" + frontendDomain + "/activate/" + registrationToken;
         message.setText(String.format(contentTemplate, client.getFirstName(), url));
         mailSender.send(message);
     }

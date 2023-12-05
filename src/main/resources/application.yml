@@ -38,7 +38,8 @@ spring:
         /users/activate/**,
         /authenticate,
         /patterns/calculate,
-        /coat-models
+        /coat-models,
+        /coat-models/**/images
   jwt:
     secret: KE73EYGWFWT378RTGFEW873R87F7TF8WYE7FT76FW6E76TF76ETFW76
     expiration-time-millis: 604800000
@@ -62,7 +63,7 @@ spring:
       on-profile: prod
   custom:
     frontend:
-      domain: 'atelier-vm.northeurope.cloudapp.azure.com:4200'
+      domain: 'a-telie.web.app'
 
 
 
