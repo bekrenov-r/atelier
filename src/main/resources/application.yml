@@ -5,6 +5,10 @@ server:
   tomcat:
     max-http-form-post-size: 4194304
 spring:
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
   config:
     activate:
       on-profile: dev, prod
@@ -56,7 +60,7 @@ spring:
       on-profile: prod
   custom:
     frontend:
-      domain: 'a-telier.web.app'
+      domain: 'ec2-51-21-26-25.eu-north-1.compute.amazonaws.com:4200'
 
 
 
