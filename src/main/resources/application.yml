@@ -2,11 +2,9 @@ server:
   servlet:
     context-path: /api/v1
   ssl:
-    key-store-type: PKCS12
-    key-store: classpath:keystore/atelier-key.p12
+    key-store: classpath:keystore/atelier-keystore.jks
     key-store-password: atelier-admin
     key-alias: atelier
-    enabled: true
   max-http-header-size: 4194304
   tomcat:
     max-http-form-post-size: 4194304
