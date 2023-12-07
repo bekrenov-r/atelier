@@ -1,10 +1,6 @@
 server:
   servlet:
     context-path: /api/v1
-  ssl:
-    key-store: classpath:keystore/atelier-keystore.jks
-    key-store-password: atelier-admin
-    key-alias: atelier
   max-http-header-size: 4194304
   tomcat:
     max-http-form-post-size: 4194304
@@ -65,6 +61,11 @@ spring:
   custom:
     frontend:
       domain: 'a-telie.web.app'
+server:
+  ssl:
+    key-store: classpath:keystore/atelier-keystore.jks
+    key-store-password: atelier-admin
+    key-alias: atelier
 
 
 
