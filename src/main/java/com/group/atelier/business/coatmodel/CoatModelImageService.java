@@ -18,7 +18,7 @@ public class CoatModelImageService {
 
     public String saveImageForCoatModel(CoatModel coatModel, MultipartFile file) throws IOException {
         File targetDir = new File(COAT_MODELS_IMG_DIR_PATH + '/' + coatModel.getCoatType().getImgDirName());
-        imageService.removeOldImageIfPresent(coatModel.getImgPath());
+        imageService.removeImageIfPresent(coatModel.getImgPath());
         return imageService.saveImage(file.getInputStream(), targetDir);
     }
 }

@@ -38,7 +38,7 @@ public class ImageService {
                 : null;
     }
 
-    public void removeOldImageIfPresent(String imgPath) throws IOException {
+    public void removeImageIfPresent(String imgPath) throws IOException {
         if(imgPath != null)
             Files.delete(Paths.get(imgPath));
     }

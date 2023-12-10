@@ -10,6 +10,7 @@ public enum ApplicationExceptionReason {
     REGISTRATION_TOKEN_NOT_FOUND("Registration token [%s] does not exist", HttpStatus.NOT_FOUND),
     USER_NOT_FOUND("User with username [%s] does not exist", HttpStatus.NOT_FOUND),
     COAT_MODEL_NOT_FOUND("Coat model with id [%s] does not exist", HttpStatus.NOT_FOUND),
+    CANNOT_DELETE_COAT_MODEL("Coat model with id [%s] is referenced from [%s] orders and therefore cannot be deleted", HttpStatus.CONFLICT),
     ORDER_NOT_FOUND("Order with id [%s] does not exist", HttpStatus.NOT_FOUND),
     NOT_ENTITY_OWNER("You are not owner of this entity", HttpStatus.FORBIDDEN),
     CLIENT_METRICS_NOT_FOUND("Current client does not have recorded metrics", HttpStatus.NOT_FOUND),

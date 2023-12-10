@@ -56,4 +56,13 @@ public class CoatModelController {
     ){
         return ResponseEntity.ok(coatModelService.updateCoatModel(id, request));
     }
+
+    @DeleteMapping("/{id}")
+    @Secured("EMPLOYEE")
+    public ResponseEntity<Void> deleteCoatModel(@PathVariable Long id) throws IOException {
+        coatModelService.deleteCoatModel(id);
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .build();
+    }
 }

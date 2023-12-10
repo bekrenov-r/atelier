@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import static com.group.atelier.exception.ApplicationExceptionReason.CANNOT_DELETE_COAT_MODEL;
 import static com.group.atelier.exception.ApplicationExceptionReason.COAT_MODEL_NOT_FOUND;
 
 @Service
@@ -77,5 +78,16 @@ public class CoatModelService {
         coatModel.setPrice(request.price());
 
         return coatModelMapper.entityToResponse(coatModelRepository.save(coatModel));
+    }
+
+    public void deleteCoatModel(Long id) throws IOException {
+        CoatModel coatModel = coatModelRepository.findById(id)
+                .orElseThrow(() -> new ApplicationException(COAT_MODEL_NOT_FOUND, id));
+        List<Order> associatedOrders = orderRepository.findAllByCoatModel(coatModel);
+        if(!associatedOrders.isEmpty())
+            throw new ApplicationException(CANNOT_DELETE_COAT_MODEL, id, associatedOrders.size());
+
+        imageService.removeImageIfPresent(coatModel.getImgPath());
+        coatModelRepository.delete(coatModel);
     }
 }

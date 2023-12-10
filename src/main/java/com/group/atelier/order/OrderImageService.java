@@ -17,7 +17,7 @@ public class OrderImageService {
 
     public String saveImageForOrder(Order order, MultipartFile file) throws IOException {
         File targetDir = new File(ORDERS_IMAGES_DIR_PATH);
-        imageService.removeOldImageIfPresent(order.getImgPath());
+        imageService.removeImageIfPresent(order.getImgPath());
         return imageService.saveImage(file.getInputStream(), targetDir);
     }
 }
