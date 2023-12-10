@@ -66,4 +66,16 @@ public class CoatModelService {
         coatModel.setImgPath(imgPath);
         coatModelRepository.save(coatModel);
     }
+
+    public CoatModelResponse updateCoatModel(Long id, CoatModelRequest request) {
+        CoatModel coatModel = coatModelRepository.findById(id)
+                .orElseThrow(() -> new ApplicationException(COAT_MODEL_NOT_FOUND, id));
+
+        coatModel.setCoatType(request.coatType());
+        coatModel.setName(request.name());
+        coatModel.setVideoUrl(request.videoUrl());
+        coatModel.setPrice(request.price());
+
+        return coatModelMapper.entityToResponse(coatModelRepository.save(coatModel));
+    }
 }

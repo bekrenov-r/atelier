@@ -2,6 +2,7 @@ package com.group.atelier.business.coatmodel;
 
 import com.group.atelier.model.dto.request.CoatModelRequest;
 import com.group.atelier.model.dto.response.CoatModelResponse;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,8 +32,10 @@ public class CoatModelController {
 
     @PostMapping
     @Secured("EMPLOYEE")
-    public ResponseEntity<CoatModelResponse> createCoatModel(@RequestBody CoatModelRequest request) throws IOException {
-        return ResponseEntity.ok(coatModelService.createCoatModel(request));
+    public ResponseEntity<CoatModelResponse> createCoatModel(@RequestBody @Valid CoatModelRequest request) {
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(coatModelService.createCoatModel(request));
     }
 
     @PatchMapping("/{id}/image")
@@ -44,5 +47,13 @@ public class CoatModelController {
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .build();
+    }
+
+    @PutMapping("/{id}")
+    @Secured("EMPLOYEE")
+    public ResponseEntity<CoatModelResponse> updateCoatModel(
+            @PathVariable Long id, @RequestBody @Valid CoatModelRequest request
+    ){
+        return ResponseEntity.ok(coatModelService.updateCoatModel(id, request));
     }
 }
