@@ -36,8 +36,13 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             return shouldNotFilterClientRegistrationRequest(request);
 
         return Arrays.stream(permittedMatchers)
-                .map(AntPathRequestMatcher::new)
+                .map(this::parseMatcher)
                 .anyMatch(matcher -> matcher.matches(request));
+    }
+
+    private AntPathRequestMatcher parseMatcher(String matcher){
+        String[] arr = matcher.split(" ");
+        return new AntPathRequestMatcher(arr[1], arr[0]);
     }
 
     private boolean isClientRegistrationRequest(HttpServletRequest request){

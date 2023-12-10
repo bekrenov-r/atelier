@@ -110,7 +110,6 @@ create table coat_model(
     id serial primary key,
     name text,
     price float,
-    creation_time_days int,
     coat_type text,
     img_path text,
     video_url text
@@ -202,18 +201,18 @@ values
     ('Yuliya', 'Zhuravlova', 'yuliya.zhuravlova@example.com', '1234567890', '2023-11-23 19:16:14.572710', 5),
     ('Viktor', 'Pawlenko', 'viktor.pawlenko@example.com', '1234567890', '2023-11-23 19:16:14.572710', 6);
 
-insert into coat_model(name, price, creation_time_days, img_path, coat_type, video_url)
+insert into coat_model(name, price, img_path, coat_type, video_url)
 values
-    ('Денім-стрейч 1', 999.99, 14, '/images/coat_models/jacket_coat/jacket_coat_1.png', 'JACKET_COAT', 'https://youtube.com/shorts/Oqjsgf0-OWA'),
-    ('Шкіра хамелеона 3', 999.99, 14, '/images/coat_models/jacket_coat/jacket_coat_2.png', 'JACKET_COAT', 'https://youtube.com/shorts/ibm1MRLUWd0'),
-    ('Льон 1', 999.99, 14, '/images/coat_models/jacket_coat/jacket_coat_3.png', 'JACKET_COAT', 'https://youtube.com/shorts/x5TbwJB6eYE'),
-    ('Ялинка 1', 999.99, 14, '/images/coat_models/jacket_coat/jacket_coat_4.png', 'JACKET_COAT', 'https://youtube.com/shorts/gibgoFhrrGM'),
-    ('Вельвет 1', 999.99, 14, '/images/coat_models/maxi_coat/maxi_coat_1.png', 'MAXI_COAT', 'https://youtube.com/shorts/2z7PTTESbj0'),
-    ('Вельвет 3', 999.99, 14, '/images/coat_models/maxi_coat/maxi_coat_2.png', 'MAXI_COAT', 'https://youtube.com/shorts/aJT9VHKZuYc'),
-    ('Вельвет 2', 999.99, 14, '/images/coat_models/maxi_coat/maxi_coat_3.png', 'MAXI_COAT', 'https://youtube.com/shorts/mmHCWOlPF0I'),
-    ('Вовна сіра', 999.99, 14, '/images/coat_models/maxi_coat/maxi_coat_4.png', 'MAXI_COAT', 'https://youtube.com/shorts/6Ez2-XG1_XA'),
-    ('Шкіра 5', 999.99, 14, '/images/coat_models/midi_coat/midi_coat_1.png', 'MIDI_COAT', 'https://youtube.com/shorts/zspo23P4hYo'),
-    ('Шовк-сатин 1', 999.99, 14, '/images/coat_models/midi_coat/midi_coat_2.png', 'MIDI_COAT', 'https://youtube.com/shorts/JTOu0x6Yk9k'),
-    ('Вовна 1', 999.99, 14, '/images/coat_models/midi_coat/midi_coat_3.png', 'MIDI_COAT', 'https://youtube.com/shorts/Vr-39Hednug'),
-    ('Вовна 2', 999.99, 14, '/images/coat_models/midi_coat/midi_coat_4.png', 'MIDI_COAT', 'https://youtube.com/shorts/w9kkOvztBdU');
+    ('Денім-стрейч 1', 999.99, 'src/main/resources/images/coat_models/jacket_coat/jacket_coat_1.png', 'JACKET_COAT', 'https://youtube.com/shorts/Oqjsgf0-OWA'),
+    ('Шкіра хамелеона 3', 999.99, 'src/main/resources/images/coat_models/jacket_coat/jacket_coat_2.png', 'JACKET_COAT', 'https://youtube.com/shorts/ibm1MRLUWd0'),
+    ('Льон 1', 999.99, 'src/main/resources/images/coat_models/jacket_coat/jacket_coat_3.png', 'JACKET_COAT', 'https://youtube.com/shorts/x5TbwJB6eYE'),
+    ('Ялинка 1', 999.99, 'src/main/resources/images/coat_models/jacket_coat/jacket_coat_4.png', 'JACKET_COAT', 'https://youtube.com/shorts/gibgoFhrrGM'),
+    ('Вельвет 1', 999.99, 'src/main/resources/images/coat_models/maxi_coat/maxi_coat_1.png', 'MAXI_COAT', 'https://youtube.com/shorts/2z7PTTESbj0'),
+    ('Вельвет 3', 999.99, 'src/main/resources/images/coat_models/maxi_coat/maxi_coat_2.png', 'MAXI_COAT', 'https://youtube.com/shorts/aJT9VHKZuYc'),
+    ('Вельвет 2', 999.99, 'src/main/resources/images/coat_models/maxi_coat/maxi_coat_3.png', 'MAXI_COAT', 'https://youtube.com/shorts/mmHCWOlPF0I'),
+    ('Вовна сіра', 999.99, 'src/main/resources/images/coat_models/maxi_coat/maxi_coat_4.png', 'MAXI_COAT', 'https://youtube.com/shorts/6Ez2-XG1_XA'),
+    ('Шкіра 5', 999.99, 'src/main/resources/images/coat_models/midi_coat/midi_coat_1.png', 'MIDI_COAT', 'https://youtube.com/shorts/zspo23P4hYo'),
+    ('Шовк-сатин 1', 999.99, 'src/main/resources/images/coat_models/midi_coat/midi_coat_2.png', 'MIDI_COAT', 'https://youtube.com/shorts/JTOu0x6Yk9k'),
+    ('Вовна 1', 999.99, 'src/main/resources/images/coat_models/midi_coat/midi_coat_3.png', 'MIDI_COAT', 'https://youtube.com/shorts/Vr-39Hednug'),
+    ('Вовна 2', 999.99, 'src/main/resources/images/coat_models/midi_coat/midi_coat_4.png', 'MIDI_COAT', 'https://youtube.com/shorts/w9kkOvztBdU');
 

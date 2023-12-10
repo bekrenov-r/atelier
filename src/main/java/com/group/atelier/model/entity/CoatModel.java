@@ -2,15 +2,13 @@ package com.group.atelier.model.entity;
 
 import com.group.atelier.model.enums.CoatType;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Entity
 @Table(name = "coat_model")
 @Getter
 @Setter
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class CoatModel {
@@ -24,11 +22,8 @@ public class CoatModel {
     @Column(name = "price")
     private Double price;
 
-    @Column(name = "creation_time_days")
-    private Integer creationTimeDays;
-
     @Column(name = "img_path")
-    private String imagePath;
+    private String imgPath;
 
     @Column(name = "coat_type")
     @Enumerated(value = EnumType.STRING)

@@ -29,14 +29,16 @@ spring:
           starttls:
             enable: true
   custom:
+    img:
+      format: png
     security:
       permitted-matchers: >
-        /users/activate/**,
-        /authenticate,
-        /patterns/calculate,
-        /coat-models,
-        /coat-models/**/images,
-        /orders/**/metrics
+        POST /users/activate/**,
+        POST /authenticate,
+        POST /patterns/calculate,
+        GET /coat-models,
+        GET /coat-models/**/images,
+        GET /orders/**/metrics
   jwt:
     secret: KE73EYGWFWT378RTGFEW873R87F7TF8WYE7FT76FW6E76TF76ETFW76
     expiration-time-millis: 604800000

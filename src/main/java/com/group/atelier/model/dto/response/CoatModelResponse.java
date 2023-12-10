@@ -8,7 +8,6 @@ public record CoatModelResponse(
         Long id,
         String name,
         Double price,
-        Integer creationTimeDays,
         byte[] image,
         String videoUrl,
         CoatType coatType

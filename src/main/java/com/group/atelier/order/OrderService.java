@@ -140,19 +140,15 @@ public class OrderService {
         orderRepository.save(order);
     }
 
-    public void attachImageToOrder(Long id, MultipartFile file) {
+    public void attachImageToOrder(Long id, MultipartFile file) throws IOException {
         Order order = orderRepository.findById(id)
                 .orElseThrow(() -> new ApplicationException(ORDER_NOT_FOUND, id));
         orderValidator.validateOrderOwnershipByEmployee(order);
         orderValidator.assertOrderIsCompleted(order);
 
-        try {
-            String imgPath = orderImageService.saveImageForOrder(order, file);
-            order.setImgPath(imgPath);
-            orderRepository.save(order);
-        } catch(IOException ex){
-            throw new ApplicationException(FILE_IS_NOT_IMAGE);
-        }
+        String imgPath = orderImageService.saveImageForOrder(order, file);
+        order.setImgPath(imgPath);
+        orderRepository.save(order);
     }
 
     public OrderResponse markOrderAsCompleted(Long id) {

@@ -11,6 +11,7 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -52,7 +53,9 @@ public class OrderController {
 
     @PatchMapping("/{id}/image")
     @Secured("EMPLOYEE")
-    public ResponseEntity<Void> attachImageToOrder(@PathVariable Long id, @RequestParam("file") MultipartFile file){
+    public ResponseEntity<Void> attachImageToOrder(
+            @PathVariable Long id, @RequestParam("file") MultipartFile file
+    ) throws IOException {
         orderService.attachImageToOrder(id, file);
         return ResponseEntity
                 .status(HttpStatus.OK)
