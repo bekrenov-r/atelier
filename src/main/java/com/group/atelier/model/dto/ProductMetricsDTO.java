@@ -1,20 +1,22 @@
 package com.group.atelier.model.dto;
 
 import com.group.atelier.model.dto.request.ClientMetricsRequest;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.DecimalMax;
+import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Positive;
 
 
 public record ProductMetricsDTO(
-        @NotNull
+        @NotNull @Valid
         ClientMetricsRequest clientMetrics,
         // Пг
-        @NotNull @Positive
+        @NotNull @DecimalMin("2") @DecimalMax("25")
         Double increaseToWidthByChestLine,
         // Пг.пр
-        @NotNull @Positive
+        @NotNull @DecimalMin("0") @DecimalMax("5")
         Double increaseToArmholeDepth,
         // Пш.г
-        @NotNull @Positive
+        @NotNull @DecimalMin("0") @DecimalMax("5")
         Double increaseToNeckBack
 ) { }

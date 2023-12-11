@@ -1,55 +1,56 @@
 package com.group.atelier.model.dto.request;
 
+import jakarta.validation.constraints.DecimalMax;
+import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Positive;
 
 public record ClientMetricsRequest(
         // Сш
-        @NotNull @Positive
+        @NotNull @DecimalMin("13.5") @DecimalMax("21.5")
         Double neckSemiCircumference,
         // Сг1
-        @NotNull @Positive
+        @NotNull @DecimalMin("33.2") @DecimalMax("53.2")
         Double chestSemiCircumference1,
         // Сг2
-        @NotNull @Positive
+        @NotNull @DecimalMin("36.4") @DecimalMax("56.4")
         Double chestSemiCircumference2,
         // Сг3
-        @NotNull @Positive
+        @NotNull @DecimalMin("34.0") @DecimalMax("54.0")
         Double chestSemiCircumference3,
         // Ст
-        @NotNull @Positive
+        @NotNull @DecimalMin("23.8") @DecimalMax("43.8")
         Double waistSemiCircumference,
         // Шп
-        @NotNull @Positive
+        @NotNull @DecimalMin("8.1") @DecimalMax("18.1")
         Double shoulderWidth,
         // Вг
-        @NotNull @Positive
+        @NotNull @DecimalMin("16.0") @DecimalMax("36.0")
         Double chestHeight,
         // Вг1
-        @NotNull @Positive
+        @NotNull @DecimalMin("23.7") @DecimalMax("43.7")
         Double chestHeight1,
         // Впрз
-        @NotNull @Positive
+        @NotNull @DecimalMin("12.5") @DecimalMax("22.5")
         Double backArmholeHeight,
         // Дтс
-        @NotNull @Positive
+        @NotNull @DecimalMin("30.1") @DecimalMax("50.1")
         Double backLengthTillWaist,
         // Впк
-        @NotNull @Positive
+        @NotNull @DecimalMin("32.8") @DecimalMax("52.8")
         Double shoulderHeightSidelong,
         // Шг
-        @NotNull @Positive
+        @NotNull @DecimalMin("11.5") @DecimalMax("21.5")
         Double chestWidth,
         // Цг
-        @NotNull @Positive
+        @NotNull @DecimalMin("4.6") @DecimalMax("14.6")
         Double chestCenter,
         // Шс
-        @NotNull @Positive
+        @NotNull @DecimalMin("9.3") @DecimalMax("25.3")
         Double backWidth,
         // Дтп
-        @NotNull @Positive
+        @NotNull @DecimalMin("41.5") @DecimalMax("61.5")
         Double waistLengthFront,
         // Дтп1
-        @NotNull @Positive
+        @NotNull @DecimalMin("33.0") @DecimalMax("53.0")
         Double neckBaseToFrontWaistLineDistance
 ) { }
