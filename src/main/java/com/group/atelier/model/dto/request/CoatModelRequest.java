@@ -12,6 +12,6 @@ public record CoatModelRequest(
         Double price,
         @NotNull
         CoatType coatType,
-        @NotNull
+        @NotBlank
         String videoUrl
 ) { }
