@@ -1,6 +1,8 @@
 package com.group.atelier.exception;
 
 import io.jsonwebtoken.JwtException;
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.ConstraintViolationException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -120,6 +122,28 @@ public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExce
                 .timestamp(LocalDateTime.now())
                 .build();
         return new ResponseEntity<>(response, status);
+    }
+
+    @ExceptionHandler(ConstraintViolationException.class)
+    public ResponseEntity<Object> handleConstraintViolation(ConstraintViolationException ex){
+        StringBuilder message = new StringBuilder("Errors:");
+        for(ConstraintViolation<?> cv : ex.getConstraintViolations()){
+            message
+                    .append(" [")
+                    .append(cv.getPropertyPath().toString())
+                    .append(" ")
+                    .append(cv.getMessage())
+                    .append(", rejected value: ")
+                    .append(cv.getInvalidValue())
+                    .append("]");
+        }
+        ErrorResponse response = ErrorResponse
+                .builder()
+                .message(message.toString())
+                .status(HttpStatus.BAD_REQUEST)
+                .timestamp(LocalDateTime.now())
+                .build();
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 
     protected void logException(Exception ex){

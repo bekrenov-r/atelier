@@ -12,14 +12,14 @@ import com.group.atelier.model.entity.Order;
 import com.group.atelier.model.entity.Review;
 import com.group.atelier.model.enums.OrderStatus;
 import com.group.atelier.order.OrderRepository;
+import com.group.atelier.security.Role;
 import com.group.atelier.util.CurrentUserUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-import static com.group.atelier.exception.ApplicationExceptionReason.CANNOT_CREATE_REVIEW_WITHOUT_ORDER;
-import static com.group.atelier.exception.ApplicationExceptionReason.COAT_MODEL_NOT_FOUND;
+import static com.group.atelier.exception.ApplicationExceptionReason.*;
 
 @Service
 @RequiredArgsConstructor
@@ -45,11 +45,31 @@ public class ReviewService {
         reviewRepository.save(review);
     }
 
-    public ReviewResponse updateReview(Long id, ReviewRequest request) {
-        return null;
-    }
-    public void deleteReview(Long id) {
+    public ReviewResponse updateReview(Long id, String content, Short rating) {
+        Review review = reviewRepository.findById(id)
+                .orElseThrow(() -> new ApplicationException(REVIEW_NOT_FOUND, id));
+        validateReviewOwnership(review);
 
+        if(content != null) {
+            if(!content.isBlank())
+                review.setContent(content);
+            else
+                throw new IllegalArgumentException("content must not be blank string");
+        }
+        if(rating != null)
+            review.setRating(rating);
+
+        return reviewMapper.entityToResponse(reviewRepository.save(review));
+    }
+
+    public void deleteReview(Long id) {
+        Review review = reviewRepository.findById(id)
+                .orElseThrow(() -> new ApplicationException(REVIEW_NOT_FOUND, id));
+
+        if(currentUserUtil.getCurrentUser().hasRole(Role.CLIENT))
+            validateReviewOwnership(review);
+
+        reviewRepository.delete(review);
     }
 
     private void assertClientHasOrderForCoatModel(Client client, CoatModel coatModel) {
@@ -58,5 +78,11 @@ public class ReviewService {
                 .anyMatch(o -> o.getStatus().equals(OrderStatus.COMPLETED));
         if(!hasAtLeastOneCompletedOrder)
             throw new ApplicationException(CANNOT_CREATE_REVIEW_WITHOUT_ORDER);
+    }
+
+    private void validateReviewOwnership(Review review) {
+        Client client = clientRepository.findByUser(currentUserUtil.getCurrentUser());
+        if(!review.getClient().equals(client))
+            throw new ApplicationException(NOT_ENTITY_OWNER);
     }
 }
