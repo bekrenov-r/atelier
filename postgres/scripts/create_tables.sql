@@ -170,6 +170,18 @@ create table "order"(
         foreign key (product_metrics_id) references product_metrics(id)
 );
 
+create table review(
+    id serial primary key,
+    content text,
+    rating smallint,
+    coat_model_id int,
+    client_id int,
+    constraint fk_review_coat_model
+        foreign key (coat_model_id) references coat_model(id),
+    constraint fk_review_client
+        foreign key (client_id) references client(id)
+);
+
 insert into "user"(username, password, active)
 values
     ('petro.kovalenko@example.com', '$2a$10$dGlirX4TKwGREM8iBzeWCONoU8tqy0QhYY1l/jzuq./pPKUzqw2wi', true),

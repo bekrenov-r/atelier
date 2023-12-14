@@ -3,6 +3,8 @@ package com.group.atelier.model.dto.response;
 import com.group.atelier.model.enums.CoatType;
 import lombok.Builder;
 
+import java.util.List;
+
 @Builder
 public record CoatModelResponse(
         Long id,
@@ -10,5 +12,6 @@ public record CoatModelResponse(
         Double price,
         byte[] image,
         String videoUrl,
-        CoatType coatType
+        CoatType coatType,
+        List<ReviewResponse> reviews
 ) { }

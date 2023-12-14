@@ -4,6 +4,8 @@ import com.group.atelier.model.enums.CoatType;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "coat_model")
 @Getter
@@ -31,4 +33,7 @@ public class CoatModel {
 
     @Column(name = "video_url")
     private String videoUrl;
+
+    @OneToMany(mappedBy = "coatModel", cascade = CascadeType.REMOVE)
+    private List<Review> reviews;
 }

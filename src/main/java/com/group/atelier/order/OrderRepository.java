@@ -15,6 +15,7 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
     List<Order> findAllByClient(Client client);
     List<Order> findAllByEmployee(Employee employee);
     List<Order> findAllByCoatModel(CoatModel coatModel);
+    List<Order> findAllByClientAndCoatModel(Client client, CoatModel coatModel);
     @Query("from Order o where o.employee = null")
     List<Order> findAllUnassignedOrders();
 }

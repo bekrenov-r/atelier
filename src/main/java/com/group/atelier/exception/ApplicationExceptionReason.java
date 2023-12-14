@@ -28,7 +28,8 @@ public enum ApplicationExceptionReason {
     EMPLOYEE_NOT_FOUND("Employee with id [%s] does not exist", HttpStatus.NOT_FOUND),
     EMAIL_ALREADY_EXISTS("Email address [%s] is already registered", HttpStatus.CONFLICT),
     EMPLOYEE_HAS_UNFINISHED_ORDERS("Employee with id [%s] has unfinished orders and therefore cannot be deleted", HttpStatus.CONFLICT),
-    FILE_IS_NOT_IMAGE("Uploaded file is not image", HttpStatus.BAD_REQUEST);
+    FILE_IS_NOT_IMAGE("Uploaded file is not image", HttpStatus.BAD_REQUEST),
+    CANNOT_CREATE_REVIEW_WITHOUT_ORDER("Cannot create review: no completed orders found for current client", HttpStatus.BAD_REQUEST);
 
     private final String message;
     private final HttpStatus status;
