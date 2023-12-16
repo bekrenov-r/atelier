@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.IOException;
 
-@Mapper(componentModel = "spring", uses = {ReviewMapper.class})
+@Mapper(componentModel = "spring")
 public abstract class CoatModelMapper {
     @Autowired
     protected ImageService imageService;

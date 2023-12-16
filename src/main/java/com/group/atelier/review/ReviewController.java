@@ -6,6 +6,7 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
@@ -18,6 +19,14 @@ import org.springframework.web.bind.annotation.*;
 @Validated
 public class ReviewController {
     private final ReviewService reviewService;
+
+    @GetMapping("/{coatModelId}")
+    public ResponseEntity<Page<ReviewResponse>> getReviewsForCoatModel(
+            @PathVariable Long coatModelId,
+            @RequestParam(value = "page", defaultValue = "0") Integer page
+    ) {
+        return ResponseEntity.ok(reviewService.getReviewsForCoatModel(coatModelId, page));
+    }
 
     @PostMapping
     @Secured("CLIENT")

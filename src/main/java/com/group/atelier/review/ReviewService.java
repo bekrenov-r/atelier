@@ -15,6 +15,10 @@ import com.group.atelier.order.OrderRepository;
 import com.group.atelier.security.Role;
 import com.group.atelier.util.CurrentUserUtil;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -30,6 +34,17 @@ public class ReviewService {
     private final CoatModelRepository coatModelRepository;
     private final ReviewMapper reviewMapper;
     private final OrderRepository orderRepository;
+
+    @Value("${spring.custom.pagination.page-size}")
+    private Integer pageSize;
+
+    public Page<ReviewResponse> getReviewsForCoatModel(Long coatModelId, Integer page) {
+        CoatModel coatModel = coatModelRepository.findById(coatModelId)
+                .orElseThrow(() -> new ApplicationException(COAT_MODEL_NOT_FOUND, coatModelId));
+        Pageable pageable = PageRequest.of(page, pageSize);
+        Page<Review> reviews = reviewRepository.findAllByCoatModel(coatModel, pageable);
+        return reviews.map(reviewMapper::entityToResponse);
+    }
 
     public void createReview(ReviewRequest request) {
         Client client = clientRepository.findByUser(currentUserUtil.getCurrentUser());
