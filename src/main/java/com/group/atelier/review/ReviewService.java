@@ -21,6 +21,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static com.group.atelier.exception.ApplicationExceptionReason.*;
@@ -56,6 +57,7 @@ public class ReviewService {
                 .coatModel(coatModel)
                 .content(request.content())
                 .rating(request.rating())
+                .createdAt(LocalDateTime.now())
                 .build();
         reviewRepository.save(review);
     }
@@ -65,6 +67,7 @@ public class ReviewService {
                 .orElseThrow(() -> new ApplicationException(REVIEW_NOT_FOUND, id));
         validateReviewOwnership(review);
 
+        // todo: replace with custom validator
         if(content != null) {
             if(!content.isBlank())
                 review.setContent(content);

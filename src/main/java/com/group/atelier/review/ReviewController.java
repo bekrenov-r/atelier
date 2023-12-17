@@ -1,7 +1,9 @@
 package com.group.atelier.review;
 
 import com.group.atelier.model.dto.request.ReviewRequest;
+import com.group.atelier.model.dto.response.ReviewReplyResponse;
 import com.group.atelier.model.dto.response.ReviewResponse;
+import com.group.atelier.review.reply.ReviewReplyService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
@@ -19,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 @Validated
 public class ReviewController {
     private final ReviewService reviewService;
+    private final ReviewReplyService replyService;
 
     @GetMapping("/{coatModelId}")
     public ResponseEntity<Page<ReviewResponse>> getReviewsForCoatModel(
@@ -53,5 +56,13 @@ public class ReviewController {
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .build();
+    }
+
+    @PostMapping("/{id}/reply")
+    @Secured("ADMIN")
+    public ResponseEntity<ReviewReplyResponse> createReviewReply(@PathVariable Long id, @RequestParam String content){
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(replyService.createReviewReply(id, content));
     }
 }

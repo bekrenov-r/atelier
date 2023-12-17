@@ -41,7 +41,7 @@ spring:
         GET /orders/**/metrics,
         GET /reviews/**
     pagination:
-      page-size: 2
+      page-size: 5
   jwt:
     secret: KE73EYGWFWT378RTGFEW873R87F7TF8WYE7FT76FW6E76TF76ETFW76
     expiration-time-millis: 604800000

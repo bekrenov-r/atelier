@@ -3,6 +3,8 @@ package com.group.atelier.model.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Table(name = "review")
 @AllArgsConstructor
@@ -21,6 +23,9 @@ public class Review {
     @Column(name = "rating")
     private Short rating;
 
+    @Column(name = "created_at")
+    private LocalDateTime createdAt;
+
     @ManyToOne
     @JoinColumn(name = "coat_model_id")
     private CoatModel coatModel;
@@ -28,4 +33,8 @@ public class Review {
     @ManyToOne
     @JoinColumn(name = "client_id")
     private Client client;
+
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "reply_id")
+    private ReviewReply reply;
 }
