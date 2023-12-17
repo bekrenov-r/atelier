@@ -34,7 +34,7 @@ public class Review {
     @JoinColumn(name = "client_id")
     private Client client;
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "reply_id")
+    @OneToOne(mappedBy = "review", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @PrimaryKeyJoinColumn
     private ReviewReply reply;
 }

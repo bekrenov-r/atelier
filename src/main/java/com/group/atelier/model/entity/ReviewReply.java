@@ -23,7 +23,8 @@ public class ReviewReply {
     @Column(name = "createdAt")
     private LocalDateTime createdAt;
 
-    @OneToOne(mappedBy = "reply", cascade = CascadeType.MERGE)
+    @OneToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(name = "review_id")
     @MapsId
     private Review review;
 }

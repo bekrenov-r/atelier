@@ -5,6 +5,7 @@ import com.group.atelier.business.order.OrderRepository;
 import com.group.atelier.business.review.dto.ReviewMapper;
 import com.group.atelier.business.review.dto.ReviewRequest;
 import com.group.atelier.business.review.dto.ReviewResponse;
+import com.group.atelier.business.review.reply.ReviewReplyRepository;
 import com.group.atelier.client.ClientRepository;
 import com.group.atelier.exception.ApplicationException;
 import com.group.atelier.model.entity.Client;
@@ -35,6 +36,7 @@ public class ReviewService {
     private final CoatModelRepository coatModelRepository;
     private final ReviewMapper reviewMapper;
     private final OrderRepository orderRepository;
+    private final ReviewReplyRepository replyRepository;
 
     @Value("${spring.custom.pagination.page-size}")
     private Integer pageSize;

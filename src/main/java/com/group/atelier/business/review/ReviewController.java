@@ -58,11 +58,24 @@ public class ReviewController {
                 .build();
     }
 
-    @PostMapping("/{id}/reply")
+    @PostMapping("/{reviewId}/reply")
     @Secured("ADMIN")
-    public ResponseEntity<ReviewReplyResponse> createReviewReply(@PathVariable Long id, @RequestParam String content){
+    public ResponseEntity<ReviewReplyResponse> createReviewReply(@PathVariable Long reviewId, @RequestParam String content){
         return ResponseEntity
                 .status(HttpStatus.CREATED)
-                .body(replyService.createReviewReply(id, content));
+                .body(replyService.createReviewReply(reviewId, content));
+    }
+
+    @PutMapping("/{reviewId}/reply")
+    @Secured("ADMIN")
+    public ResponseEntity<ReviewReplyResponse> updateReviewReply(@PathVariable Long reviewId, @RequestParam String content){
+        return ResponseEntity.ok(replyService.updateReviewReply(reviewId, content));
+    }
+
+    @DeleteMapping("/{reviewId}/reply")
+    @Secured("ADMIN")
+    public ResponseEntity<Void> deleteReviewReply(@PathVariable Long reviewId){
+        replyService.deleteReviewReply(reviewId);
+        return ResponseEntity.ok().build();
     }
 }

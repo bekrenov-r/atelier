@@ -177,7 +177,6 @@ create table review(
     created_at timestamp,
     coat_model_id int,
     client_id int,
-    reply_id int,
     constraint fk_review_coat_model
         foreign key (coat_model_id) references coat_model(id),
     constraint fk_review_client
@@ -188,13 +187,9 @@ create table review_reply(
     review_id int primary key,
     content text,
     created_at timestamp,
-    constraint fk_review_coat_model
+    constraint fk_review_reply_review
         foreign key (review_id) references review(id)
 );
-
-alter table review
-add constraint fk_review_review_reply
-    foreign key (reply_id) references review_reply(review_id);
 
 insert into "user"(username, password, active)
 values
