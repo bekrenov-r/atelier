@@ -1,13 +1,12 @@
 package com.group.atelier.client.clientmetrics;
 
-import com.group.atelier.model.dto.mapper.ClientMetricsMapper;
-import com.group.atelier.model.dto.request.ClientMetricsRequest;
-import com.group.atelier.model.dto.response.ClientMetricsResponse;
+import com.group.atelier.client.ClientRepository;
+import com.group.atelier.client.clientmetrics.dto.ClientMetricsMapper;
+import com.group.atelier.client.clientmetrics.dto.ClientMetricsRequest;
+import com.group.atelier.client.clientmetrics.dto.ClientMetricsResponse;
 import com.group.atelier.exception.ApplicationException;
 import com.group.atelier.model.entity.Client;
 import com.group.atelier.model.entity.ClientMetrics;
-import com.group.atelier.client.clientmetrics.ClientMetricsRepository;
-import com.group.atelier.client.ClientRepository;
 import com.group.atelier.util.CurrentUserUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

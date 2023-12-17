@@ -1,7 +1,7 @@
 package com.group.atelier.client.clientdetails;
 
-import com.group.atelier.model.dto.request.ClientDetailsRequest;
-import com.group.atelier.model.dto.response.ClientDetailsResponse;
+import com.group.atelier.client.clientdetails.dto.ClientDetailsRequest;
+import com.group.atelier.client.clientdetails.dto.ClientDetailsResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

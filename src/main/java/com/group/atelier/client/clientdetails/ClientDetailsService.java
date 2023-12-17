@@ -1,18 +1,18 @@
 package com.group.atelier.client.clientdetails;
 
-import com.group.atelier.model.dto.mapper.ClientDetailsMapper;
-import com.group.atelier.model.dto.request.ClientDetailsRequest;
-import com.group.atelier.model.dto.response.ClientDetailsResponse;
+import com.group.atelier.client.ClientRepository;
+import com.group.atelier.client.clientdetails.dto.ClientDetailsMapper;
+import com.group.atelier.client.clientdetails.dto.ClientDetailsRequest;
+import com.group.atelier.client.clientdetails.dto.ClientDetailsResponse;
 import com.group.atelier.exception.ApplicationException;
 import com.group.atelier.model.entity.Client;
 import com.group.atelier.model.entity.ClientDetails;
-import com.group.atelier.client.clientdetails.ClientDetailsRepository;
-import com.group.atelier.client.ClientRepository;
 import com.group.atelier.util.CurrentUserUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import static com.group.atelier.exception.ApplicationExceptionReason.*;
+import static com.group.atelier.exception.ApplicationExceptionReason.CLIENT_DETAILS_ALREADY_EXIST;
+import static com.group.atelier.exception.ApplicationExceptionReason.CLIENT_DETAILS_NOT_FOUND;
 
 @Service
 @RequiredArgsConstructor

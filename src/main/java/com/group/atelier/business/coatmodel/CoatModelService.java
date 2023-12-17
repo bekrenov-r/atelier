@@ -1,12 +1,12 @@
 package com.group.atelier.business.coatmodel;
 
+import com.group.atelier.business.coatmodel.dto.CoatModelMapper;
+import com.group.atelier.business.coatmodel.dto.CoatModelRequest;
+import com.group.atelier.business.coatmodel.dto.CoatModelResponse;
+import com.group.atelier.business.order.OrderRepository;
 import com.group.atelier.exception.ApplicationException;
-import com.group.atelier.model.dto.mapper.CoatModelMapper;
-import com.group.atelier.model.dto.request.CoatModelRequest;
-import com.group.atelier.model.dto.response.CoatModelResponse;
 import com.group.atelier.model.entity.CoatModel;
 import com.group.atelier.model.entity.Order;
-import com.group.atelier.order.OrderRepository;
 import com.group.atelier.util.ImageService;
 import io.vavr.CheckedFunction1;
 import lombok.RequiredArgsConstructor;

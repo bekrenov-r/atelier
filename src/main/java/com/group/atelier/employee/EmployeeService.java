@@ -1,10 +1,10 @@
 package com.group.atelier.employee;
 
 import com.group.atelier.client.ClientRepository;
+import com.group.atelier.employee.dto.EmployeeMapper;
+import com.group.atelier.employee.dto.EmployeeRegistrationRequest;
+import com.group.atelier.employee.dto.EmployeeResponse;
 import com.group.atelier.exception.ApplicationException;
-import com.group.atelier.model.dto.mapper.EmployeeMapper;
-import com.group.atelier.model.dto.request.EmployeeRegistrationRequest;
-import com.group.atelier.model.dto.response.EmployeeResponse;
 import com.group.atelier.model.entity.Employee;
 import com.group.atelier.model.entity.User;
 import com.group.atelier.model.enums.OrderStatus;

@@ -1,7 +1,7 @@
 package com.group.atelier.client.clientmetrics;
 
-import com.group.atelier.model.dto.request.ClientMetricsRequest;
-import com.group.atelier.model.dto.response.ClientMetricsResponse;
+import com.group.atelier.client.clientmetrics.dto.ClientMetricsRequest;
+import com.group.atelier.client.clientmetrics.dto.ClientMetricsResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

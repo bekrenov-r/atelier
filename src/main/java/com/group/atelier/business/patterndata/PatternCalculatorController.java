@@ -1,7 +1,7 @@
 package com.group.atelier.business.patterndata;
 
-import com.group.atelier.model.dto.ProductMetricsDTO;
-import com.group.atelier.model.dto.response.PatternDataResponse;
+import com.group.atelier.business.patterndata.dto.PatternDataResponse;
+import com.group.atelier.business.productmetrics.dto.ProductMetricsDTO;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

@@ -1,7 +1,7 @@
 package com.group.atelier.business.coatmodel;
 
-import com.group.atelier.model.dto.request.CoatModelRequest;
-import com.group.atelier.model.dto.response.CoatModelResponse;
+import com.group.atelier.business.coatmodel.dto.CoatModelRequest;
+import com.group.atelier.business.coatmodel.dto.CoatModelResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

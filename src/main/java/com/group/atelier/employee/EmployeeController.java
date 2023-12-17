@@ -1,7 +1,7 @@
 package com.group.atelier.employee;
 
-import com.group.atelier.model.dto.request.EmployeeRegistrationRequest;
-import com.group.atelier.model.dto.response.EmployeeResponse;
+import com.group.atelier.employee.dto.EmployeeRegistrationRequest;
+import com.group.atelier.employee.dto.EmployeeResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

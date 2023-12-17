@@ -1,8 +1,8 @@
 package com.group.atelier.business.patterndata;
 
-import com.group.atelier.model.dto.ProductMetricsDTO;
 import com.group.atelier.business.patterndata.dto.PatternDataMapper;
-import com.group.atelier.model.dto.response.PatternDataResponse;
+import com.group.atelier.business.patterndata.dto.PatternDataResponse;
+import com.group.atelier.business.productmetrics.dto.ProductMetricsDTO;
 import com.group.atelier.model.entity.PatternData;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

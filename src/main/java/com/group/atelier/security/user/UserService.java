@@ -1,12 +1,12 @@
 package com.group.atelier.security.user;
 
 import com.group.atelier.exception.ApplicationException;
-import com.group.atelier.model.dto.request.UserRegistrationRequest;
 import com.group.atelier.model.entity.RegistrationToken;
 import com.group.atelier.model.entity.User;
 import com.group.atelier.security.JwtProvider;
 import com.group.atelier.security.RegistrationTokenRepository;
 import com.group.atelier.security.Role;
+import com.group.atelier.security.dto.UserRegistrationRequest;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.security.crypto.password.PasswordEncoder;

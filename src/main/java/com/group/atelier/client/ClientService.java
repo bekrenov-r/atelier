@@ -1,8 +1,8 @@
 package com.group.atelier.client;
 
-import com.group.atelier.model.dto.mapper.ClientMapper;
-import com.group.atelier.model.dto.request.ClientRegistrationRequest;
-import com.group.atelier.model.dto.response.ClientResponse;
+import com.group.atelier.client.dto.ClientMapper;
+import com.group.atelier.client.dto.ClientRegistrationRequest;
+import com.group.atelier.client.dto.ClientResponse;
 import com.group.atelier.model.entity.Client;
 import com.group.atelier.model.entity.User;
 import com.group.atelier.security.Role;
