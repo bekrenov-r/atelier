@@ -5,7 +5,6 @@ import com.group.atelier.business.order.OrderRepository;
 import com.group.atelier.business.review.dto.ReviewMapper;
 import com.group.atelier.business.review.dto.ReviewRequest;
 import com.group.atelier.business.review.dto.ReviewResponse;
-import com.group.atelier.business.review.reply.ReviewReplyRepository;
 import com.group.atelier.client.ClientRepository;
 import com.group.atelier.exception.ApplicationException;
 import com.group.atelier.model.entity.Client;
@@ -20,6 +19,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -36,7 +36,6 @@ public class ReviewService {
     private final CoatModelRepository coatModelRepository;
     private final ReviewMapper reviewMapper;
     private final OrderRepository orderRepository;
-    private final ReviewReplyRepository replyRepository;
 
     @Value("${spring.custom.pagination.page-size}")
     private Integer pageSize;
@@ -44,7 +43,7 @@ public class ReviewService {
     public Page<ReviewResponse> getReviewsForCoatModel(Long coatModelId, Integer page) {
         CoatModel coatModel = coatModelRepository.findById(coatModelId)
                 .orElseThrow(() -> new ApplicationException(COAT_MODEL_NOT_FOUND, coatModelId));
-        Pageable pageable = PageRequest.of(page, pageSize);
+        Pageable pageable = PageRequest.of(page, pageSize, Sort.by(Sort.Direction.DESC, "createdAt"));
         Page<Review> reviews = reviewRepository.findAllByCoatModel(coatModel, pageable);
         return reviews.map(reviewMapper::entityToResponse);
     }
