@@ -6,6 +6,7 @@ import java.time.LocalDateTime;
 
 public record ReviewResponse(
         Long id,
+        Long clientId,
         String clientFullName,
         String content,
         Short rating,

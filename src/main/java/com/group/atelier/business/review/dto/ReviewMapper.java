@@ -11,6 +11,7 @@ import org.mapstruct.Named;
 public abstract class ReviewMapper {
 
     @Mapping(source = "client", target = "clientFullName", qualifiedByName = "mapClientFullName")
+    @Mapping(source = "client.id", target = "clientId")
     public abstract ReviewResponse entityToResponse(Review review);
 
     @Named("mapClientFullName")
