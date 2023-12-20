@@ -52,6 +52,11 @@ public class ReviewReplyService {
     public void deleteReviewReply(Long reviewId){
         ReviewReply reply = replyRepository.findById(reviewId)
                 .orElseThrow(() -> new ApplicationException(REVIEW_REPLY_NOT_FOUND, reviewId));
+
+        Review review = reviewRepository.findById(reviewId).get();
+        review.setReply(null);
+        reviewRepository.save(review);
+
         replyRepository.delete(reply);
     }
 }
