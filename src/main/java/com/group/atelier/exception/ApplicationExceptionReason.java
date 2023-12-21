@@ -32,7 +32,8 @@ public enum ApplicationExceptionReason {
     CANNOT_CREATE_REVIEW_WITHOUT_ORDER("Cannot create review: no completed orders found for current client", HttpStatus.BAD_REQUEST),
     REVIEW_NOT_FOUND("Review with id [%s] does not exist", HttpStatus.NOT_FOUND),
     REVIEW_ALREADY_HAS_REPLY("Review with id [%s] already has assigned reply", HttpStatus.CONFLICT),
-    REVIEW_REPLY_NOT_FOUND("Review with id [%s] either does not exist or does not have assigned reply", HttpStatus.NOT_FOUND);
+    REVIEW_REPLY_NOT_FOUND("Review with id [%s] either does not exist or does not have assigned reply", HttpStatus.NOT_FOUND),
+    CLIENT_ALREADY_HAS_REVIEW_ON_COAT_MODEL("Current client already has review on coat model with id [%s]", HttpStatus.CONFLICT);
 
     private final String message;
     private final HttpStatus status;

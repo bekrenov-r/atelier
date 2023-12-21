@@ -24,6 +24,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 import static com.group.atelier.exception.ApplicationExceptionReason.*;
 
@@ -52,7 +53,10 @@ public class ReviewService {
         Client client = clientRepository.findByUser(currentUserUtil.getCurrentUser());
         CoatModel coatModel = coatModelRepository.findById(request.coatModelId())
                 .orElseThrow(() -> new ApplicationException(COAT_MODEL_NOT_FOUND, request.coatModelId()));
+
         assertClientHasOrderForCoatModel(client, coatModel);
+        assertClientHasNoReviewsForCoatModel(client, coatModel);
+
         Review review = Review.builder()
                 .client(client)
                 .coatModel(coatModel)
@@ -95,6 +99,12 @@ public class ReviewService {
                 .anyMatch(o -> o.getStatus().equals(OrderStatus.COMPLETED));
         if(!hasAtLeastOneCompletedOrder)
             throw new ApplicationException(CANNOT_CREATE_REVIEW_WITHOUT_ORDER);
+    }
+
+    private void assertClientHasNoReviewsForCoatModel(Client client, CoatModel coatModel) {
+        Optional<Review> reviewOptional = reviewRepository.findByClientAndCoatModel(client, coatModel);
+        if(reviewOptional.isPresent())
+            throw new ApplicationException(CLIENT_ALREADY_HAS_REVIEW_ON_COAT_MODEL, coatModel.getId());
     }
 
     private void validateReviewOwnership(Review review) {
