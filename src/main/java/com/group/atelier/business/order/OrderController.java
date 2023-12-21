@@ -62,6 +62,15 @@ public class OrderController {
                 .build();
     }
 
+    @DeleteMapping("/{id}/image")
+    @Secured("EMPLOYEE")
+    public ResponseEntity<Void> removeImageFromOrder(@PathVariable Long id) throws IOException {
+        orderService.removeImageFromOrder(id);
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .build();
+    }
+
     @PatchMapping("/assign/{orderId}")
     @Secured("EMPLOYEE")
     public ResponseEntity<Void> assignEmployeeToOrder(@PathVariable Long orderId){

@@ -20,4 +20,8 @@ public class OrderImageService {
         imageService.removeImageIfPresent(order.getImgPath());
         return imageService.saveImage(file.getInputStream(), targetDir);
     }
+
+    public void removeImageFromOrder(String imgPath) throws IOException {
+        imageService.removeImageIfPresent(imgPath);
+    }
 }

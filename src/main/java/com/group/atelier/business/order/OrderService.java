@@ -151,6 +151,15 @@ public class OrderService {
         orderRepository.save(order);
     }
 
+    public void removeImageFromOrder(Long id) throws IOException {
+        Order order = orderRepository.findById(id)
+                .orElseThrow(() -> new ApplicationException(ORDER_NOT_FOUND, id));
+        orderValidator.validateOrderOwnershipByEmployee(order);
+        orderImageService.removeImageFromOrder(order.getImgPath());
+        order.setImgPath(null);
+        orderRepository.save(order);
+    }
+
     public OrderResponse markOrderAsCompleted(Long id) {
         Order order = orderRepository.findById(id)
                 .orElseThrow(() -> new ApplicationException(ORDER_NOT_FOUND, id));
