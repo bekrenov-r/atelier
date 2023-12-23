@@ -19,6 +19,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class OrderController {
     private final OrderService orderService;
+    private final OrderImageService orderImageService;
 
     @PostMapping
     public ResponseEntity<OrderResponse> createOrder(@RequestBody @Valid OrderRequest request){
@@ -51,12 +52,18 @@ public class OrderController {
         return ResponseEntity.ok(orderService.updateOrder(id, request));
     }
 
+    @GetMapping("/{orderId}/image")
+    @Secured({"EMPLOYEE", "CLIENT"})
+    public ResponseEntity<byte[]> getOrderImage(@PathVariable Long orderId) throws IOException {
+        return ResponseEntity.ok(orderImageService.getOrderImage(orderId));
+    }
+
     @PatchMapping("/{id}/image")
     @Secured("EMPLOYEE")
     public ResponseEntity<Void> attachImageToOrder(
             @PathVariable Long id, @RequestParam("file") MultipartFile file
     ) throws IOException {
-        orderService.attachImageToOrder(id, file);
+        orderImageService.attachImageToOrder(id, file);
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .build();
@@ -65,7 +72,7 @@ public class OrderController {
     @DeleteMapping("/{id}/image")
     @Secured("EMPLOYEE")
     public ResponseEntity<Void> removeImageFromOrder(@PathVariable Long id) throws IOException {
-        orderService.removeImageFromOrder(id);
+        orderImageService.removeImageFromOrder(id);
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .build();

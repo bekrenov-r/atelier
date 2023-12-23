@@ -1,5 +1,6 @@
 package com.group.atelier.business.order;
 
+import com.group.atelier.exception.ApplicationException;
 import com.group.atelier.model.entity.Order;
 import com.group.atelier.util.ImageService;
 import lombok.RequiredArgsConstructor;
@@ -9,19 +10,45 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.IOException;
 
+import static com.group.atelier.exception.ApplicationExceptionReason.ORDER_NOT_FOUND;
+
 @Service
 @RequiredArgsConstructor
 public class OrderImageService {
     private final ImageService imageService;
+    private final OrderRepository orderRepository;
+    private final OrderValidator orderValidator;
     private static final String ORDERS_IMAGES_DIR_PATH = "src/main/resources/images/orders";
 
-    public String saveImageForOrder(Order order, MultipartFile file) throws IOException {
-        File targetDir = new File(ORDERS_IMAGES_DIR_PATH);
+    public void attachImageToOrder(Long id, MultipartFile file) throws IOException {
+        Order order = orderRepository.findById(id)
+                .orElseThrow(() -> new ApplicationException(ORDER_NOT_FOUND, id));
+        orderValidator.validateOrderOwnershipByEmployee(order);
+        orderValidator.assertOrderIsCompleted(order);
+
         imageService.removeImageIfPresent(order.getImgPath());
-        return imageService.saveImage(file.getInputStream(), targetDir);
+        String imgPath = imageService.saveImage(file.getInputStream(), new File(ORDERS_IMAGES_DIR_PATH));
+        order.setImgPath(imgPath);
+        orderRepository.save(order);
     }
 
-    public void removeImageFromOrder(String imgPath) throws IOException {
-        imageService.removeImageIfPresent(imgPath);
+    public void removeImageFromOrder(Long id) throws IOException {
+        Order order = orderRepository.findById(id)
+                .orElseThrow(() -> new ApplicationException(ORDER_NOT_FOUND, id));
+        orderValidator.validateOrderOwnershipByEmployee(order);
+        imageService.removeImageIfPresent(order.getImgPath());
+        order.setImgPath(null);
+        orderRepository.save(order);
+    }
+
+    public byte[] getOrderImage(Long orderId) throws IOException {
+        Order order = orderRepository.findById(orderId)
+                .orElseThrow(() -> new ApplicationException(ORDER_NOT_FOUND, orderId));
+        orderValidator.assertOrderIsCompleted(order);
+        orderValidator.validateOrderOwnershipByCurrentUser(order);
+
+        if(order.getImgPath() == null)
+            return null;
+        return imageService.extractImage(order.getImgPath());
     }
 }

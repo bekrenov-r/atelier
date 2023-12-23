@@ -17,9 +17,7 @@ import com.group.atelier.model.enums.OrderStatus;
 import com.group.atelier.util.CurrentUserUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -137,26 +135,6 @@ public class OrderService {
         orderValidator.validateBeforeAssignment(order);
         order.setEmployee(currentEmployee);
         order.setStatus(OrderStatus.IN_PROGRESS);
-        orderRepository.save(order);
-    }
-
-    public void attachImageToOrder(Long id, MultipartFile file) throws IOException {
-        Order order = orderRepository.findById(id)
-                .orElseThrow(() -> new ApplicationException(ORDER_NOT_FOUND, id));
-        orderValidator.validateOrderOwnershipByEmployee(order);
-        orderValidator.assertOrderIsCompleted(order);
-
-        String imgPath = orderImageService.saveImageForOrder(order, file);
-        order.setImgPath(imgPath);
-        orderRepository.save(order);
-    }
-
-    public void removeImageFromOrder(Long id) throws IOException {
-        Order order = orderRepository.findById(id)
-                .orElseThrow(() -> new ApplicationException(ORDER_NOT_FOUND, id));
-        orderValidator.validateOrderOwnershipByEmployee(order);
-        orderImageService.removeImageFromOrder(order.getImgPath());
-        order.setImgPath(null);
         orderRepository.save(order);
     }
 

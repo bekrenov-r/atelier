@@ -11,7 +11,6 @@ public record OrderResponse(
     Long id,
     LocalDateTime createdAt,
     OrderStatus status,
-    byte[] image,
     CoatModelResponse coatModel,
     PatternDataResponse patternData,
     ProductMetricsDTO productMetrics

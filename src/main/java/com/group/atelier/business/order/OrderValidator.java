@@ -6,7 +6,9 @@ import com.group.atelier.exception.ApplicationException;
 import com.group.atelier.model.entity.Client;
 import com.group.atelier.model.entity.Employee;
 import com.group.atelier.model.entity.Order;
+import com.group.atelier.model.entity.User;
 import com.group.atelier.model.enums.OrderStatus;
+import com.group.atelier.security.Role;
 import com.group.atelier.util.CurrentUserUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -30,6 +32,15 @@ public class OrderValidator {
         Employee currentEmployee = employeeRepository.findByUser(currentUserUtil.getCurrentUser());
         if(!order.getEmployee().equals(currentEmployee))
             throw new ApplicationException(NOT_ENTITY_OWNER);
+    }
+
+    public void validateOrderOwnershipByCurrentUser(Order order){
+        User user = currentUserUtil.getCurrentUser();
+
+        if(user.hasRole(Role.EMPLOYEE))
+            validateOrderOwnershipByEmployee(order);
+        else if (user.hasRole(Role.CLIENT))
+            validateOrderOwnershipByClient(order);
     }
 
     public void validateBeforeAssignment(Order order){
