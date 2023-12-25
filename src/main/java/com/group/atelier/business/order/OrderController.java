@@ -54,7 +54,7 @@ public class OrderController {
 
     @GetMapping("/{orderId}/image")
     @Secured({"EMPLOYEE", "CLIENT"})
-    public ResponseEntity<byte[]> getOrderImage(@PathVariable Long orderId) throws IOException {
+    public ResponseEntity<String> getOrderImage(@PathVariable Long orderId) throws IOException {
         return ResponseEntity.ok(orderImageService.getOrderImage(orderId));
     }
 
