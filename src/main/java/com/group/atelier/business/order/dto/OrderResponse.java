@@ -5,11 +5,11 @@ import com.group.atelier.business.patterndata.dto.PatternDataResponse;
 import com.group.atelier.business.productmetrics.dto.ProductMetricsDTO;
 import com.group.atelier.model.enums.OrderStatus;
 
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 
 public record OrderResponse(
     Long id,
-    LocalDateTime createdAt,
+    ZonedDateTime createdAt,
     OrderStatus status,
     CoatModelResponse coatModel,
     PatternDataResponse patternData,

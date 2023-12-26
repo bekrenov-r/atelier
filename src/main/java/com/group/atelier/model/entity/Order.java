@@ -4,7 +4,7 @@ import com.group.atelier.model.enums.OrderStatus;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 
 @Entity
 @Table(name = "\"order\"")
@@ -19,7 +19,7 @@ public class Order {
     private Long id;
 
     @Column(name = "created_at")
-    private LocalDateTime createdAt;
+    private ZonedDateTime createdAt;
 
     @Column(name = "status")
     @Enumerated(EnumType.STRING)

@@ -18,7 +18,7 @@ import com.group.atelier.util.CurrentUserUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.List;
 
 import static com.group.atelier.exception.ApplicationExceptionReason.*;
@@ -39,7 +39,6 @@ public class OrderService {
     private final ProductMetricsMapper productMetricsMapper;
     private final EmployeeRepository employeeRepository;
     private final OrderValidator orderValidator;
-    private final OrderImageService orderImageService;
 
     public OrderResponse createOrder(OrderRequest request) {
         ProductMetrics productMetrics = productMetricsService.save(request.productMetrics());
@@ -49,6 +48,7 @@ public class OrderService {
         Order order = Order.builder()
                 .coatModel(coatModel)
                 .productMetrics(productMetrics)
+                .createdAt(ZonedDateTime.now())
                 .patternData(patternData)
                 .build();
 
@@ -60,8 +60,8 @@ public class OrderService {
     private OrderResponse createOrderAsClient(Order order){
         Client client = clientRepository.findByUser(currentUserUtil.getCurrentUser());
         order.setClient(client);
-        order.setCreatedAt(LocalDateTime.now());
         order.setStatus(OrderStatus.PENDING);
+        System.out.println(order.getCreatedAt());
         return orderMapper.entityToResponse(orderRepository.save(order));
     }
 
@@ -72,7 +72,6 @@ public class OrderService {
         Client client = clientRepository.findById(clientId)
                 .orElseThrow(() -> new ApplicationException(CLIENT_NOT_FOUND, clientId));
         order.setClient(client);
-        order.setCreatedAt(LocalDateTime.now());
 
         Order savedOrder = orderRepository.save(order);
         assignEmployeeToOrder(savedOrder.getId());
