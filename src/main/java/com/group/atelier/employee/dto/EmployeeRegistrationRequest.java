@@ -1,6 +1,6 @@
 package com.group.atelier.employee.dto;
 
-import com.group.atelier.security.dto.UserRegistrationRequest;
+import com.group.atelier.security.dto.RegistrationRequest;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 
@@ -15,4 +15,4 @@ public record EmployeeRegistrationRequest(
         String phoneNumber,
         @NotBlank
         String password
-) implements UserRegistrationRequest { }
+) implements RegistrationRequest { }

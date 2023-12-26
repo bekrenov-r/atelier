@@ -8,7 +8,6 @@ import com.group.atelier.model.entity.User;
 import com.group.atelier.security.Role;
 import com.group.atelier.security.user.UserService;
 import com.group.atelier.util.CurrentUserUtil;
-import com.group.atelier.util.mail.EmailService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.AuthorizationServiceException;
 import org.springframework.stereotype.Service;
@@ -21,7 +20,6 @@ import java.util.Set;
 public class ClientService {
     private final ClientRepository clientRepository;
     private final UserService userService;
-    private final EmailService emailService;
     private final CurrentUserUtil currentUserUtil;
     private final ClientMapper clientMapper;
 
@@ -35,8 +33,6 @@ public class ClientService {
         if(shouldCreateUserForClient()){
             User user = userService.createUser(request, Set.of(Role.CLIENT));
             client.setUser(user);
-            // todo: move email sending to UserService
-            emailService.sendRegistrationConfirmationEmail(client);
         }
 
         return clientMapper.entityToResponse(clientRepository.save(client));

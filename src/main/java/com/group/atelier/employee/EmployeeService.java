@@ -10,9 +10,11 @@ import com.group.atelier.model.entity.User;
 import com.group.atelier.model.enums.OrderStatus;
 import com.group.atelier.security.Role;
 import com.group.atelier.security.user.UserService;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
@@ -35,7 +37,8 @@ public class EmployeeService {
                 .toList();
     }
 
-    public EmployeeResponse registerEmployee(EmployeeRegistrationRequest request) {
+    @Transactional
+    public EmployeeResponse registerEmployee(EmployeeRegistrationRequest request) throws IOException {
         Employee employee = employeeMapper.requestToEntity(request);
         if(wasDismissed(employee)){
             return restoreEmployee(employee.getEmail());

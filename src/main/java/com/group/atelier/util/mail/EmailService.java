@@ -1,7 +1,7 @@
 package com.group.atelier.util.mail;
 
-import com.group.atelier.model.entity.Client;
 import com.group.atelier.security.TokenRepository;
+import com.group.atelier.security.dto.RegistrationRequest;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Value;
@@ -28,14 +28,11 @@ public class EmailService {
     private static final String REGISTRATION_CONFIRMATION_TEMPLATE_PATH = "/email_templates/registration-confirmation.txt";
     private static final String PASSWORD_RECOVERY_TEMPLATE_PATH = "/email_templates/password-recovery.txt";
 
-    public void sendRegistrationConfirmationEmail(Client client) throws IOException {
+    public void sendRegistrationConfirmationEmail(RegistrationRequest request, String registrationToken) throws IOException {
         String contentTemplate = this.getContentTemplate(REGISTRATION_CONFIRMATION_TEMPLATE_PATH);
-        String registrationToken = tokenRepository
-                .findByUser(client.getUser())
-                .getValue();
         String url = protocol + "://" + frontendDomain + "/activate/" + registrationToken;
-        String content = String.format(contentTemplate, client.getFirstName(), url);
-        SimpleMailMessage message = prepareSimpleMessage(client.getEmail(), "Registration Confirmation", content);
+        String content = String.format(contentTemplate, request.firstName(), url);
+        SimpleMailMessage message = prepareSimpleMessage(request.email(), "Registration Confirmation", content);
         mailSender.send(message);
     }
 

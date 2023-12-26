@@ -7,7 +7,7 @@ import com.group.atelier.model.enums.TokenType;
 import com.group.atelier.security.JwtProvider;
 import com.group.atelier.security.Role;
 import com.group.atelier.security.TokenRepository;
-import com.group.atelier.security.dto.UserRegistrationRequest;
+import com.group.atelier.security.dto.RegistrationRequest;
 import com.group.atelier.util.mail.EmailService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -29,7 +29,7 @@ public class UserService {
     private final JwtProvider jwtProvider;
     private final EmailService emailService;
 
-    public User createUser(UserRegistrationRequest request, Set<Role> roles) {
+    public User createUser(RegistrationRequest request, Set<Role> roles) throws IOException {
         User user = User.builder()
                 .username(request.email())
                 .password(passwordEncoder.encode(request.password()))
@@ -39,17 +39,18 @@ public class UserService {
         if(user.hasRole(Role.EMPLOYEE))
             user.setActive(true);
         User savedUser = userRepository.save(user);
-        createRegistrationToken(savedUser);
+        var registrationToken = createRegistrationToken(savedUser);
+        emailService.sendRegistrationConfirmationEmail(request, registrationToken.getValue());
         return savedUser;
     }
 
-    private void createRegistrationToken(User user){
+    private Token createRegistrationToken(User user){
         Token token = Token.builder()
                 .value(RandomStringUtils.random(20, true, true))
                 .type(TokenType.REGISTRATION)
                 .user(user)
                 .build();
-        tokenRepository.save(token);
+        return tokenRepository.save(token);
     }
 
     @Transactional
