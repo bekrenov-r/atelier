@@ -52,12 +52,14 @@ public class UserService {
         tokenRepository.save(token);
     }
 
+    @Transactional
     public String activateUser(String token) {
         var user = tokenRepository.findByValueAndType(token, TokenType.REGISTRATION)
                 .orElseThrow(() -> new ApplicationException(REGISTRATION_TOKEN_NOT_FOUND, token))
                 .getUser();
         user.setActive(true);
         userRepository.save(user);
+        tokenRepository.deleteByValue(token);
         return jwtProvider.generateToken(user);
     }
 
