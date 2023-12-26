@@ -1,7 +1,7 @@
 package com.group.atelier.util.mail;
 
 import com.group.atelier.model.entity.Client;
-import com.group.atelier.security.RegistrationTokenRepository;
+import com.group.atelier.security.TokenRepository;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Value;
@@ -16,28 +16,48 @@ import java.nio.charset.StandardCharsets;
 @RequiredArgsConstructor
 public class EmailService {
     private final JavaMailSender mailSender;
-    private final RegistrationTokenRepository registrationTokenRepository;
+    private final TokenRepository tokenRepository;
 
     @Value("${spring.custom.frontend.domain}")
     private String frontendDomain;
+    @Value("${spring.custom.frontend.protocol}")
+    private String protocol;
+    @Value("${spring.mail.username}")
+    private String mailUsername;
 
-    private static final String CONTENT_TEMPLATE_FILE_PATH = "/registration-confirmation-email-content.txt";
+    private static final String REGISTRATION_CONFIRMATION_TEMPLATE_PATH = "/email_templates/registration-confirmation.txt";
+    private static final String PASSWORD_RECOVERY_TEMPLATE_PATH = "/email_templates/password-recovery.txt";
 
     public void sendRegistrationConfirmationEmail(Client client) throws IOException {
-        String contentTemplate = this.getContentTemplate();
-        SimpleMailMessage message = new SimpleMailMessage();
-        message.setTo(client.getEmail());
-        message.setSubject("Registration Confirmation");
-        String registrationToken = registrationTokenRepository
+        String contentTemplate = this.getContentTemplate(REGISTRATION_CONFIRMATION_TEMPLATE_PATH);
+        String registrationToken = tokenRepository
                 .findByUser(client.getUser())
-                .getToken();
-        String url = "https://" + frontendDomain + "/activate/" + registrationToken;
-        message.setText(String.format(contentTemplate, client.getFirstName(), url));
+                .getValue();
+        String url = protocol + "://" + frontendDomain + "/activate/" + registrationToken;
+        String content = String.format(contentTemplate, client.getFirstName(), url);
+        SimpleMailMessage message = prepareSimpleMessage(client.getEmail(), "Registration Confirmation", content);
         mailSender.send(message);
     }
 
-    private String getContentTemplate() throws IOException {
-        var inputStream = getClass().getResourceAsStream(CONTENT_TEMPLATE_FILE_PATH);
+    public void sendPasswordRecoveryEmail(String emailAddress, String token) throws IOException {
+        String contentTemplate = this.getContentTemplate(PASSWORD_RECOVERY_TEMPLATE_PATH);
+        String url = protocol + "://" + frontendDomain + "/recover-password/" + token;
+        String content = String.format(contentTemplate, url);
+        SimpleMailMessage message = prepareSimpleMessage(emailAddress, "Password Recovery", content);
+        mailSender.send(message);
+    }
+
+    private SimpleMailMessage prepareSimpleMessage(String to, String subject, String content){
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setTo(to);
+        message.setFrom("CloTech <" + mailUsername + ">");
+        message.setSubject(subject);
+        message.setText(content);
+        return message;
+    }
+
+    private String getContentTemplate(String path) throws IOException {
+        var inputStream = getClass().getResourceAsStream(path);
         return IOUtils.toString(inputStream, StandardCharsets.UTF_8);
     }
 }

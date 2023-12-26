@@ -35,6 +35,7 @@ public class ClientService {
         if(shouldCreateUserForClient()){
             User user = userService.createUser(request, Set.of(Role.CLIENT));
             client.setUser(user);
+            // todo: move email sending to UserService
             emailService.sendRegistrationConfirmationEmail(client);
         }
 

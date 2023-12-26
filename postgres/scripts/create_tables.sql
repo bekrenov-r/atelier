@@ -100,9 +100,10 @@ create table user_role(
     role text
 );
 
-create table registration_token(
+create table token(
     id bigserial,
-    token text,
+    value text,
+    type text,
     user_id int
 );
 
