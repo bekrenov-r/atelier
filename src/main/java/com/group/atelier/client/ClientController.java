@@ -25,4 +25,10 @@ public class ClientController {
                 .status(HttpStatus.CREATED)
                 .body(clientService.registerClient(request));
     }
+
+    @PostMapping("/register/resend-email")
+    public ResponseEntity<Void> resendRegistrationConfirmationEmail(@RequestBody ClientRegistrationRequest request) throws IOException {
+        clientService.resendEmailRegistrationConfirmationEmail(request);
+        return ResponseEntity.ok().build();
+    }
 }

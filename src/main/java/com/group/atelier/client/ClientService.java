@@ -22,8 +22,10 @@ public class ClientService {
     private final UserService userService;
     private final CurrentUserUtil currentUserUtil;
     private final ClientMapper clientMapper;
+    private final UniqueEmailValidator uniqueEmailValidator;
 
     public ClientResponse registerClient(ClientRegistrationRequest request) throws IOException {
+        uniqueEmailValidator.assertEmailIsUnique(request.email());
         Client client = Client.builder()
                 .firstName(request.firstName())
                 .lastName(request.lastName())
@@ -46,5 +48,9 @@ public class ClientService {
                 throw new AuthorizationServiceException("You don't have authority required for this action");
         }
         return true;
+    }
+
+    public void resendEmailRegistrationConfirmationEmail(ClientRegistrationRequest request) throws IOException {
+        userService.resendRegistrationConfirmationEmail(request);
     }
 }

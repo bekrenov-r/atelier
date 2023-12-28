@@ -40,7 +40,8 @@ spring:
         GET /coat-models,
         GET /coat-models/**/images,
         GET /orders/**/metrics,
-        GET /reviews/**
+        GET /reviews/**,
+        POST /clients/register/resend-email
     pagination:
       page-size: 5
   jwt:

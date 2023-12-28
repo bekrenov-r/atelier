@@ -46,24 +46,24 @@ public class UserService {
         return savedUser;
     }
 
-    private Token createRegistrationToken(User user){
-        Token token = Token.builder()
-                .value(RandomStringUtils.random(20, true, true))
-                .type(TokenType.REGISTRATION)
-                .user(user)
-                .build();
-        return tokenRepository.save(token);
-    }
-
     @Transactional
     public String activateUser(String token) {
         var user = tokenRepository.findByValueAndType(token, TokenType.REGISTRATION)
-                .orElseThrow(() -> new ApplicationException(REGISTRATION_TOKEN_NOT_FOUND, token))
+                .orElseThrow(() -> new ApplicationException(REGISTRATION_TOKEN_NOT_FOUND_BY_VALUE, token))
                 .getUser();
         user.setActive(true);
         userRepository.save(user);
         tokenRepository.deleteByValue(token);
         return jwtProvider.generateToken(user);
+    }
+
+    public void resendRegistrationConfirmationEmail(RegistrationRequest request) throws IOException {
+        User user = userRepository.findByUsername(request.email())
+                .orElseThrow(() -> new ApplicationException(USER_NOT_FOUND, request.email()));
+        Token registrationToken = tokenRepository.findByUserAndType(user, TokenType.REGISTRATION)
+                .orElseThrow(() -> new ApplicationException(REGISTRATION_TOKEN_NOT_FOUND_BY_USER, user.getUsername()));
+
+        emailService.sendRegistrationConfirmationEmail(request, registrationToken.getValue());
     }
 
     public void sendEmailForPasswordRecovery(String email) throws IOException {
@@ -88,6 +88,15 @@ public class UserService {
         userRepository.save(user);
         tokenRepository.deleteByValue(token);
         return authService.authenticate(user.getUsername(), newPassword);
+    }
+
+    private Token createRegistrationToken(User user){
+        Token token = Token.builder()
+                .value(RandomStringUtils.random(20, true, true))
+                .type(TokenType.REGISTRATION)
+                .user(user)
+                .build();
+        return tokenRepository.save(token);
     }
 
     private void assertUserIsEnabled(User user){

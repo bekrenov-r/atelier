@@ -1,6 +1,5 @@
 package com.group.atelier.util.mail;
 
-import com.group.atelier.security.TokenRepository;
 import com.group.atelier.security.dto.RegistrationRequest;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.io.IOUtils;
@@ -16,7 +15,6 @@ import java.nio.charset.StandardCharsets;
 @RequiredArgsConstructor
 public class EmailService {
     private final JavaMailSender mailSender;
-    private final TokenRepository tokenRepository;
 
     @Value("${spring.custom.frontend.domain}")
     private String frontendDomain;

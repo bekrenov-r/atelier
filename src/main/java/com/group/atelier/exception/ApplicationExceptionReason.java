@@ -7,10 +7,12 @@ import org.springframework.http.HttpStatus;
 @Getter
 @AllArgsConstructor
 public enum ApplicationExceptionReason {
-    REGISTRATION_TOKEN_NOT_FOUND("Registration token [%s] does not exist", HttpStatus.NOT_FOUND),
+    REGISTRATION_TOKEN_NOT_FOUND_BY_VALUE("Registration token [%s] does not exist", HttpStatus.NOT_FOUND),
+    REGISTRATION_TOKEN_NOT_FOUND_BY_USER("Registration token for user [%s] does not exist", HttpStatus.NOT_FOUND),
     PASSWORD_RECOVERY_TOKEN_NOT_FOUND("Password recovery token [%s] does not exist", HttpStatus.NOT_FOUND),
     USER_NOT_FOUND("User with username [%s] does not exist", HttpStatus.NOT_FOUND),
     USER_IS_DISABLED("User with username [%s] is disabled", HttpStatus.FORBIDDEN),
+    USER_ALREADY_EXISTS("User with email [%s] already exists", HttpStatus.CONFLICT),
     COAT_MODEL_NOT_FOUND("Coat model with id [%s] does not exist", HttpStatus.NOT_FOUND),
     CANNOT_DELETE_COAT_MODEL("Coat model with id [%s] is referenced from [%s] orders and therefore cannot be deleted", HttpStatus.CONFLICT),
     ORDER_NOT_FOUND("Order with id [%s] does not exist", HttpStatus.NOT_FOUND),
