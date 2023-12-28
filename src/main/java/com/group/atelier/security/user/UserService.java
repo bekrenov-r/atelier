@@ -7,6 +7,7 @@ import com.group.atelier.model.enums.TokenType;
 import com.group.atelier.security.JwtProvider;
 import com.group.atelier.security.Role;
 import com.group.atelier.security.TokenRepository;
+import com.group.atelier.security.auth.AuthenticationService;
 import com.group.atelier.security.dto.RegistrationRequest;
 import com.group.atelier.util.mail.EmailService;
 import jakarta.transaction.Transactional;
@@ -28,6 +29,7 @@ public class UserService {
     private final TokenRepository tokenRepository;
     private final JwtProvider jwtProvider;
     private final EmailService emailService;
+    private final AuthenticationService authService;
 
     public User createUser(RegistrationRequest request, Set<Role> roles) throws IOException {
         User user = User.builder()
@@ -67,6 +69,7 @@ public class UserService {
     public void sendEmailForPasswordRecovery(String email) throws IOException {
         User user = userRepository.findByUsername(email)
                 .orElseThrow(() -> new ApplicationException(USER_NOT_FOUND, email));
+        assertUserIsEnabled(user);
         Token token = Token.builder()
                 .value(RandomStringUtils.random(20, true, true))
                 .type(TokenType.PASSWORD_RECOVERY)
@@ -84,6 +87,11 @@ public class UserService {
         user.setPassword(passwordEncoder.encode(newPassword));
         userRepository.save(user);
         tokenRepository.deleteByValue(token);
-        return jwtProvider.generateToken(user);
+        return authService.authenticate(user.getUsername(), newPassword);
+    }
+
+    private void assertUserIsEnabled(User user){
+        if(!user.isEnabled())
+            throw new ApplicationException(USER_IS_DISABLED, user.getUsername());
     }
 }

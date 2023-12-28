@@ -18,10 +18,14 @@ public class AuthenticationService {
     private final JwtProvider jwtProvider;
 
     public String authenticate(AuthenticationRequest request) {
+        return this.authenticate(request.username(), request.password());
+    }
+
+    public String authenticate(String username, String password){
         Authentication auth = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(request.username(), request.password())
+                new UsernamePasswordAuthenticationToken(username, password)
         );
         SecurityContextHolder.getContext().setAuthentication(auth);
-        return jwtProvider.generateToken(userDetailsService.loadUserByUsername(request.username()));
+        return jwtProvider.generateToken(userDetailsService.loadUserByUsername(username));
     }
 }
