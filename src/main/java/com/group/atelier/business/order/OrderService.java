@@ -4,6 +4,7 @@ import com.group.atelier.business.coatmodel.CoatModelRepository;
 import com.group.atelier.business.order.dto.OrderMapper;
 import com.group.atelier.business.order.dto.OrderRequest;
 import com.group.atelier.business.order.dto.OrderResponse;
+import com.group.atelier.business.order.dto.OrderShortResponse;
 import com.group.atelier.business.patterndata.PatternCalculator;
 import com.group.atelier.business.patterndata.PatternCalculatorService;
 import com.group.atelier.business.productmetrics.ProductMetricsService;
@@ -78,10 +79,10 @@ public class OrderService {
         return orderMapper.entityToResponse(savedOrder);
     }
 
-    public List<OrderResponse> getAllOrders() {
+    public List<OrderShortResponse> getAllOrders() {
         List<Order> orders = this.getAllOrdersDependingOnRole();
         return orders.stream()
-                .map(orderMapper::entityToResponse)
+                .map(orderMapper::entityToShortResponse)
                 .toList();
     }
 
@@ -103,10 +104,10 @@ public class OrderService {
         return orderMapper.entityToResponse(order);
     }
 
-    public List<OrderResponse> getAllUnassignedOrders() {
+    public List<OrderShortResponse> getAllUnassignedOrders() {
         List<Order> orders = orderRepository.findAllUnassignedOrders();
         return orders.stream()
-                .map(orderMapper::entityToResponse)
+                .map(orderMapper::entityToShortResponse)
                 .toList();
     }
 

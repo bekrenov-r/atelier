@@ -2,6 +2,7 @@ package com.group.atelier.business.order;
 
 import com.group.atelier.business.order.dto.OrderRequest;
 import com.group.atelier.business.order.dto.OrderResponse;
+import com.group.atelier.business.order.dto.OrderShortResponse;
 import com.group.atelier.business.productmetrics.dto.ProductMetricsDTO;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -27,7 +28,7 @@ public class OrderController {
     }
 
     @GetMapping
-    public ResponseEntity<List<OrderResponse>> getAllOrdersOfCurrentUser(){
+    public ResponseEntity<List<OrderShortResponse>> getAllOrdersOfCurrentUser(){
         return ResponseEntity.ok(orderService.getAllOrders());
     }
 
@@ -43,7 +44,7 @@ public class OrderController {
 
     @GetMapping("/unassigned")
     @Secured("EMPLOYEE")
-    public ResponseEntity<List<OrderResponse>> getAllUnassignedOrders(){
+    public ResponseEntity<List<OrderShortResponse>> getAllUnassignedOrders(){
         return ResponseEntity.ok(orderService.getAllUnassignedOrders());
     }
 
