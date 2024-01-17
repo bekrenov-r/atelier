@@ -21,7 +21,7 @@ spring:
     host: smtp.gmail.com
     port: 587
     username: atelier.mail.server@gmail.com
-    password: rywh kjrd fruh pubs
+    password:
     properties:
       mail:
         smtp:
@@ -45,7 +45,7 @@ spring:
     pagination:
       page-size: 5
   jwt:
-    secret: KE73EYGWFWT378RTGFEW873R87F7TF8WYE7FT76FW6E76TF76ETFW76
+    secret:
     expiration-time-millis: 604800000
 logging:
   level:
