@@ -41,7 +41,10 @@ spring:
         GET /coat-models/**/images,
         GET /orders/**/metrics,
         GET /reviews/**,
-        POST /clients/register/resend-email
+        POST /clients/register/resend-email,
+        GET /swagger-ui.html,
+        GET /swagger-ui/**,
+        GET /api-docs/**
     pagination:
       page-size: 5
   jwt:
@@ -52,6 +55,9 @@ logging:
     org:
       springframework:
         security: TRACE
+springdoc:
+  api-docs:
+    path: /api-docs
 ---
 spring:
   config:
