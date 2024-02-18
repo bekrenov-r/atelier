@@ -13,5 +13,6 @@ public abstract class OrderMapper {
 
     @Mapping(target = "coatModelName", source = "coatModel.name")
     @Mapping(target = "price", source = "coatModel.price")
+    @Mapping(target = "coatType", source = "coatModel.coatType")
     public abstract OrderShortResponse entityToShortResponse(Order order);
 }
