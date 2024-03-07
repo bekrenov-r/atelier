@@ -78,9 +78,8 @@ spring:
       protocol: https
 server:
   ssl:
-    key-store: classpath:keystore/atelier-keystore.jks
+    key-store: classpath:keystore/atelier-keystore.p12
     key-store-password: atelier-admin
-    key-alias: atelier
 
 
 
