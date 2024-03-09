@@ -17,6 +17,8 @@ public abstract class CoatModelMapper {
     @Mapping(source = "imgPath", target = "image", qualifiedByName = "mapImage")
     public abstract CoatModelResponse entityToResponse(CoatModel coatModel);
 
+    public abstract CoatModelShortResponse entityToShortResponse(CoatModel coatModel);
+
     @Named("mapImage")
     protected byte[] mapImage(String path) throws IOException {
         return imageService.extractImage(path);

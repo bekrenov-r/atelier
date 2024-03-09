@@ -11,8 +11,6 @@ import org.mapstruct.Mapping;
 public abstract class OrderMapper {
     public abstract OrderResponse entityToResponse(Order order);
 
-    @Mapping(target = "coatModelName", source = "coatModel.name")
     @Mapping(target = "price", source = "coatModel.price")
-    @Mapping(target = "coatType", source = "coatModel.coatType")
     public abstract OrderShortResponse entityToShortResponse(Order order);
 }
